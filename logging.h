@@ -32,5 +32,20 @@
 #  define PTRACE(fmt, ...) /* not debugging: nothing */
 #endif
 
+/* SAME FOR ERROR FUNCTIONS */
+
+#undef PERROR             /* undef it, just in case */
+#ifdef API_ERROR
+     /* This one if debugging is on, and kernel space */
+     /* This one for user space */
+#    define PERROR(fmt, ...)	do{ \
+					fprintf(stderr, "%s(): ", __FUNCTION__); \
+					fprintf(stderr, fmt, ##__VA_ARGS__); \
+					fprintf(stderr, "\n"); \
+				} while(0)
+#else
+#  define PERROR(fmt, ...) /* not debugging: nothing */
+#endif
+
 
 #endif

@@ -12,6 +12,7 @@
 #include "url.h"
 #include "logging.h"
 
+#define BUFFER_SIZE 4096
 
 char* curl_get(char *query_string);
 int query_private(struct kraken_api **kr_api);

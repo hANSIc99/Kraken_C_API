@@ -1,6 +1,7 @@
 
 CC=gcc 
 
+ERROR =y
 DEBUG =y
 TRACE =y
 
@@ -19,6 +20,14 @@ endif
 ifeq ($(TRACE),y)
   TRACEFLAGS = -DAPI_TRACE # "-O" is needed to expand inlines
   CFLAGS += $(TRACEFLAGS)
+
+endif
+
+# PROGRAM ERROR FUNCTIONS
+
+ifeq ($(ERROR),y)
+  ERRORLAGS = -DAPI_ERROR # "-O" is needed to expand inlines
+  CFLAGS += $(ERRORLAGS)
 
 endif
 

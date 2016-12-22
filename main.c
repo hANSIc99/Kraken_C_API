@@ -7,8 +7,8 @@ int main (void){
 struct kraken_api *kr_api = NULL;
 
 
-const char *api_key = "api_key";
-const char *sec_key = "sec_key";
+const char *api_key = "api-key";
+const char *sec_key = "sec-key";
 
 /* init function.... */
 

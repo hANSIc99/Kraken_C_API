@@ -11,8 +11,9 @@ char* curl_get(char *query_string){
 	result = NULL;
 
 
-	result = calloc(10000, sizeof(char));
+	result = calloc(BUFFER_SIZE, sizeof(char));
 	curl_out = popen(query_string, "r");
+
 	if(curl_out == NULL)
 		return NULL;	/* ERROR */
 
@@ -29,7 +30,7 @@ char* curl_get(char *query_string){
 		*(result + (memcount-1)) = (char)i_char; 
 		
 
-	}while( i_char != EOF);
+	}while(i_char != EOF);
 
 	/* replace the EOF char with the terminate string char */
 
@@ -38,15 +39,16 @@ char* curl_get(char *query_string){
 	printf("\n\n");
 
 
-	ext_status = pclose(curl_out);
+	if((ext_status = pclose(curl_out)) != 0){
+		PERROR("ERROR on pclose");
+		PERROR("ERRNO-String: %s\n",strerror(errno));
+	}
 
 
-	printf("Exit status: %d\n", ext_status);
-	printf("ERRNO-String: %s\n",strerror(errno));
-	printf("String lenght: %lu\n", strlen(result));
+	PTRACE("Exit status: %d", ext_status);
 
-	printf("\nAccount query: %s \n", result);
-	
+	/* free memory allocated in query_private() */
+
 	free(query_string);
 
 	return result;
@@ -71,9 +73,6 @@ int query_private(struct kraken_api **kr_api){
 	struct timeval sys_time;
 	struct timezone sys_tz;
 
-	curl_query = malloc(sizeof(char) * 10000);
-	curl_query_url = malloc(sizeof(char) * 3000);
-
 
 	/* create nonce */
 
@@ -92,33 +91,41 @@ int query_private(struct kraken_api **kr_api){
 
 	/* baustelle */
 
-	/*  create nonce url */
+	/*  create nonce url with the nonce + the specific data */
 
 	if((curl_nonce_url = strdup(url_nonce)) == NULL)
-		PDEBUG("ERROR on strdup");
+		PERROR("ERROR on strdup");
 	
 
 	curl_nonce_url = to_url(curl_nonce_url, str_nonce);
 
+	/* curl_nonce_url = "nonce=1234567890123456" */
+
 	if(((*kr_api)->s_data) != NULL){
-	/* add seperator to the string */
-	curl_nonce_url = to_url(curl_nonce_url, url_seperator);
-	/* add the rest URI-data to the url-string */
-	curl_nonce_url = to_url(curl_nonce_url, (*kr_api)->s_data);
+
+		/* add seperator to the string */
+
+		curl_nonce_url = to_url(curl_nonce_url, url_seperator);
+
+		/* add the rest URI-data to the url-string */
+
+		curl_nonce_url = to_url(curl_nonce_url, (*kr_api)->s_data);
 	}
+
 	PTRACE("curl_nonce_url: %s", curl_nonce_url);
 
 
 	/*  CRYPTO FUNCTIONS */
 	
-	/* string lenght + 17 digits for the nonce */
 
-	s_sha256 = malloc(strlen(curl_nonce_url) + 17 );
+	/* s_sha256 = "1234567890123456nonce=12332.....pair=XBT.."  */
 
-	strcpy(s_sha256, str_nonce);
-	strcat(s_sha256, curl_nonce_url);
+	s_sha256 = strdup(str_nonce);
+	s_sha256 = to_url(s_sha256, curl_nonce_url);
 
 	PTRACE("s_sha256 nonce: %s", s_sha256);
+
+	/* execute SHA256 hash-algorithm */
 
 	sha256(s_sha256, digest);
 
@@ -126,6 +133,9 @@ int query_private(struct kraken_api **kr_api){
 
 	PTRACE("uri_path: %s", (*kr_api)->tmp_query_url);
 	uc_data_size =uri_length + SHA256_DIGEST_LENGTH;
+
+	/* MALLOC: posix functions cannot be used;
+	 * a trailing '\0' must not exist */
 
 	uc_data = malloc(uc_data_size);
 
@@ -144,33 +154,35 @@ int query_private(struct kraken_api **kr_api){
 
 	PTRACE("HMAC out: %s", hmac_out);
 
-	/* create the curl query string */
+	/* create the curl query string:
+	 * complete tmp_query_url */
 
-
-	/* complete tmp_query_url */
-
-	strcpy(curl_query_url, (*kr_api)->s_url);
+	curl_query_url = strdup((*kr_api)->s_url);
 	curl_query_url = to_url(curl_query_url, (*kr_api)->tmp_query_url);
+
+	/* GENERATE THE CURL COMMAND LINE ARGUMENT STRING */
 
 	/* -tlsv1.3 to force TLS V1.3 support */
 
-	strcpy(curl_query, "curl -tlsv1.3 --data ");
-	strcat(curl_query, "\"");
-	strcat(curl_query, curl_nonce_url);
-	strcat(curl_query, "\" ");
-	strcat(curl_query, "--header ");
-	strcat(curl_query, "\"");
-	strcat(curl_query, "API-Key: ");
-        strcat(curl_query, (*kr_api)->s_api_key);
-	strcat(curl_query, "\" ");
-	strcat(curl_query, "--header ");
-	strcat(curl_query, "\"");
-	strcat(curl_query, "API-Sign: ");
-	strcat(curl_query, hmac_out);
-	strcat(curl_query, "\" ");
-	strcat(curl_query, curl_query_url);
+	curl_query = strdup("curl -tlsv1.3 --data ");
+	curl_query = to_url(curl_query, "\"");
+	curl_query = to_url(curl_query, curl_nonce_url);
+	curl_query = to_url(curl_query, "\" ");
+	curl_query = to_url(curl_query, "--header ");
+	curl_query = to_url(curl_query, "\"");
+	curl_query = to_url(curl_query, "API-Key: ");
+	curl_query = to_url(curl_query, (*kr_api)->s_api_key);
+	curl_query = to_url(curl_query, "\" ");
+	curl_query = to_url(curl_query, "--header ");
+	curl_query = to_url(curl_query, "\"");
+	curl_query = to_url(curl_query, "API-Sign: ");
+	curl_query = to_url(curl_query, hmac_out);
+	curl_query = to_url(curl_query, "\" ");
+	curl_query = to_url(curl_query, curl_query_url);
 
 
+
+	/* free s_data only if it was used */
 	if((*kr_api)->s_data != NULL)
 		free((*kr_api)->s_data);
 
