@@ -75,7 +75,7 @@ kraken_init(&kr_api, api_key, sec_key);
 
 
 /* add_order returns 0 on success */
-#if 1
+#if 0
 kr_api->priv_func->add_order(&kr_api, "buy", "trailing-stop-limit", "XXBTZEUR", "10.0", "755.00", "758.00");
 #endif
 
@@ -85,8 +85,8 @@ kr_api->priv_func->get_account_balance(&kr_api);
 #endif
 /* the result is stored in the buffer: kr_api->s_result */
 
-#if 0
-kr_api->priv_func->get_trade_balance(&kr_api, "hello");
+#if 1
+kr_api->priv_func->get_trade_balance(&kr_api);
 #endif
 
 PTRACE("BUFFER RESULT: %s", kr_api->s_result);

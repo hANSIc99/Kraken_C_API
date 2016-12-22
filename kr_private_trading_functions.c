@@ -65,16 +65,16 @@ int addOrder(struct kraken_api **kr_api, const char *type, const char *order, co
 	/* create the temporary url for this type of api call */
 
 	if(((*kr_api)->tmp_query_url = strdup((*kr_api)->s_uri_private)) == NULL){
-		PDEBUG("ERROR on strdup");
-		exit(-1);
+		PERROR("ERROR on strdup");
+		return -1;
 	}
 
 	(*kr_api)->tmp_query_url = to_url((*kr_api)->tmp_query_url, (*kr_api)->s_uri_addorder);
 	
 	/* start the data string */
 	if(((*kr_api)->s_data = strdup(url_pair)) == NULL){
-		PDEBUG("ERROR on strdup");
-		exit(-1);
+		PERROR("ERROR on strdup");
+		return -1;
 	}	
 
 	/* add XXBTZEUR to the string */
@@ -241,14 +241,14 @@ switch (key_from_string(order)){
 		break;
 	case BADARG:
 		
-		PDEBUG("switch to case BADARG ERROR\n");
+		PERROR("switch to case BADARG ERROR\n");
 		return -1;
 		break;
 
 
 }
 	/* clean up var-args */
-	va_end(ap);
+va_end(ap);
 	
 query_private(kr_api);
 

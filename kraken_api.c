@@ -12,11 +12,11 @@ int kraken_init(struct kraken_api **kr_api, const char* api_key, const char *sec
 	(*kr_api)->s_sec_key = NULL;
 
 	if(((*kr_api)->s_api_key = malloc((size_t)strlen(api_key)+1)) == NULL){
-		PDEBUG("ERROR on malloc");
+		PERROR("ERROR on malloc");
 		return -1;
 	}
 	if(((*kr_api)->s_sec_key = malloc((size_t)strlen(sec_key)+1)) == NULL){
-		PDEBUG("ERROR on malloc");
+		PERROR("ERROR on malloc");
 		return -1;
 	}
 

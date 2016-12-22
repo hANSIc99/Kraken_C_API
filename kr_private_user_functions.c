@@ -5,8 +5,8 @@ int account_balance(struct kraken_api **kr_api){
 
 	/* create the temporary url for this type of api call */
 	if(((*kr_api)->tmp_query_url = strdup((*kr_api)->s_uri_private)) == NULL){
-		PDEBUG("ERROR on strdup");
-		exit(-1);
+		PERROR("ERROR on strdup");
+		return -1;
 	}
 
 	
@@ -31,10 +31,10 @@ int trade_balance(struct kraken_api **kr_api, ...){
 	/* create the temporary url for this type of api call */
 	if(((*kr_api)->tmp_query_url = strdup((*kr_api)->s_uri_private)) == NULL){
 		PDEBUG("ERROR on strdup");
-		exit(-1);
+		return -1;
 	}
 	
-	(*kr_api)->tmp_query_url = to_url((*kr_api)->tmp_query_url, (*kr_api)->s_uri_balance);
+	(*kr_api)->tmp_query_url = to_url((*kr_api)->tmp_query_url, (*kr_api)->s_uri_trade_balance);
 
 	PTRACE("Query URL: %s", (*kr_api)->tmp_query_url);
 	
@@ -42,12 +42,14 @@ int trade_balance(struct kraken_api **kr_api, ...){
 
 		PTRACE("No Argument");
 	}else{
-		PTRACE("Argument = %s", var_arg);
 		(*kr_api)->s_data = strdup(url_aclass);
+		(*kr_api)->s_data = to_url((*kr_api)->s_data, var_arg);
+		PTRACE("s_data = %s", (*kr_api)->s_data);
 	}
 
-
 	va_end(ap);
+
+	query_private(kr_api);
 
 	return 0;
 }
