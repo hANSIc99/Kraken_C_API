@@ -284,7 +284,27 @@ void kraken_clean(struct kraken_api **kr_api){
 int key_from_string(const char *str, const struct st_list *type_table, const uint8_t u8_n_keys){
 
 	uint8_t u8_i = 0;
+	char* tmp_str = NULL;
+	int i;
 
+	tmp_str = strdup(str);
+
+	PTRACE("tmp_str = %s", tmp_str);
+#if 1
+	while(tmp_str[i]){
+		tmp_str[i] = tolower(tmp_str[i]);
+		i++;
+	}
+	tmp_str[i] = '\0';
+#endif
+
+#if 0
+	for( ; *tmp_str; ++tmp_str) *tmp_str = tolower(*tmp_str);
+#endif
+	
+
+
+	PTRACE("tmp_str = %s", tmp_str);
 	PTRACE("u8_n_keys = %d", u8_n_keys);
 
 	for(u8_i = 0; u8_i <  u8_n_keys; u8_i++){

@@ -1,11 +1,12 @@
 #ifndef __kraken_api_h
 #define __kraken_api_h
 
-#include "crypto.h"
 #include <string.h>
 #include <stdlib.h>
 #include <stdint.h>
+#include <ctype.h>
 #include "logging.h"
+#include "crypto.h"
 
 #define ACLASS		1
 #define ASSET		2
