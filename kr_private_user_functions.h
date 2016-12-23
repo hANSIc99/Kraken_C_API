@@ -11,8 +11,12 @@
 #include "crypto.h"
 #include "kr_private_trading_functions.h"
 
+#define TRADES	1
+#define USERREF	2
+
 int account_balance(struct kraken_api **kr_api);
 int trade_balance(struct kraken_api **kr_api, ...);
+int open_orders(struct kraken_api **kr_api, ...);
 
 
 

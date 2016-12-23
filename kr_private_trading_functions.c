@@ -18,26 +18,8 @@ static struct st_list type_table[] = {
 
 };
 
-static int key_from_string(const char *str){
-
-	uint8_t u8_i = 0;
-
-	for(u8_i = 0; u8_i <  NKEYS; u8_i++){
-
-		struct st_list *typ = &type_table[u8_i];
-
-		if(!(strcmp(typ->key, str))){
-
-			return typ->val;
-		}
-	}
-
-	return BADARG;
-}
-
-
-
-
+#undef NKEYS
+#define NKEYS (uint8_t)(sizeof(type_table)/sizeof(type_table[0]))
 
 
 int addOrder(struct kraken_api **kr_api, const char *type, const char *order, const char *asset, const char* volume, ...){
@@ -107,7 +89,7 @@ int addOrder(struct kraken_api **kr_api, const char *type, const char *order, co
 
 
 
-switch (key_from_string(order)){
+switch (key_from_string(order, type_table, NKEYS)){
 
 	case MARKET:
 		PTRACE("switch to case market");
@@ -248,6 +230,9 @@ switch (key_from_string(order)){
 
 }
 	/* clean up var-args */
+
+	/* construction site:
+	 * optional arguments are not considered yet */
 va_end(ap);
 	
 query_private(kr_api);

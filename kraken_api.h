@@ -4,10 +4,23 @@
 #include "crypto.h"
 #include <string.h>
 #include <stdlib.h>
+#include <stdint.h>
 #include "logging.h"
 
 
+#define BADARG -1
 
+/* this structure is used to distinguish diffrent commanline
+ * arguments on kr_private_trading_functions
+ * and on kr_private_user_functions */
+
+struct st_list {
+
+	char *key;
+	uint8_t val;
+};
+
+/* main api-structure */
 
 struct kraken_api {
 
@@ -66,7 +79,7 @@ struct private_functions {
 
 	int (*get_account_balance)(struct kraken_api**);
 	int (*get_trade_balance)(struct kraken_api**, ...);
-	int (*get_open_orders)(struct kraken_api**, int);
+	int (*get_open_orders)(struct kraken_api**, ...);
 	int (*get_closed_orders)(struct kraken_api**, int);
 	int (*query_order_info)(struct kraken_api**, int);
 	int (*get_trades_history)(struct kraken_api**, int);
@@ -95,6 +108,7 @@ struct public_functions {
 
 int kraken_init(struct kraken_api **kr_api, const char* api_key, const char *sec_key);
 void kraken_clean(struct kraken_api **kr_api);
+int key_from_string(const char *str, const struct st_list *type_table, const uint8_t u8_n_keys);
 
 
 

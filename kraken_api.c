@@ -38,6 +38,7 @@ int kraken_init(struct kraken_api **kr_api, const char* api_key, const char *sec
 	(*kr_api)->priv_func->add_order = &addOrder;
 	(*kr_api)->priv_func->get_account_balance = &account_balance;
 	(*kr_api)->priv_func->get_trade_balance = &trade_balance;
+	(*kr_api)->priv_func->get_open_orders = &open_orders;
 
 	make_url(kr_api);
 
@@ -82,6 +83,28 @@ void kraken_clean(struct kraken_api **kr_api){
 
 	free(*kr_api);
 
+}
+
+
+/* helper functions to distinguish between command line arguments */
+
+int key_from_string(const char *str, const struct st_list *type_table, const uint8_t u8_n_keys){
+
+	uint8_t u8_i = 0;
+
+	PTRACE("u8_n_keys = %d", u8_n_keys);
+
+	for(u8_i = 0; u8_i <  u8_n_keys; u8_i++){
+
+		const struct st_list *typ = type_table + u8_i;
+
+		if(!(strcmp(typ->key, str))){
+
+			return typ->val;
+		}
+	}
+
+	return BADARG;
 }
 
 
