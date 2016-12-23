@@ -102,9 +102,134 @@ int kraken_init(struct kraken_api **kr_api, const char* api_key, const char *sec
 int kraken_set_opt(struct kraken_api **kr_api, const char* opt, const char* val){
 	
 	PTRACE("nkeys: %d", NKEYS);
-#if 0
-	switch(key_from_string(opt, opt_table, NKEYS)) 
-#endif	
+
+	switch(key_from_string(opt, opt_table, NKEYS)){
+
+		case ACLASS:
+			PTRACE("switch to case ACLASS");
+			if(((*kr_api)->priv_opt->opt_aclass = strdup(val)) == NULL){
+				PERROR("ERROR on strdup");
+				return -1;
+			}
+			PTRACE("opt_aclass = %s", (*kr_api)->priv_opt->opt_aclass);
+			break;
+		case ASSET:
+			PTRACE("switch to case ASSET");
+			if(((*kr_api)->priv_opt->opt_asset = strdup(val)) == NULL){
+				PERROR("ERROR on strdup");
+				return -1;
+			}
+			PTRACE("opt_asset = %s", (*kr_api)->priv_opt->opt_asset);
+			break;
+		case TRADES:
+			PTRACE("switch to case TRADES");
+			if(((*kr_api)->priv_opt->opt_trades = strdup(val)) == NULL){
+				PERROR("ERROR on strdup");
+				return -1;
+			}
+			PTRACE("opt_trades = %s", (*kr_api)->priv_opt->opt_trades);
+			break;
+		case USERREF:
+			PTRACE("switch to case USERREF");
+			if(((*kr_api)->priv_opt->opt_userref = strdup(val)) == NULL){
+				PERROR("ERROR on strdup");
+				return -1;
+			}
+			PTRACE("opt_userref = %s", (*kr_api)->priv_opt->opt_userref);
+			break;
+		case START:
+			PTRACE("switch to case START");
+			if(((*kr_api)->priv_opt->opt_start = strdup(val)) == NULL){
+				PERROR("ERROR on strdup");
+				return -1;
+			}
+			PTRACE("opt_start = %s", (*kr_api)->priv_opt->opt_start);
+			break;
+		case END:
+			PTRACE("switch to case END");
+			if(((*kr_api)->priv_opt->opt_end = strdup(val)) == NULL){
+				PERROR("ERROR on strdup");
+				return -1;
+			}
+			PTRACE("opt_end = %s", (*kr_api)->priv_opt->opt_end);
+			break;
+		case OFS:
+			PTRACE("switch to case OFS");
+			if(((*kr_api)->priv_opt->opt_ofs = strdup(val)) == NULL){
+				PERROR("ERROR on strdup");
+				return -1;
+			}
+			PTRACE("opt_ofs = %s", (*kr_api)->priv_opt->opt_ofs);
+			break;
+		case CLOSETIME:
+			PTRACE("switch to case CLOSETIME");
+			if(((*kr_api)->priv_opt->opt_closetime = strdup(val)) == NULL){
+				PERROR("ERROR on strdup");
+				return -1;
+			}
+			PTRACE("opt_closetime = %s", (*kr_api)->priv_opt->opt_closetime);
+			break;
+		case DOCALCS:
+			PTRACE("switch to case DOCALCS");
+			if(((*kr_api)->priv_opt->opt_docalcs = strdup(val)) == NULL){
+				PERROR("ERROR on strdup");
+				return -1;
+			}
+			PTRACE("opt_docalcs = %s", (*kr_api)->priv_opt->opt_docalcs);
+			break;
+		case PAIR:
+			PTRACE("switch to case PAIR");
+			if(((*kr_api)->priv_opt->opt_pair = strdup(val)) == NULL){
+				PERROR("ERROR on strdup");
+				return -1;
+			}
+			PTRACE("opt_pair = %s", (*kr_api)->priv_opt->opt_pair);
+			break;
+		case FEE_INFO:
+			PTRACE("switch to case FEE_INFO");
+			if(((*kr_api)->priv_opt->opt_fee_info = strdup(val)) == NULL){
+				PERROR("ERROR on strdup");
+				return -1;
+			}
+			PTRACE("opt_fee_info = %s", (*kr_api)->priv_opt->opt_fee_info);
+			break;
+		case OFLAGS:
+			PTRACE("switch to case OFLAGS");
+			if(((*kr_api)->priv_opt->opt_oflags = strdup(val)) == NULL){
+				PERROR("ERROR on strdup");
+				return -1;
+			}
+			PTRACE("opt_oflags = %s", (*kr_api)->priv_opt->opt_oflags);
+			break;
+		case STARTTM:
+			PTRACE("switch to case STARTTM");
+			if(((*kr_api)->priv_opt->opt_starttm = strdup(val)) == NULL){
+				PERROR("ERROR on strdup");
+				return -1;
+			}
+			PTRACE("opt_starttm = %s", (*kr_api)->priv_opt->opt_starttm);
+			break;
+		case EXPIRETM:
+			PTRACE("switch to case EXPIRETM");
+			if(((*kr_api)->priv_opt->opt_expiretm = strdup(val)) == NULL){
+				PERROR("ERROR on strdup");
+				return -1;
+			}
+			PTRACE("opt_expiretm = %s", (*kr_api)->priv_opt->opt_expiretm);
+			break;
+		case VALIDATE:
+			PTRACE("switch to case VALIDATE");
+			if(((*kr_api)->priv_opt->opt_validate = strdup(val)) == NULL){
+				PERROR("ERROR on strdup");
+				return -1;
+			}
+			PTRACE("opt_validate = %s", (*kr_api)->priv_opt->opt_validate);
+			break;
+		case BADARG:
+			PERROR("BADARG");
+			return -1;
+
+	}	
 	
 	return 0;
 

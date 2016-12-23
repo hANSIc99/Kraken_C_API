@@ -75,7 +75,7 @@ kraken_init(&kr_api, api_key, sec_key);
 
 
 #if 1
-kraken_set_opt(&kr_api, "option", "value"); 
+kraken_set_opt(&kr_api, "aclass", "value"); 
 #endif
 
 /* add_order returns 0 on success */
