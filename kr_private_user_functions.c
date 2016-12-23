@@ -1,11 +1,5 @@
 #include "kr_private_user_functions.h"
 
-static struct st_list type_table[] = {
-
-	{"trades",		TRADES},
-	{"userref",		USERREF}
-
-};
 
 #undef NKEYS
 #define NKEYS (uint8_t)(sizeof(type_table)/sizeof(type_table[0]))
@@ -101,18 +95,4 @@ int open_orders(struct kraken_api **kr_api, ...){
 	return 0;
 }
 
-static void set_uri_data(va_list ap, struct kraken_api **kr_api){
 
-	const char* var_arg = NULL;
-
-	if((strlen(var_arg = va_arg(ap, char*))) == 0){
-
-		PTRACE("Calling without argument");
-		query_private(kr_api);
-		va_end(ap);
-	}
-
-
-
-
-}

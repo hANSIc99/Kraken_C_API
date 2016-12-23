@@ -134,13 +134,17 @@ int query_private(struct kraken_api **kr_api){
 	PTRACE("uri_path: %s", (*kr_api)->tmp_query_url);
 	uc_data_size =uri_length + SHA256_DIGEST_LENGTH;
 
+
 	/* MALLOC: posix functions cannot be used;
 	 * a trailing '\0' must not exist */
 
 	uc_data = malloc(uc_data_size);
 
+
 	memcpy(uc_data, (*kr_api)->tmp_query_url, uri_length);
 	memcpy(uc_data+uri_length, digest, SHA256_DIGEST_LENGTH);
+
+
 
 	/* BASE64 decoding */
 
@@ -148,6 +152,7 @@ int query_private(struct kraken_api **kr_api){
 
 	/* HMAC decoding */
 
+	PTRACE("HI");
 	uc_hmac_output = hmac_sha512(uc_data, uc_b64_decoded, uc_hmac_output, uc_data_size);
 
 	hmac_out = base64_encode(uc_hmac_output);

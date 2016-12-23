@@ -74,6 +74,10 @@ kraken_init(&kr_api, api_key, sec_key);
 /* settle-position: add_order(&kr_api, "buy", "stop-loss-profit", "XXBTZEUR", "0.43") */
 
 
+#if 1
+kraken_set_opt(&kr_api, "option", "value"); 
+#endif
+
 /* add_order returns 0 on success */
 #if 0
 kr_api->priv_func->add_order(&kr_api, "buy", "trailing-stop-limit", "XXBTZEUR", "10.0", "755.00", "758.00");
@@ -91,7 +95,9 @@ kr_api->priv_func->get_account_balance(&kr_api);
 kr_api->priv_func->get_trade_balance(&kr_api);
 #endif
 
-#if 1
+
+
+#if 0
 kr_api->priv_func->get_open_orders(&kr_api);
 #endif
 
@@ -99,9 +105,9 @@ PTRACE("BUFFER RESULT: %s", kr_api->s_result);
 
 
 /* cleanup function must be called to free allocated memory */
-
+#if 0
 kraken_clean(&kr_api);
-
+#endif
 
 }
 

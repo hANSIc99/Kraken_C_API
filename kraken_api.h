@@ -7,6 +7,21 @@
 #include <stdint.h>
 #include "logging.h"
 
+#define ACLASS		1
+#define ASSET		2
+#define TRADES		3
+#define USERREF		4
+#define START		5
+#define END		6
+#define OFS		7
+#define CLOSETIME	8
+#define DOCALCS		10
+#define PAIR		11
+#define FEE_INFO	12
+#define OFLAGS		13
+#define STARTTM		14
+#define EXPIRETM	15
+#define VALIDATE	16
 
 #define BADARG -1
 
@@ -26,6 +41,7 @@ struct kraken_api {
 
 	struct private_functions *priv_func; 
 	struct public_functions *pub_func;
+	struct private_optionals *priv_opt;
 
 	/* KEY'S */
 
@@ -89,7 +105,27 @@ struct private_functions {
 	int (*query_ledgers)(struct kraken_api**, int);
 	int (*get_trade_volume)(struct kraken_api**, int);
 
+};
 
+
+
+struct private_optionals {
+
+	char* opt_aclass;
+	char* opt_asset;
+	char* opt_trades;
+	char* opt_userref;
+	char* opt_start;
+	char* opt_end;
+	char* opt_ofs;
+	char* opt_closetime;
+	char* opt_docalcs;
+	char* opt_pair;
+	char* opt_fee_info;
+	char* opt_oflags;
+	char* opt_starttm;
+	char* opt_expiretm;
+	char* opt_validate;
 };
 
 struct public_functions {
@@ -109,6 +145,7 @@ struct public_functions {
 int kraken_init(struct kraken_api **kr_api, const char* api_key, const char *sec_key);
 void kraken_clean(struct kraken_api **kr_api);
 int key_from_string(const char *str, const struct st_list *type_table, const uint8_t u8_n_keys);
+int kraken_set_opt(struct kraken_api **kr_api, const char* opt, const char* val);
 
 
 
