@@ -69,8 +69,11 @@ int kraken_init(struct kraken_api **kr_api, const char* api_key, const char *sec
 	/* initialize with default values */
 	(*kr_api)->s_url =			NULL;
 	(*kr_api)->s_data =			NULL;
+	(*kr_api)->s_result =			NULL;
 	(*kr_api)->s_uri_private =		NULL;
 	(*kr_api)->s_uri_addorder =		NULL;
+
+	(*kr_api)->tmp_query_url =		NULL;
 
 	(*kr_api)->priv_opt->opt_aclass =	NULL;
 	(*kr_api)->priv_opt->opt_asset =	NULL;
@@ -238,6 +241,7 @@ int kraken_set_opt(struct kraken_api **kr_api, const char* opt, const char* val)
 void kraken_clean(struct kraken_api **kr_api){
 
 	PTRACE("API CLEANUP");
+	char* tmp_ptr = NULL;
 
 	free((*kr_api)->priv_func);
 	free((*kr_api)->pub_func);
@@ -269,10 +273,27 @@ void kraken_clean(struct kraken_api **kr_api){
 	free((*kr_api)->s_uri_trade_balance);
 
 	/* BUFFER */
-	free((*kr_api)->s_result);
+	if((*kr_api)->s_result != NULL) free((*kr_api)->s_result);  
 
 	/* OPTIONALS */
+	
+	if((tmp_ptr = (*kr_api)->priv_opt->opt_aclass) != NULL) free(tmp_ptr);
+	if((tmp_ptr = (*kr_api)->priv_opt->opt_asset) != NULL) free(tmp_ptr);
+	if((tmp_ptr = (*kr_api)->priv_opt->opt_trades) != NULL) free(tmp_ptr);
+	if((tmp_ptr = (*kr_api)->priv_opt->opt_userref) != NULL) free(tmp_ptr);
+	if((tmp_ptr = (*kr_api)->priv_opt->opt_start) != NULL) free(tmp_ptr);
+	if((tmp_ptr = (*kr_api)->priv_opt->opt_end) != NULL) free(tmp_ptr);
+	if((tmp_ptr = (*kr_api)->priv_opt->opt_ofs) != NULL) free(tmp_ptr);
+	if((tmp_ptr = (*kr_api)->priv_opt->opt_closetime) != NULL) free(tmp_ptr);
+	if((tmp_ptr = (*kr_api)->priv_opt->opt_docalcs) != NULL) free(tmp_ptr);
+	if((tmp_ptr = (*kr_api)->priv_opt->opt_pair) != NULL) free(tmp_ptr);
+	if((tmp_ptr = (*kr_api)->priv_opt->opt_fee_info) != NULL) free(tmp_ptr);
+	if((tmp_ptr = (*kr_api)->priv_opt->opt_oflags) != NULL) free(tmp_ptr);
+	if((tmp_ptr = (*kr_api)->priv_opt->opt_starttm) != NULL) free(tmp_ptr);
+	if((tmp_ptr = (*kr_api)->priv_opt->opt_expiretm) != NULL) free(tmp_ptr);
+	if((tmp_ptr = (*kr_api)->priv_opt->opt_validate) != NULL) free(tmp_ptr);
 
+	free((*kr_api)->priv_opt);
 
 	free(*kr_api);
 
@@ -288,8 +309,6 @@ int key_from_string(const char *str, const struct st_list *type_table, const uin
 	char* check_str = NULL;
 	
 	tmp_str = strdup(str);
-
-	PTRACE("tmp_str = %s", tmp_str);
 
 	check_str = tmp_str ;
 

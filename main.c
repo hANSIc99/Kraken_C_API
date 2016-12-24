@@ -76,6 +76,7 @@ kraken_init(&kr_api, api_key, sec_key);
 
 #if 1
 kraken_set_opt(&kr_api, "AClass", "hi"); 
+kraken_set_opt(&kr_api, "expireTM", "hi2"); 
 #endif
 
 /* add_order returns 0 on success */
@@ -101,11 +102,12 @@ kr_api->priv_func->get_trade_balance(&kr_api);
 kr_api->priv_func->get_open_orders(&kr_api);
 #endif
 
+#if 0
 PTRACE("BUFFER RESULT: %s", kr_api->s_result);
-
+#endif
 
 /* cleanup function must be called to free allocated memory */
-#if 0
+#if 1
 kraken_clean(&kr_api);
 #endif
 
