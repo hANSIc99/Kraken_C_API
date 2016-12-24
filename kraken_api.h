@@ -23,6 +23,10 @@
 #define STARTTM		14
 #define EXPIRETM	15
 #define VALIDATE	16
+#define LEVERAGE	17
+#define CLOSE_TYPE	18
+#define CLOSE_PRICE_1	19
+#define CLOSE_PRICE_2	20
 
 #define BADARG -1
 
@@ -127,6 +131,10 @@ struct private_optionals {
 	char* opt_starttm;
 	char* opt_expiretm;
 	char* opt_validate;
+	char* opt_leverage;
+	char* opt_close_type;
+	char* opt_close_pc_1;
+	char* opt_close_pc_2;
 };
 
 struct public_functions {

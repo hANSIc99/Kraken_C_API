@@ -75,12 +75,13 @@ kraken_init(&kr_api, api_key, sec_key);
 
 
 #if 1
-kraken_set_opt(&kr_api, "AClass", "hi"); 
-kraken_set_opt(&kr_api, "expireTM", "hi2"); 
+kraken_set_opt(&kr_api, "validate", "true"); 
+kraken_set_opt(&kr_api, "close-type", "limit"); 
+kraken_set_opt(&kr_api, "close-pc-1", "765"); 
 #endif
 
 /* add_order returns 0 on success */
-#if 0
+#if 1
 kr_api->priv_func->add_order(&kr_api, "buy", "trailing-stop-limit", "XXBTZEUR", "10.0", "755.00", "758.00");
 #endif
 
@@ -102,7 +103,7 @@ kr_api->priv_func->get_trade_balance(&kr_api);
 kr_api->priv_func->get_open_orders(&kr_api);
 #endif
 
-#if 0
+#if 1
 PTRACE("BUFFER RESULT: %s", kr_api->s_result);
 #endif
 

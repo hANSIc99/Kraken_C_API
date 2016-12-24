@@ -26,18 +26,28 @@ int addOrder(struct kraken_api **kr_api, const char *type, const char *order, co
 
 
 	va_list ap;
+	char* tmp_char = NULL;
 	const char *var_arg = NULL;
 	va_start(ap, volume);
 
-	const char* url_seperator = "&";
-	const char* url_pair = "pair=";
-	const char* url_type = "type=";
-	const char* url_ordertype = "ordertype=";
-	const char* url_volume = "volume=";
-	const char* url_price_1 = "price=";
-	const char* url_price_2 = "price2=";
-	const char* url_trading = "trading_agreement=";
-	const char* var_agreement = "agree";
+	const char* url_seperator	= "&";
+	const char* url_pair		= "pair=";
+	const char* url_type		= "type=";
+	const char* url_ordertype	= "ordertype=";
+	const char* url_volume		= "volume=";
+	const char* url_price_1		= "price=";
+	const char* url_price_2		= "price2=";
+	const char* url_trading		= "trading_agreement=";
+	const char* url_leverage	= "leverage=";
+	const char* url_oflags		= "oflags=";
+	const char* url_starttm		= "starttm=";
+	const char* url_expiretm	= "expiretm=";
+	const char* url_userref		= "userref=";
+	const char* url_validate	= "validate=";
+	const char* url_close_type	= "close[ordertype]=";
+	const char* url_close_price_1	= "close[price]=";
+	const char* url_close_price_2	= "close[price2]=";
+	const char* var_agreement	= "agree";
 
 
 	PTRACE("type: %s\n", type);
@@ -229,10 +239,84 @@ switch (key_from_string(order, type_table, NKEYS)){
 
 
 }
-	/* clean up var-args */
 
-	/* construction site:
-	 * optional arguments are not considered yet */
+	/* check for given LEVERAGE */		
+
+	if((tmp_char = (*kr_api)->priv_opt->opt_leverage) != NULL){
+		(*kr_api)->s_data = to_url((*kr_api)->s_data, url_seperator); 
+		(*kr_api)->s_data = to_url((*kr_api)->s_data, url_leverage); 
+		(*kr_api)->s_data = to_url((*kr_api)->s_data, tmp_char);
+	}
+
+	/* check for given ORDER-FLAGS */
+
+	if((tmp_char = (*kr_api)->priv_opt->opt_ofs) != NULL){
+		(*kr_api)->s_data = to_url((*kr_api)->s_data, url_seperator); 
+		(*kr_api)->s_data = to_url((*kr_api)->s_data, url_oflags); 
+		(*kr_api)->s_data = to_url((*kr_api)->s_data, tmp_char);
+	}
+
+	/* check for given START-TIME */
+
+	if((tmp_char = (*kr_api)->priv_opt->opt_starttm) != NULL){
+		(*kr_api)->s_data = to_url((*kr_api)->s_data, url_seperator); 
+		(*kr_api)->s_data = to_url((*kr_api)->s_data, url_starttm); 
+		(*kr_api)->s_data = to_url((*kr_api)->s_data, tmp_char);
+	}
+
+
+	/* check for given EXPIRE-TIME */
+
+	if((tmp_char = (*kr_api)->priv_opt->opt_expiretm) != NULL){
+		(*kr_api)->s_data = to_url((*kr_api)->s_data, url_seperator); 
+		(*kr_api)->s_data = to_url((*kr_api)->s_data, url_expiretm); 
+		(*kr_api)->s_data = to_url((*kr_api)->s_data, tmp_char);
+	}
+
+	/* check for given USER-REFERENCE  */
+
+	if((tmp_char = (*kr_api)->priv_opt->opt_userref) != NULL){
+		(*kr_api)->s_data = to_url((*kr_api)->s_data, url_seperator); 
+		(*kr_api)->s_data = to_url((*kr_api)->s_data, url_userref); 
+		(*kr_api)->s_data = to_url((*kr_api)->s_data, tmp_char);
+	}
+
+	/* check for given VALIDATE  */
+
+	if((tmp_char = (*kr_api)->priv_opt->opt_validate) != NULL){
+		(*kr_api)->s_data = to_url((*kr_api)->s_data, url_seperator); 
+		(*kr_api)->s_data = to_url((*kr_api)->s_data, url_validate); 
+		(*kr_api)->s_data = to_url((*kr_api)->s_data, tmp_char);
+	}
+
+	/* check for given CLOSE_TYPE */
+	
+	if((tmp_char = (*kr_api)->priv_opt->opt_close_type) != NULL){
+		(*kr_api)->s_data = to_url((*kr_api)->s_data, url_seperator); 
+		(*kr_api)->s_data = to_url((*kr_api)->s_data, url_close_type); 
+		(*kr_api)->s_data = to_url((*kr_api)->s_data, tmp_char);
+
+		/* check for given CLOSE_PRICE_! */
+
+		if((tmp_char = (*kr_api)->priv_opt->opt_close_pc_1) != NULL){
+			(*kr_api)->s_data = to_url((*kr_api)->s_data, url_seperator); 
+			(*kr_api)->s_data = to_url((*kr_api)->s_data, url_close_price_1); 
+			(*kr_api)->s_data = to_url((*kr_api)->s_data, tmp_char);
+		}
+
+		/* check for given CLOSE_PRICE_2 */
+
+		if((tmp_char = (*kr_api)->priv_opt->opt_close_pc_2) != NULL){
+			(*kr_api)->s_data = to_url((*kr_api)->s_data, url_seperator); 
+			(*kr_api)->s_data = to_url((*kr_api)->s_data, url_close_price_2); 
+			(*kr_api)->s_data = to_url((*kr_api)->s_data, tmp_char);
+		}
+
+
+	}
+
+	
+
 va_end(ap);
 	
 query_private(kr_api);

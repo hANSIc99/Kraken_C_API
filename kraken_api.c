@@ -19,7 +19,11 @@ static struct st_list opt_table[] = {
 	{"oflags",	OFLAGS		},
 	{"starttm",	STARTTM		},
 	{"expiretm",	EXPIRETM	},
-	{"validate",	VALIDATE	}
+	{"validate",	VALIDATE	},
+	{"leverage",	LEVERAGE	},
+	{"close-type",	CLOSE_TYPE	},
+	{"close-pc-1",	CLOSE_PRICE_1	},
+	{"close-pc-2",	CLOSE_PRICE_2	}
 
 };
 
@@ -90,6 +94,11 @@ int kraken_init(struct kraken_api **kr_api, const char* api_key, const char *sec
 	(*kr_api)->priv_opt->opt_starttm =	NULL;
 	(*kr_api)->priv_opt->opt_expiretm =	NULL;
 	(*kr_api)->priv_opt->opt_validate =	NULL;
+	(*kr_api)->priv_opt->opt_leverage =	NULL;
+	(*kr_api)->priv_opt->opt_close_type =	NULL;
+	(*kr_api)->priv_opt->opt_close_pc_1 =	NULL;
+	(*kr_api)->priv_opt->opt_close_pc_2 =	NULL;
+
 
 
 	(*kr_api)->priv_func->add_order = &addOrder;
@@ -228,6 +237,38 @@ int kraken_set_opt(struct kraken_api **kr_api, const char* opt, const char* val)
 			}
 			PTRACE("opt_validate = %s", (*kr_api)->priv_opt->opt_validate);
 			break;
+		case LEVERAGE:
+			PTRACE("switch to case LEVERAGE");
+			if(((*kr_api)->priv_opt->opt_leverage = strdup(val)) == NULL){
+				PERROR("ERROR on strdup");
+				return -1;
+			}
+			PTRACE("opt_leverage = %s", (*kr_api)->priv_opt->opt_leverage);
+			break;
+		case CLOSE_TYPE:
+			PTRACE("switch to case CLOSE_TYPE");
+			if(((*kr_api)->priv_opt->opt_close_type = strdup(val)) == NULL){
+				PERROR("ERROR on strdup");
+				return -1;
+			}
+			PTRACE("opt_close_pc_1 = %s", (*kr_api)->priv_opt->opt_close_type);
+			break;
+		case CLOSE_PRICE_1:
+			PTRACE("switch to case CLOSE_PRICE_1");
+			if(((*kr_api)->priv_opt->opt_close_pc_1 = strdup(val)) == NULL){
+				PERROR("ERROR on strdup");
+				return -1;
+			}
+			PTRACE("opt_close_pc_1 = %s", (*kr_api)->priv_opt->opt_close_pc_1);
+			break;
+		case CLOSE_PRICE_2:
+			PTRACE("switch to case CLOSE_PRICE_2");
+			if(((*kr_api)->priv_opt->opt_close_pc_2 = strdup(val)) == NULL){
+				PERROR("ERROR on strdup");
+				return -1;
+			}
+			PTRACE("opt_close_pc_2 = %s", (*kr_api)->priv_opt->opt_close_pc_2);
+			break;
 		case BADARG:
 			PERROR("BADARG");
 			return -1;
@@ -277,21 +318,25 @@ void kraken_clean(struct kraken_api **kr_api){
 
 	/* OPTIONALS */
 	
-	if((tmp_ptr = (*kr_api)->priv_opt->opt_aclass) != NULL) free(tmp_ptr);
-	if((tmp_ptr = (*kr_api)->priv_opt->opt_asset) != NULL) free(tmp_ptr);
-	if((tmp_ptr = (*kr_api)->priv_opt->opt_trades) != NULL) free(tmp_ptr);
-	if((tmp_ptr = (*kr_api)->priv_opt->opt_userref) != NULL) free(tmp_ptr);
-	if((tmp_ptr = (*kr_api)->priv_opt->opt_start) != NULL) free(tmp_ptr);
-	if((tmp_ptr = (*kr_api)->priv_opt->opt_end) != NULL) free(tmp_ptr);
-	if((tmp_ptr = (*kr_api)->priv_opt->opt_ofs) != NULL) free(tmp_ptr);
+	if((tmp_ptr = (*kr_api)->priv_opt->opt_aclass)	!= NULL) free(tmp_ptr);
+	if((tmp_ptr = (*kr_api)->priv_opt->opt_asset)	!= NULL) free(tmp_ptr);
+	if((tmp_ptr = (*kr_api)->priv_opt->opt_trades)	!= NULL) free(tmp_ptr);
+	if((tmp_ptr = (*kr_api)->priv_opt->opt_userref)	!= NULL) free(tmp_ptr);
+	if((tmp_ptr = (*kr_api)->priv_opt->opt_start)	!= NULL) free(tmp_ptr);
+	if((tmp_ptr = (*kr_api)->priv_opt->opt_end)	!= NULL) free(tmp_ptr);
+	if((tmp_ptr = (*kr_api)->priv_opt->opt_ofs)	!= NULL) free(tmp_ptr);
 	if((tmp_ptr = (*kr_api)->priv_opt->opt_closetime) != NULL) free(tmp_ptr);
-	if((tmp_ptr = (*kr_api)->priv_opt->opt_docalcs) != NULL) free(tmp_ptr);
-	if((tmp_ptr = (*kr_api)->priv_opt->opt_pair) != NULL) free(tmp_ptr);
+	if((tmp_ptr = (*kr_api)->priv_opt->opt_docalcs)	!= NULL) free(tmp_ptr);
+	if((tmp_ptr = (*kr_api)->priv_opt->opt_pair)	!= NULL) free(tmp_ptr);
 	if((tmp_ptr = (*kr_api)->priv_opt->opt_fee_info) != NULL) free(tmp_ptr);
-	if((tmp_ptr = (*kr_api)->priv_opt->opt_oflags) != NULL) free(tmp_ptr);
-	if((tmp_ptr = (*kr_api)->priv_opt->opt_starttm) != NULL) free(tmp_ptr);
-	if((tmp_ptr = (*kr_api)->priv_opt->opt_expiretm) != NULL) free(tmp_ptr);
-	if((tmp_ptr = (*kr_api)->priv_opt->opt_validate) != NULL) free(tmp_ptr);
+	if((tmp_ptr = (*kr_api)->priv_opt->opt_oflags)	!= NULL) free(tmp_ptr);
+	if((tmp_ptr = (*kr_api)->priv_opt->opt_starttm)	!= NULL) free(tmp_ptr);
+	if((tmp_ptr = (*kr_api)->priv_opt->opt_expiretm)!= NULL) free(tmp_ptr);
+	if((tmp_ptr = (*kr_api)->priv_opt->opt_validate)!= NULL) free(tmp_ptr);
+	if((tmp_ptr = (*kr_api)->priv_opt->opt_leverage)!= NULL) free(tmp_ptr);
+	if((tmp_ptr = (*kr_api)->priv_opt->opt_close_type)!= NULL) free(tmp_ptr);
+	if((tmp_ptr = (*kr_api)->priv_opt->opt_close_pc_1)!= NULL) free(tmp_ptr);
+	if((tmp_ptr = (*kr_api)->priv_opt->opt_close_pc_2)!= NULL) free(tmp_ptr);
 
 	free((*kr_api)->priv_opt);
 
