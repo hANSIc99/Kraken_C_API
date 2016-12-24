@@ -285,38 +285,31 @@ int key_from_string(const char *str, const struct st_list *type_table, const uin
 
 	uint8_t u8_i = 0;
 	char* tmp_str = NULL;
-	int i;
-
+	char* check_str = NULL;
+	
 	tmp_str = strdup(str);
 
 	PTRACE("tmp_str = %s", tmp_str);
-#if 1
-	while(tmp_str[i]){
-		tmp_str[i] = tolower(tmp_str[i]);
-		i++;
-	}
-	tmp_str[i] = '\0';
-#endif
 
-#if 0
+	check_str = tmp_str ;
+
+	/* convert to lower case chars */
+
 	for( ; *tmp_str; ++tmp_str) *tmp_str = tolower(*tmp_str);
-#endif
-	
 
-
-	PTRACE("tmp_str = %s", tmp_str);
 	PTRACE("u8_n_keys = %d", u8_n_keys);
 
 	for(u8_i = 0; u8_i <  u8_n_keys; u8_i++){
 
 		const struct st_list *typ = type_table + u8_i;
 
-		if(!(strcmp(typ->key, str))){
-
+		if(!(strcmp(typ->key, check_str))){
+			free(check_str);
 			return typ->val;
 		}
 	}
-
+	
+	free(check_str);
 	return BADARG;
 }
 
