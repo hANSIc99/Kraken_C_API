@@ -8,6 +8,9 @@
 #include "logging.h"
 #include "crypto.h"
 
+#define TRUE	1
+#define FALSE	0
+
 #define ACLASS		1
 #define ASSET		2
 #define TRADES		3
@@ -40,6 +43,16 @@ struct st_list {
 	uint8_t val;
 };
 
+struct st_opt_list {
+
+	uint8_t key;
+	uint8_t val;
+};
+
+
+
+
+
 /* main api-structure */
 
 struct kraken_api {
@@ -47,6 +60,13 @@ struct kraken_api {
 	struct private_functions *priv_func; 
 	struct public_functions *pub_func;
 	struct private_optionals *priv_opt;
+	struct private_opt_listen *priv_opt_list;
+
+	struct st_opt_list *opt_listen_table;
+       
+
+
+
 
 	/* KEY'S */
 
@@ -136,7 +156,28 @@ struct private_optionals {
 	char* opt_close_pc_1;
 	char* opt_close_pc_2;
 };
+struct private_opt_listen {
 
+	uint8_t bool_aclass;
+	uint8_t bool_asset;
+	uint8_t bool_trades;
+	uint8_t bool_userref;
+	uint8_t bool_start;
+	uint8_t bool_end;
+	uint8_t bool_ofs;
+	uint8_t bool_closetime;
+	uint8_t bool_docalcs;
+	uint8_t bool_pair;
+	uint8_t bool_fee_info;
+	uint8_t bool_oflags;
+	uint8_t bool_starttm;
+	uint8_t bool_expiretm;
+	uint8_t bool_validate;
+	uint8_t bool_leverage;
+	uint8_t bool_close_type;
+	uint8_t bool_close_pc_1;
+	uint8_t bool_close_pc_2;
+};
 struct public_functions {
 
 	int (*get_server_time)(struct kraken_api*, int);

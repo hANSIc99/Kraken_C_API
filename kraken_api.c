@@ -27,6 +27,31 @@ static struct st_list opt_table[] = {
 
 };
 
+static struct st_opt_list options_listen_table[] = {
+
+	{ACLASS, 	FALSE},
+	{ASSET,	 	FALSE},
+	{TRADES,	FALSE},
+	{USERREF,	FALSE},
+	{START,		FALSE},
+	{END,		FALSE},
+	{OFS,		FALSE},
+	{CLOSETIME,	FALSE},
+	{DOCALCS,	FALSE},
+	{PAIR,		FALSE},
+	{FEE_INFO,	FALSE},
+	{OFLAGS,	FALSE},
+	{STARTTM,	FALSE},
+	{EXPIRETM,	FALSE},
+	{VALIDATE,	FALSE},
+	{LEVERAGE,	FALSE},
+	{CLOSE_TYPE,	FALSE},
+	{CLOSE_PRICE_1,	FALSE},
+	{CLOSE_PRICE_2,	FALSE}
+};
+
+#define SZ_LIST_TABLE (sizeof(options_listen_table))
+
 #undef NKEYS
 #define NKEYS (uint8_t)(sizeof(opt_table)/sizeof(opt_table[0]))
 
@@ -35,30 +60,42 @@ int kraken_init(struct kraken_api **kr_api, const char* api_key, const char *sec
 	/* new Init function */
 
 
-	if(((*kr_api) = malloc(sizeof(struct kraken_api))) == NULL){
+	if(!((*kr_api) = malloc(sizeof(struct kraken_api)))){
 		PERROR("ERROR on malloc");
 		return -1;
 	}
 
-	(*kr_api)->priv_func = NULL;
-	(*kr_api)->pub_func = NULL;
-	(*kr_api)->priv_opt = NULL;
+	(*kr_api)->priv_func	=	NULL;
+	(*kr_api)->pub_func	=	NULL;
+	(*kr_api)->priv_opt	=	NULL;
+	(*kr_api)->priv_opt_list =	NULL;
 
-	if(((*kr_api)->priv_func = malloc(sizeof(struct private_functions))) == NULL){
+	if(!((*kr_api)->opt_listen_table = malloc(sizeof(options_listen_table)))){
 		PERROR("ERROR on malloc");
 		return -1;
 	}
 
-	if(((*kr_api)->pub_func = malloc(sizeof(struct public_functions))) == NULL){
+	if(!((*kr_api)->priv_func = malloc(sizeof(struct private_functions)))){
+		PERROR("ERROR on malloc");
+		return -1;
+	}
+
+	if(!((*kr_api)->pub_func = malloc(sizeof(struct public_functions)))){
 		PERROR("ERROR on malloc");
 		return -1;
 	}
 
 
-	if(((*kr_api)->priv_opt = malloc(sizeof(struct private_optionals))) == NULL){
+	if(!((*kr_api)->priv_opt = malloc(sizeof(struct private_optionals)))){
 		PERROR("ERROR on malloc");
 		return -1;
 	}
+
+	if(!((*kr_api)->priv_opt_list = malloc(sizeof(struct private_opt_listen)))){
+		PERROR("ERROR on malloc");
+		return -1;
+	}
+
 
 	/* initialise the api-keys */
 
@@ -99,7 +136,29 @@ int kraken_init(struct kraken_api **kr_api, const char* api_key, const char *sec
 	(*kr_api)->priv_opt->opt_close_pc_1 =	NULL;
 	(*kr_api)->priv_opt->opt_close_pc_2 =	NULL;
 
+	/* create opt_listen_table  */
 
+	memcpy((*kr_api)->opt_listen_table, options_listen_table, SZ_LIST_TABLE); 
+
+	(*kr_api)->priv_opt_list->bool_aclass	 =	FALSE;
+	(*kr_api)->priv_opt_list->bool_asset	 =	FALSE;
+	(*kr_api)->priv_opt_list->bool_trades	 =	FALSE;
+	(*kr_api)->priv_opt_list->bool_userref	 =	FALSE;
+	(*kr_api)->priv_opt_list->bool_start	 =	FALSE;
+	(*kr_api)->priv_opt_list->bool_end	 =	FALSE;
+	(*kr_api)->priv_opt_list->bool_ofs	 =	FALSE;
+	(*kr_api)->priv_opt_list->bool_closetime =	FALSE;
+	(*kr_api)->priv_opt_list->bool_docalcs	 =	FALSE;
+	(*kr_api)->priv_opt_list->bool_pair	 =	FALSE;
+	(*kr_api)->priv_opt_list->bool_fee_info	 =	FALSE;
+	(*kr_api)->priv_opt_list->bool_oflags	 =	FALSE;
+	(*kr_api)->priv_opt_list->bool_starttm	 =	FALSE;
+	(*kr_api)->priv_opt_list->bool_expiretm	 =	FALSE;
+	(*kr_api)->priv_opt_list->bool_validate	 =	FALSE;
+	(*kr_api)->priv_opt_list->bool_leverage	 =	FALSE;
+	(*kr_api)->priv_opt_list->bool_close_type =	FALSE;
+	(*kr_api)->priv_opt_list->bool_close_pc_1 =	FALSE;
+	(*kr_api)->priv_opt_list->bool_close_pc_2 =	FALSE;
 
 	(*kr_api)->priv_func->add_order = &addOrder;
 	(*kr_api)->priv_func->cancel_order = &cancelOrder;

@@ -15,9 +15,11 @@ const char *sec_key = "sec-key";
 kraken_init(&kr_api, api_key, sec_key);
 
 
-#if 0
+#if 1
 kraken_set_opt(&kr_api, "close-type", "hellokitti"); 
 kraken_set_opt(&kr_api, "close-pc-1", "hellokitty2"); 
+kraken_set_opt(&kr_api, "trades", "hellokitty2"); 
+kraken_set_opt(&kr_api, "start", "start!!!"); 
 #endif
 
 
@@ -114,7 +116,7 @@ kr_api->priv_func->get_account_balance(&kr_api);
 
 /* get-trade-balance: get_trade_balance(&kr_api, "asset-class") */
 /* get-trade-balance: get_trade_balance(&kr_api)  asset class is optional */
-#if 1
+#if 0
 kr_api->priv_func->get_trade_balance(&kr_api);
 #endif
 
@@ -125,7 +127,7 @@ kr_api->priv_func->get_trade_balance(&kr_api);
 kr_api->priv_func->get_open_orders(&kr_api);
 #endif
 
-#if 0
+#if 1
 kr_api->priv_func->get_closed_orders(&kr_api);
 #endif
 
