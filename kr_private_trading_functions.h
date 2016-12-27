@@ -27,5 +27,7 @@
 
 int addOrder(struct kraken_api **kr_api, const char *type, const char *order, const char *asset, const char* volume, ...);
 
+int cancelOrder(struct kraken_api **kr_api, const char *txid);
+
 
 #endif

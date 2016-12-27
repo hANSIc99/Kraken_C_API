@@ -56,7 +56,7 @@ int addOrder(struct kraken_api **kr_api, const char *type, const char *order, co
 	
 	/* create the temporary url for this type of api call */
 
-	if(((*kr_api)->tmp_query_url = strdup((*kr_api)->s_uri_private)) == NULL){
+	if(!((*kr_api)->tmp_query_url = strdup((*kr_api)->s_uri_private))){
 		PERROR("ERROR on strdup");
 		return -1;
 	}
@@ -64,7 +64,7 @@ int addOrder(struct kraken_api **kr_api, const char *type, const char *order, co
 	(*kr_api)->tmp_query_url = to_url((*kr_api)->tmp_query_url, (*kr_api)->s_uri_addorder);
 	
 	/* start the data string */
-	if(((*kr_api)->s_data = strdup(url_pair)) == NULL){
+	if(!((*kr_api)->s_data = strdup(url_pair))){
 		PERROR("ERROR on strdup");
 		return -1;
 	}	
@@ -242,7 +242,7 @@ switch (key_from_string(order, type_table, NKEYS)){
 
 	/* check for given LEVERAGE */		
 
-	if((tmp_char = (*kr_api)->priv_opt->opt_leverage) != NULL){
+	if((tmp_char = (*kr_api)->priv_opt->opt_leverage)){
 		(*kr_api)->s_data = to_url((*kr_api)->s_data, url_seperator); 
 		(*kr_api)->s_data = to_url((*kr_api)->s_data, url_leverage); 
 		(*kr_api)->s_data = to_url((*kr_api)->s_data, tmp_char);
@@ -250,7 +250,7 @@ switch (key_from_string(order, type_table, NKEYS)){
 
 	/* check for given ORDER-FLAGS */
 
-	if((tmp_char = (*kr_api)->priv_opt->opt_ofs) != NULL){
+	if((tmp_char = (*kr_api)->priv_opt->opt_ofs)){
 		(*kr_api)->s_data = to_url((*kr_api)->s_data, url_seperator); 
 		(*kr_api)->s_data = to_url((*kr_api)->s_data, url_oflags); 
 		(*kr_api)->s_data = to_url((*kr_api)->s_data, tmp_char);
@@ -258,7 +258,7 @@ switch (key_from_string(order, type_table, NKEYS)){
 
 	/* check for given START-TIME */
 
-	if((tmp_char = (*kr_api)->priv_opt->opt_starttm) != NULL){
+	if((tmp_char = (*kr_api)->priv_opt->opt_starttm)){
 		(*kr_api)->s_data = to_url((*kr_api)->s_data, url_seperator); 
 		(*kr_api)->s_data = to_url((*kr_api)->s_data, url_starttm); 
 		(*kr_api)->s_data = to_url((*kr_api)->s_data, tmp_char);
@@ -267,7 +267,7 @@ switch (key_from_string(order, type_table, NKEYS)){
 
 	/* check for given EXPIRE-TIME */
 
-	if((tmp_char = (*kr_api)->priv_opt->opt_expiretm) != NULL){
+	if((tmp_char = (*kr_api)->priv_opt->opt_expiretm)){
 		(*kr_api)->s_data = to_url((*kr_api)->s_data, url_seperator); 
 		(*kr_api)->s_data = to_url((*kr_api)->s_data, url_expiretm); 
 		(*kr_api)->s_data = to_url((*kr_api)->s_data, tmp_char);
@@ -275,7 +275,7 @@ switch (key_from_string(order, type_table, NKEYS)){
 
 	/* check for given USER-REFERENCE  */
 
-	if((tmp_char = (*kr_api)->priv_opt->opt_userref) != NULL){
+	if((tmp_char = (*kr_api)->priv_opt->opt_userref)){
 		(*kr_api)->s_data = to_url((*kr_api)->s_data, url_seperator); 
 		(*kr_api)->s_data = to_url((*kr_api)->s_data, url_userref); 
 		(*kr_api)->s_data = to_url((*kr_api)->s_data, tmp_char);
@@ -283,7 +283,7 @@ switch (key_from_string(order, type_table, NKEYS)){
 
 	/* check for given VALIDATE  */
 
-	if((tmp_char = (*kr_api)->priv_opt->opt_validate) != NULL){
+	if((tmp_char = (*kr_api)->priv_opt->opt_validate)){
 		(*kr_api)->s_data = to_url((*kr_api)->s_data, url_seperator); 
 		(*kr_api)->s_data = to_url((*kr_api)->s_data, url_validate); 
 		(*kr_api)->s_data = to_url((*kr_api)->s_data, tmp_char);
@@ -291,14 +291,14 @@ switch (key_from_string(order, type_table, NKEYS)){
 
 	/* check for given CLOSE_TYPE */
 	
-	if((tmp_char = (*kr_api)->priv_opt->opt_close_type) != NULL){
+	if((tmp_char = (*kr_api)->priv_opt->opt_close_type)){
 		(*kr_api)->s_data = to_url((*kr_api)->s_data, url_seperator); 
 		(*kr_api)->s_data = to_url((*kr_api)->s_data, url_close_type); 
 		(*kr_api)->s_data = to_url((*kr_api)->s_data, tmp_char);
 
 		/* check for given CLOSE_PRICE_! */
 
-		if((tmp_char = (*kr_api)->priv_opt->opt_close_pc_1) != NULL){
+		if((tmp_char = (*kr_api)->priv_opt->opt_close_pc_1)){
 			(*kr_api)->s_data = to_url((*kr_api)->s_data, url_seperator); 
 			(*kr_api)->s_data = to_url((*kr_api)->s_data, url_close_price_1); 
 			(*kr_api)->s_data = to_url((*kr_api)->s_data, tmp_char);
@@ -306,7 +306,7 @@ switch (key_from_string(order, type_table, NKEYS)){
 
 		/* check for given CLOSE_PRICE_2 */
 
-		if((tmp_char = (*kr_api)->priv_opt->opt_close_pc_2) != NULL){
+		if((tmp_char = (*kr_api)->priv_opt->opt_close_pc_2)){
 			(*kr_api)->s_data = to_url((*kr_api)->s_data, url_seperator); 
 			(*kr_api)->s_data = to_url((*kr_api)->s_data, url_close_price_2); 
 			(*kr_api)->s_data = to_url((*kr_api)->s_data, tmp_char);
@@ -323,4 +323,32 @@ query_private(kr_api);
 
 return 0;
 
+}
+
+
+int cancelOrder(struct kraken_api **kr_api, const char *txid){
+
+	const char* url_txid = "txid=";
+
+	/* create the temporary url for this type of api call */
+
+	if(!((*kr_api)->tmp_query_url = strdup((*kr_api)->s_uri_private))){
+		PERROR("ERROR on strdup");
+		return -1;
+	}
+
+	(*kr_api)->tmp_query_url = to_url((*kr_api)->tmp_query_url, (*kr_api)->s_uri_cancel_order);
+
+	/* start the data string */
+	if(!((*kr_api)->s_data = strdup(url_txid))){
+		PERROR("ERROR on strdup");
+		return -1;
+	}	
+
+	/* add XXBTZEUR to the string */
+	(*kr_api)->s_data = to_url((*kr_api)->s_data, txid);
+
+	query_private(kr_api);
+
+	return 0;
 }

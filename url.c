@@ -98,11 +98,17 @@ char *to_url(char* dest, const char *source){
 
 	char* ptr = NULL;
 
-	if((asprintf(&ptr, "%s%s", dest, source)) < 0){
-		PDEBUG("ERROR");
-		return NULL;
-	}
-
+	if(!dest){
+		if(!(ptr = strdup(source))){
+			PERROR("ERROR on strdup");
+			return NULL;
+		}
+	}else{
+		if((asprintf(&ptr, "%s%s", dest, source)) < 0){
+			PDEBUG("ERROR");
+			return NULL;
+		}
+}
 	free(dest);
 
 	return ptr;

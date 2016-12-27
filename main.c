@@ -14,8 +14,21 @@ const char *sec_key = "sec-key";
 
 kraken_init(&kr_api, api_key, sec_key);
 
+
+#if 0
+kraken_set_opt(&kr_api, "close-type", "hellokitti"); 
+kraken_set_opt(&kr_api, "close-pc-1", "hellokitty2"); 
+#endif
+
+
 /* AVAILABLE ORDERS */
 
+/* PRIVATE USER TRADING */
+
+/* add_order returns 0 on success */
+#if 0
+kr_api->priv_func->add_order(&kr_api, "buy", "trailing-stop-limit", "XXBTZEUR", "10.0", "755.00", "758.00");
+#endif
 /* market: add_order(&api, TYPE, ORDERTYPE, ASSET-PAIR, VOLUME) */
 /* buy/sell assets at the best market price */
 /* market: add_order(&kr_api, "buy", "market", "XXBTZEUR", "0.43") */
@@ -73,34 +86,47 @@ kraken_init(&kr_api, api_key, sec_key);
 /* Settle position at the original order price */
 /* settle-position: add_order(&kr_api, "buy", "stop-loss-profit", "XXBTZEUR", "0.43") */
 
+/* cancel-order: cancel_order(&api, "ORDER-ID"); */
+/* cancel-order: cancel_order(&kr_api, "OBH2CQ-KGH4B-YFF3PA") */
 
-#if 1
-kraken_set_opt(&kr_api, "validate", "true"); 
-kraken_set_opt(&kr_api, "close-type", "limit"); 
-kraken_set_opt(&kr_api, "close-pc-1", "765"); 
+#if 0
+kr_api->priv_func->cancel_order(&kr_api, "OBH2CQ-KGH4B-YFF3PA");
 #endif
 
-/* add_order returns 0 on success */
-#if 1
-kr_api->priv_func->add_order(&kr_api, "buy", "trailing-stop-limit", "XXBTZEUR", "10.0", "755.00", "758.00");
-#endif
+/* PRIVATE USER DATA */
 
+/* get open orders: get_open_orders(&kr_api) */
+/* the function takes the optionals USERREF and TRADES into account (if given) */
+
+/* get-account-balance: get_account_balance(&api) - no further arguments or optionals */
 /* get-account-balance: get_account_balance(&kr_api) */
+
 #if 0
 kr_api->priv_func->get_account_balance(&kr_api);
 #endif
+
+
+
+
+
+
 /* the result is stored in the buffer: kr_api->s_result */
 
 /* get-trade-balance: get_trade_balance(&kr_api, "asset-class") */
 /* get-trade-balance: get_trade_balance(&kr_api)  asset class is optional */
-#if 0
+#if 1
 kr_api->priv_func->get_trade_balance(&kr_api);
 #endif
 
 
 
+
 #if 0
 kr_api->priv_func->get_open_orders(&kr_api);
+#endif
+
+#if 0
+kr_api->priv_func->get_closed_orders(&kr_api);
 #endif
 
 #if 1

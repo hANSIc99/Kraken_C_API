@@ -96,12 +96,12 @@ struct private_functions {
 
 	/* order in function: type, ordertype, asset-pair */
 	int (*add_order)(struct kraken_api**, const char*, const char*, const char*, const char*, ...);
-	int (*cancel_order)(struct kraken_api**, int);
+	int (*cancel_order)(struct kraken_api**, const char*);
 
 	int (*get_account_balance)(struct kraken_api**);
 	int (*get_trade_balance)(struct kraken_api**, ...);
-	int (*get_open_orders)(struct kraken_api**, ...);
-	int (*get_closed_orders)(struct kraken_api**, int);
+	int (*get_open_orders)(struct kraken_api**);
+	int (*get_closed_orders)(struct kraken_api**);
 	int (*query_order_info)(struct kraken_api**, int);
 	int (*get_trades_history)(struct kraken_api**, int);
 	int (*query_trades_info)(struct kraken_api**, int);

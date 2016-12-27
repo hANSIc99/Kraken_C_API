@@ -102,9 +102,11 @@ int kraken_init(struct kraken_api **kr_api, const char* api_key, const char *sec
 
 
 	(*kr_api)->priv_func->add_order = &addOrder;
+	(*kr_api)->priv_func->cancel_order = &cancelOrder;
 	(*kr_api)->priv_func->get_account_balance = &account_balance;
 	(*kr_api)->priv_func->get_trade_balance = &trade_balance;
 	(*kr_api)->priv_func->get_open_orders =	&open_orders;
+	(*kr_api)->priv_func->get_closed_orders = &closed_orders;
 
 	make_url(kr_api);
 
