@@ -15,11 +15,12 @@ const char *sec_key = "sec-key";
 kraken_init(&kr_api, api_key, sec_key);
 
 
+kraken_set_opt(&kr_api, "asset", "hellokitty2"); 
+kraken_set_opt(&kr_api, "aclass", "hellokitti"); 
 #if 1
-kraken_set_opt(&kr_api, "close-type", "hellokitti"); 
 kraken_set_opt(&kr_api, "close-pc-1", "hellokitty2"); 
-kraken_set_opt(&kr_api, "trades", "hellokitty2"); 
 kraken_set_opt(&kr_api, "start", "start!!!"); 
+kraken_set_opt(&kr_api, "close-pc-2", "hier ist preis 2"); 
 #endif
 
 

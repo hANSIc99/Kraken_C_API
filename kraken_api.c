@@ -3,57 +3,35 @@
 #include "kr_private_user_functions.h"
 #include "url.h"
 
-static struct st_list opt_table[] = {
 
-	{"aclass",	ACLASS		},
-	{"asset",	ASSET		},
-	{"trades",	TRADES		},
-	{"userref",	USERREF		},
-	{"start",	START		},
-	{"end",		END		},
-	{"ofs",		OFS		},
-	{"closetime",	CLOSETIME	},
-	{"docalcs",	DOCALCS		},
-	{"pair",	PAIR		},
-	{"fee-info",	FEE_INFO	},
-	{"oflags",	OFLAGS		},
-	{"starttm",	STARTTM		},
-	{"expiretm",	EXPIRETM	},
-	{"validate",	VALIDATE	},
-	{"leverage",	LEVERAGE	},
-	{"close-type",	CLOSE_TYPE	},
-	{"close-pc-1",	CLOSE_PRICE_1	},
-	{"close-pc-2",	CLOSE_PRICE_2	}
-
-};
 
 static struct st_opt_list options_listen_table[] = {
 
-	{ACLASS, 	FALSE},
-	{ASSET,	 	FALSE},
-	{TRADES,	FALSE},
-	{USERREF,	FALSE},
-	{START,		FALSE},
-	{END,		FALSE},
-	{OFS,		FALSE},
-	{CLOSETIME,	FALSE},
-	{DOCALCS,	FALSE},
-	{PAIR,		FALSE},
-	{FEE_INFO,	FALSE},
-	{OFLAGS,	FALSE},
-	{STARTTM,	FALSE},
-	{EXPIRETM,	FALSE},
-	{VALIDATE,	FALSE},
-	{LEVERAGE,	FALSE},
-	{CLOSE_TYPE,	FALSE},
-	{CLOSE_PRICE_1,	FALSE},
-	{CLOSE_PRICE_2,	FALSE}
+	[ACLASS]	=	{.name = "aclass",	.b_flag =	FALSE,	.key = "aclass="},
+	[ASSET]		=	{.name = "asset",	.b_flag =	FALSE,	.key = "asset="},	
+	[TRADES]	=	{.name = "trades",	.b_flag =	FALSE,	.key = "trades="},
+	[USERREF]	=	{.name ="userref",	.b_flag =	FALSE,	.key = "userref="},
+	[START]		=	{.name = "start",	.b_flag =	FALSE,	.key = "start="},
+	[END]		=	{.name = "end",		.b_flag =	FALSE,	.key = "end="},
+	[OFS]		=	{.name = "ofs",		.b_flag =	FALSE,	.key = "ofs="},
+	[CLOSETIME]	=	{.name = "closetime",	.b_flag =	FALSE,	.key = "closetime="},
+	[DOCALCS]	=	{.name = "docalcs",	.b_flag =	FALSE,	.key = "docalcs="},
+	[PAIR]		=	{.name = "pair",	.b_flag =	FALSE,	.key = "pair="},
+	[FEE_INFO]	=	{.name = "fee-info",	.b_flag =	FALSE,	.key = "fee-info="},
+	[OFLAGS]	=	{.name = "oflags",	.b_flag =	FALSE,	.key = "oflags="},
+	[STARTTM]	=	{.name = "starttm",	.b_flag =	FALSE,	.key = "starttm="},
+	[EXPIRETM]	=	{.name = "expiretm",	.b_flag =	FALSE,	.key = "expiretm="},
+	[VALIDATE]	=	{.name = "validate",	.b_flag =	FALSE,	.key = "validate="},
+	[LEVERAGE]	=	{.name = "leverage",	.b_flag =	FALSE,	.key = "leverage="},
+	[CLOSE_TYPE]	=	{.name = "close-type",	.b_flag =	FALSE,	.key = "close[ordertype]="},
+	[CLOSE_PRICE_1]	=	{.name = "close-pc-1",	.b_flag =	FALSE,	.key = "close[price]="},
+	[CLOSE_PRICE_2]	=	{.name = "close-pc-2",	.b_flag =	FALSE,	.key = "close[price2]="}
 };
 
 #define SZ_LIST_TABLE (sizeof(options_listen_table))
 
 #undef NKEYS
-#define NKEYS (uint8_t)(sizeof(opt_table)/sizeof(opt_table[0]))
+#define NKEYS (uint8_t)(sizeof(options_listen_table)/sizeof(options_listen_table[1]))
 
 int kraken_init(struct kraken_api **kr_api, const char* api_key, const char *sec_key){
 
@@ -67,10 +45,12 @@ int kraken_init(struct kraken_api **kr_api, const char* api_key, const char *sec
 
 	(*kr_api)->priv_func	=	NULL;
 	(*kr_api)->pub_func	=	NULL;
+#if 0
 	(*kr_api)->priv_opt	=	NULL;
+#endif
 	(*kr_api)->priv_opt_list =	NULL;
 
-	if(!((*kr_api)->opt_listen_table = malloc(sizeof(options_listen_table)))){
+	if(!((*kr_api)->opt_table = malloc(sizeof(options_listen_table)))){
 		PERROR("ERROR on malloc");
 		return -1;
 	}
@@ -85,17 +65,19 @@ int kraken_init(struct kraken_api **kr_api, const char* api_key, const char *sec
 		return -1;
 	}
 
-
+#if 0
 	if(!((*kr_api)->priv_opt = malloc(sizeof(struct private_optionals)))){
 		PERROR("ERROR on malloc");
 		return -1;
 	}
+#endif
 
+#if 0
 	if(!((*kr_api)->priv_opt_list = malloc(sizeof(struct private_opt_listen)))){
 		PERROR("ERROR on malloc");
 		return -1;
 	}
-
+#endif
 
 	/* initialise the api-keys */
 
@@ -115,7 +97,7 @@ int kraken_init(struct kraken_api **kr_api, const char* api_key, const char *sec
 	(*kr_api)->s_uri_addorder =		NULL;
 
 	(*kr_api)->tmp_query_url =		NULL;
-
+#if 0
 	(*kr_api)->priv_opt->opt_aclass =	NULL;
 	(*kr_api)->priv_opt->opt_asset =	NULL;
 	(*kr_api)->priv_opt->opt_trades =	NULL;
@@ -135,11 +117,15 @@ int kraken_init(struct kraken_api **kr_api, const char* api_key, const char *sec
 	(*kr_api)->priv_opt->opt_close_type =	NULL;
 	(*kr_api)->priv_opt->opt_close_pc_1 =	NULL;
 	(*kr_api)->priv_opt->opt_close_pc_2 =	NULL;
-
+#endif
 	/* create opt_listen_table  */
 
-	memcpy((*kr_api)->opt_listen_table, options_listen_table, SZ_LIST_TABLE); 
+	memcpy((*kr_api)->opt_table, options_listen_table, SZ_LIST_TABLE); 
 
+	/* set table lenght */
+
+	(*kr_api)->opt_table_lenght = NKEYS;
+#if 0
 	(*kr_api)->priv_opt_list->bool_aclass	 =	FALSE;
 	(*kr_api)->priv_opt_list->bool_asset	 =	FALSE;
 	(*kr_api)->priv_opt_list->bool_trades	 =	FALSE;
@@ -159,6 +145,7 @@ int kraken_init(struct kraken_api **kr_api, const char* api_key, const char *sec
 	(*kr_api)->priv_opt_list->bool_close_type =	FALSE;
 	(*kr_api)->priv_opt_list->bool_close_pc_1 =	FALSE;
 	(*kr_api)->priv_opt_list->bool_close_pc_2 =	FALSE;
+#endif
 
 	(*kr_api)->priv_func->add_order = &addOrder;
 	(*kr_api)->priv_func->cancel_order = &cancelOrder;
@@ -176,159 +163,159 @@ int kraken_set_opt(struct kraken_api **kr_api, const char* opt, const char* val)
 	
 	PTRACE("nkeys: %d", NKEYS);
 
-	switch(key_from_string(opt, opt_table, NKEYS)){
+	switch(key_from_string(opt, options_listen_table, NKEYS)){
 
 		case ACLASS:
 			PTRACE("switch to case ACLASS");
-			if(((*kr_api)->priv_opt->opt_aclass = strdup(val)) == NULL){
+			if(!((*kr_api)->opt_table[ACLASS].val = strdup(val))){
 				PERROR("ERROR on strdup");
 				return -1;
 			}
-			PTRACE("opt_aclass = %s", (*kr_api)->priv_opt->opt_aclass);
+			PTRACE("opt_aclass = %s", (*kr_api)->opt_table[ACLASS].val);
 			break;
 		case ASSET:
 			PTRACE("switch to case ASSET");
-			if(((*kr_api)->priv_opt->opt_asset = strdup(val)) == NULL){
+			if(!((*kr_api)->opt_table[ASSET].val = strdup(val))){
 				PERROR("ERROR on strdup");
 				return -1;
 			}
-			PTRACE("opt_asset = %s", (*kr_api)->priv_opt->opt_asset);
+			PTRACE("opt_aclass = %s", (*kr_api)->opt_table[ASSET].val);
 			break;
 		case TRADES:
 			PTRACE("switch to case TRADES");
-			if(((*kr_api)->priv_opt->opt_trades = strdup(val)) == NULL){
+			if(!((*kr_api)->opt_table[TRADES].val = strdup(val))){
 				PERROR("ERROR on strdup");
 				return -1;
 			}
-			PTRACE("opt_trades = %s", (*kr_api)->priv_opt->opt_trades);
+			PTRACE("opt_aclass = %s", (*kr_api)->opt_table[TRADES].val);
 			break;
 		case USERREF:
 			PTRACE("switch to case USERREF");
-			if(((*kr_api)->priv_opt->opt_userref = strdup(val)) == NULL){
+			if(!((*kr_api)->opt_table[USERREF].val = strdup(val))){
 				PERROR("ERROR on strdup");
 				return -1;
 			}
-			PTRACE("opt_userref = %s", (*kr_api)->priv_opt->opt_userref);
+			PTRACE("opt_aclass = %s", (*kr_api)->opt_table[USERREF].val);
 			break;
 		case START:
 			PTRACE("switch to case START");
-			if(((*kr_api)->priv_opt->opt_start = strdup(val)) == NULL){
+			if(!((*kr_api)->opt_table[START].val = strdup(val))){
 				PERROR("ERROR on strdup");
 				return -1;
 			}
-			PTRACE("opt_start = %s", (*kr_api)->priv_opt->opt_start);
+			PTRACE("opt_aclass = %s", (*kr_api)->opt_table[START].val);
 			break;
 		case END:
 			PTRACE("switch to case END");
-			if(((*kr_api)->priv_opt->opt_end = strdup(val)) == NULL){
+			if(!((*kr_api)->opt_table[END].val = strdup(val))){
 				PERROR("ERROR on strdup");
 				return -1;
 			}
-			PTRACE("opt_end = %s", (*kr_api)->priv_opt->opt_end);
+			PTRACE("opt_aclass = %s", (*kr_api)->opt_table[END].val);
 			break;
 		case OFS:
 			PTRACE("switch to case OFS");
-			if(((*kr_api)->priv_opt->opt_ofs = strdup(val)) == NULL){
+			if(!((*kr_api)->opt_table[OFS].val = strdup(val))){
 				PERROR("ERROR on strdup");
 				return -1;
 			}
-			PTRACE("opt_ofs = %s", (*kr_api)->priv_opt->opt_ofs);
+			PTRACE("opt_aclass = %s", (*kr_api)->opt_table[OFS].val);
 			break;
 		case CLOSETIME:
 			PTRACE("switch to case CLOSETIME");
-			if(((*kr_api)->priv_opt->opt_closetime = strdup(val)) == NULL){
+			if(!((*kr_api)->opt_table[CLOSETIME].val = strdup(val))){
 				PERROR("ERROR on strdup");
 				return -1;
 			}
-			PTRACE("opt_closetime = %s", (*kr_api)->priv_opt->opt_closetime);
+			PTRACE("opt_aclass = %s", (*kr_api)->opt_table[CLOSETIME].val);
 			break;
 		case DOCALCS:
 			PTRACE("switch to case DOCALCS");
-			if(((*kr_api)->priv_opt->opt_docalcs = strdup(val)) == NULL){
+			if(!((*kr_api)->opt_table[DOCALCS].val = strdup(val))){
 				PERROR("ERROR on strdup");
 				return -1;
 			}
-			PTRACE("opt_docalcs = %s", (*kr_api)->priv_opt->opt_docalcs);
+			PTRACE("opt_aclass = %s", (*kr_api)->opt_table[DOCALCS].val);
 			break;
 		case PAIR:
 			PTRACE("switch to case PAIR");
-			if(((*kr_api)->priv_opt->opt_pair = strdup(val)) == NULL){
+			if(!((*kr_api)->opt_table[PAIR].val = strdup(val))){
 				PERROR("ERROR on strdup");
 				return -1;
 			}
-			PTRACE("opt_pair = %s", (*kr_api)->priv_opt->opt_pair);
+			PTRACE("opt_aclass = %s", (*kr_api)->opt_table[PAIR].val);
 			break;
 		case FEE_INFO:
 			PTRACE("switch to case FEE_INFO");
-			if(((*kr_api)->priv_opt->opt_fee_info = strdup(val)) == NULL){
+			if(!((*kr_api)->opt_table[FEE_INFO].val = strdup(val))){
 				PERROR("ERROR on strdup");
 				return -1;
 			}
-			PTRACE("opt_fee_info = %s", (*kr_api)->priv_opt->opt_fee_info);
+			PTRACE("opt_aclass = %s", (*kr_api)->opt_table[FEE_INFO].val);
 			break;
 		case OFLAGS:
 			PTRACE("switch to case OFLAGS");
-			if(((*kr_api)->priv_opt->opt_oflags = strdup(val)) == NULL){
+			if(!((*kr_api)->opt_table[OFLAGS].val = strdup(val))){
 				PERROR("ERROR on strdup");
 				return -1;
 			}
-			PTRACE("opt_oflags = %s", (*kr_api)->priv_opt->opt_oflags);
+			PTRACE("opt_aclass = %s", (*kr_api)->opt_table[OFLAGS].val);
 			break;
 		case STARTTM:
 			PTRACE("switch to case STARTTM");
-			if(((*kr_api)->priv_opt->opt_starttm = strdup(val)) == NULL){
+			if(!((*kr_api)->opt_table[STARTTM].val = strdup(val))){
 				PERROR("ERROR on strdup");
 				return -1;
 			}
-			PTRACE("opt_starttm = %s", (*kr_api)->priv_opt->opt_starttm);
+			PTRACE("opt_aclass = %s", (*kr_api)->opt_table[STARTTM].val);
 			break;
 		case EXPIRETM:
 			PTRACE("switch to case EXPIRETM");
-			if(((*kr_api)->priv_opt->opt_expiretm = strdup(val)) == NULL){
+			if(!((*kr_api)->opt_table[EXPIRETM].val = strdup(val))){
 				PERROR("ERROR on strdup");
 				return -1;
 			}
-			PTRACE("opt_expiretm = %s", (*kr_api)->priv_opt->opt_expiretm);
+			PTRACE("opt_aclass = %s", (*kr_api)->opt_table[EXPIRETM].val);
 			break;
 		case VALIDATE:
 			PTRACE("switch to case VALIDATE");
-			if(((*kr_api)->priv_opt->opt_validate = strdup(val)) == NULL){
+			if(!((*kr_api)->opt_table[VALIDATE].val = strdup(val))){
 				PERROR("ERROR on strdup");
 				return -1;
 			}
-			PTRACE("opt_validate = %s", (*kr_api)->priv_opt->opt_validate);
+			PTRACE("opt_aclass = %s", (*kr_api)->opt_table[VALIDATE].val);
 			break;
 		case LEVERAGE:
 			PTRACE("switch to case LEVERAGE");
-			if(((*kr_api)->priv_opt->opt_leverage = strdup(val)) == NULL){
+			if(!((*kr_api)->opt_table[LEVERAGE].val = strdup(val))){
 				PERROR("ERROR on strdup");
 				return -1;
 			}
-			PTRACE("opt_leverage = %s", (*kr_api)->priv_opt->opt_leverage);
+			PTRACE("opt_aclass = %s", (*kr_api)->opt_table[LEVERAGE].val);
 			break;
 		case CLOSE_TYPE:
 			PTRACE("switch to case CLOSE_TYPE");
-			if(((*kr_api)->priv_opt->opt_close_type = strdup(val)) == NULL){
+			if(!((*kr_api)->opt_table[CLOSE_TYPE].val = strdup(val))){
 				PERROR("ERROR on strdup");
 				return -1;
 			}
-			PTRACE("opt_close_pc_1 = %s", (*kr_api)->priv_opt->opt_close_type);
+			PTRACE("opt_aclass = %s", (*kr_api)->opt_table[CLOSE_TYPE].val);
 			break;
 		case CLOSE_PRICE_1:
 			PTRACE("switch to case CLOSE_PRICE_1");
-			if(((*kr_api)->priv_opt->opt_close_pc_1 = strdup(val)) == NULL){
+			if(!((*kr_api)->opt_table[CLOSE_PRICE_1].val = strdup(val))){
 				PERROR("ERROR on strdup");
 				return -1;
 			}
-			PTRACE("opt_close_pc_1 = %s", (*kr_api)->priv_opt->opt_close_pc_1);
+			PTRACE("opt_aclass = %s", (*kr_api)->opt_table[CLOSE_PRICE_1].val);
 			break;
 		case CLOSE_PRICE_2:
 			PTRACE("switch to case CLOSE_PRICE_2");
-			if(((*kr_api)->priv_opt->opt_close_pc_2 = strdup(val)) == NULL){
+			if(!((*kr_api)->opt_table[CLOSE_PRICE_2].val = strdup(val))){
 				PERROR("ERROR on strdup");
 				return -1;
 			}
-			PTRACE("opt_close_pc_2 = %s", (*kr_api)->priv_opt->opt_close_pc_2);
+			PTRACE("opt_aclass = %s", (*kr_api)->opt_table[CLOSE_PRICE_2].val);
 			break;
 		case BADARG:
 			PERROR("BADARG");
@@ -344,6 +331,7 @@ void kraken_clean(struct kraken_api **kr_api){
 
 	PTRACE("API CLEANUP");
 	char* tmp_ptr = NULL;
+	uint8_t u8_i;
 
 	free((*kr_api)->priv_func);
 	free((*kr_api)->pub_func);
@@ -377,8 +365,15 @@ void kraken_clean(struct kraken_api **kr_api){
 	/* BUFFER */
 	if((*kr_api)->s_result != NULL) free((*kr_api)->s_result);  
 
-	/* OPTIONALS */
+	for(u8_i = 0; u8_i < (*kr_api)->opt_table_lenght; u8_i++){
+		if((tmp_ptr = (*kr_api)->opt_table[u8_i].val)) free(tmp_ptr);
+	}	
 	
+
+	free((*kr_api)->opt_table);
+
+	/* OPTIONALS */
+#if 0	
 	if((tmp_ptr = (*kr_api)->priv_opt->opt_aclass)	!= NULL) free(tmp_ptr);
 	if((tmp_ptr = (*kr_api)->priv_opt->opt_asset)	!= NULL) free(tmp_ptr);
 	if((tmp_ptr = (*kr_api)->priv_opt->opt_trades)	!= NULL) free(tmp_ptr);
@@ -400,7 +395,7 @@ void kraken_clean(struct kraken_api **kr_api){
 	if((tmp_ptr = (*kr_api)->priv_opt->opt_close_pc_2)!= NULL) free(tmp_ptr);
 
 	free((*kr_api)->priv_opt);
-
+#endif
 	free(*kr_api);
 
 }
@@ -408,7 +403,7 @@ void kraken_clean(struct kraken_api **kr_api){
 
 /* helper functions to distinguish between command line arguments */
 
-int key_from_string(const char *str, const struct st_list *type_table, const uint8_t u8_n_keys){
+int key_from_string(const char *str, const struct st_opt_list *type_table, const uint8_t u8_n_keys){
 
 	uint8_t u8_i = 0;
 	char* tmp_str = NULL;
@@ -424,13 +419,14 @@ int key_from_string(const char *str, const struct st_list *type_table, const uin
 
 	PTRACE("u8_n_keys = %d", u8_n_keys);
 
+
 	for(u8_i = 0; u8_i <  u8_n_keys; u8_i++){
 
-		const struct st_list *typ = type_table + u8_i;
+		const struct st_opt_list *typ = type_table + u8_i;
 
-		if(!(strcmp(typ->key, check_str))){
+		if(!(strcmp(typ->name, check_str))){
 			free(check_str);
-			return typ->val;
+			return u8_i;
 		}
 	}
 	

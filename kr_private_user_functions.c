@@ -1,13 +1,10 @@
 #include "kr_private_user_functions.h"
 
 
-#undef NKEYS
-#define NKEYS (uint8_t)(sizeof(type_table)/sizeof(type_table[0]))
-
 
 
 static void switch_opt(struct kraken_api **kr_api){
-
+#if 0
 	const char* aclass	=	(*kr_api)->priv_opt->opt_aclass;
 	const char* asset	=	(*kr_api)->priv_opt->opt_asset;
 	const char* trades	=	(*kr_api)->priv_opt->opt_trades;
@@ -47,17 +44,32 @@ static void switch_opt(struct kraken_api **kr_api){
 	uint8_t* b_close_type	=	&((*kr_api)->priv_opt_list->bool_close_type);
 	uint8_t* b_close_pc_1	=	&((*kr_api)->priv_opt_list->bool_close_pc_1);
 	uint8_t* b_close_pc_2	=	&((*kr_api)->priv_opt_list->bool_close_pc_2);
-
+#endif
 	const char* url_seperator =	"&";
+	uint8_t u8_i = 0;
 
 	if((*kr_api)->s_data){
 		(*kr_api)->s_data = to_url((*kr_api)->s_data, url_seperator);	
 	}
 
-	PTRACE("b_trades: %d", *b_trades);
-	PTRACE("b_close_pc_1: %d", *b_close_pc_1);
 
-	PTRACE("opt_listen_table leverage = %d", (*kr_api)->opt_listen_table[LEVERAGE]);
+#if 0
+	for(; u8_i < (*kr_api)->opt_table_lenght; u8_i++){
+		PTRACE("u8_i: %d, name: %s", u8_i, (*kr_api)->opt_table[u8_i].name);
+
+
+		if((*kr_api)->opt_table[u8_i].b_flag){
+			(*kr_api)->s_data = to_url((*kr_api)->s_data, (*kr_api)->opt_table[u8_i].key);
+		}
+	}	
+
+	PTRACE("asset value: %s", (*kr_api)->opt_table[ASSET].val);
+	PTRACE("aclass value: %s", (*kr_api)->opt_table[ACLASS].val);
+
+#endif
+
+
+
 
 	
 
@@ -116,10 +128,10 @@ int open_orders(struct kraken_api **kr_api){
 	const char* url_trades	=	"trades=";
 	const char* url_userref	=	"userref=";
 	const char* url_seperator =	"&";
-	
+#if 0	
 	const char* trades	=	(*kr_api)->priv_opt->opt_trades;
 	const char* userref	=	(*kr_api)->priv_opt->opt_userref;
-
+#endif
 	/* create the temporary url for this type of api call */
 
 	(*kr_api)->tmp_query_url = to_url((*kr_api)->tmp_query_url, (*kr_api)->s_uri_private);
@@ -127,7 +139,7 @@ int open_orders(struct kraken_api **kr_api){
 
 	PTRACE("Query URL: %s", (*kr_api)->tmp_query_url);
 
-	
+#if 0	
 	if(trades || userref){
 		PTRACE("optionals found");
 
@@ -153,7 +165,7 @@ int open_orders(struct kraken_api **kr_api){
 	}else
 		PTRACE("no optionals found, proceed without them");
 	
-
+#endif
 	PTRACE("(*kr_api)->s_data = %s", (*kr_api)->s_data);
 
 	query_private(kr_api);
@@ -164,13 +176,12 @@ int open_orders(struct kraken_api **kr_api){
 int closed_orders(struct kraken_api **kr_api){
 
 
-
-	(*kr_api)->priv_opt_list->bool_trades	= TRUE;
-	(*kr_api)->priv_opt_list->bool_userref	= TRUE;
-	(*kr_api)->priv_opt_list->bool_start	= TRUE;
-	(*kr_api)->priv_opt_list->bool_end	= TRUE;
-	(*kr_api)->priv_opt_list->bool_ofs	= TRUE;
-	(*kr_api)->priv_opt_list->bool_closetime= TRUE;
+	(*kr_api)->opt_table[TRADES].b_flag	= TRUE;
+	(*kr_api)->opt_table[USERREF].b_flag	= TRUE;
+	(*kr_api)->opt_table[START].b_flag	= TRUE;
+	(*kr_api)->opt_table[END].b_flag	= TRUE;
+	(*kr_api)->opt_table[OFS].b_flag	= TRUE;
+	(*kr_api)->opt_table[CLOSETIME].b_flag	= TRUE;
 
 	/* create the temporary url for this type of api call */
 	(*kr_api)->tmp_query_url = to_url((*kr_api)->tmp_query_url, (*kr_api)->s_uri_private);

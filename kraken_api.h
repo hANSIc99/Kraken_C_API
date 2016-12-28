@@ -11,25 +11,25 @@
 #define TRUE	1
 #define FALSE	0
 
-#define ACLASS		1
-#define ASSET		2
-#define TRADES		3
-#define USERREF		4
-#define START		5
-#define END		6
-#define OFS		7
-#define CLOSETIME	8
-#define DOCALCS		10
-#define PAIR		11
-#define FEE_INFO	12
-#define OFLAGS		13
-#define STARTTM		14
-#define EXPIRETM	15
-#define VALIDATE	16
-#define LEVERAGE	17
-#define CLOSE_TYPE	18
-#define CLOSE_PRICE_1	19
-#define CLOSE_PRICE_2	20
+#define ACLASS		0
+#define ASSET		1
+#define TRADES		2
+#define USERREF		3
+#define START		4
+#define END		5
+#define OFS		6
+#define CLOSETIME	7
+#define DOCALCS		8
+#define PAIR		9
+#define FEE_INFO	10
+#define OFLAGS		11
+#define STARTTM		12
+#define EXPIRETM	13
+#define VALIDATE	14
+#define LEVERAGE	15
+#define CLOSE_TYPE	16
+#define CLOSE_PRICE_1	17
+#define CLOSE_PRICE_2	18
 
 #define BADARG -1
 
@@ -37,17 +37,16 @@
  * arguments on kr_private_trading_functions
  * and on kr_private_user_functions */
 
-struct st_list {
 
-	char *key;
-	uint8_t val;
-};
 
 struct st_opt_list {
 
-	uint8_t key;
-	uint8_t val;
+	char*	name;
+	uint8_t	b_flag;
+	char*	key;
+	char*	val;
 };
+
 
 
 
@@ -62,10 +61,9 @@ struct kraken_api {
 	struct private_optionals *priv_opt;
 	struct private_opt_listen *priv_opt_list;
 
-	struct st_opt_list *opt_listen_table;
-       
+	struct st_opt_list *opt_table;
 
-
+	uint8_t opt_table_lenght;
 
 
 	/* KEY'S */
@@ -133,7 +131,7 @@ struct private_functions {
 };
 
 
-
+#if 0
 struct private_optionals {
 
 	char* opt_aclass;
@@ -156,6 +154,7 @@ struct private_optionals {
 	char* opt_close_pc_1;
 	char* opt_close_pc_2;
 };
+#endif
 struct private_opt_listen {
 
 	uint8_t bool_aclass;
@@ -194,7 +193,7 @@ struct public_functions {
 
 int kraken_init(struct kraken_api **kr_api, const char* api_key, const char *sec_key);
 void kraken_clean(struct kraken_api **kr_api);
-int key_from_string(const char *str, const struct st_list *type_table, const uint8_t u8_n_keys);
+int key_from_string(const char *str, const struct st_opt_list *type_table, const uint8_t u8_n_keys);
 int kraken_set_opt(struct kraken_api **kr_api, const char* opt, const char* val);
 
 

@@ -1,20 +1,20 @@
 #include "kr_private_trading_functions.h"
 
 
-static struct st_list type_table[] = {
+static struct st_opt_list type_table[] = {
 
-	{"market",		MARKET},
-	{"limit",		LIMIT},
-	{"stop-loss",		STOP_LOSS},
-	{"take-profit",		TAKE_PROFIT},
-	{"stop-loss-profit",	STOP_LOSS_PROFIT},
-	{"stop-loss-profit-limit", STOP_LOSS_PROFIT_LIMIT},
-	{"stop-loss-limit",	STOP_LOSS_LIMIT},
-	{"take-profit-limit",	TAKE_PROFIT_LIMIT},
-	{"trailing-stop",	TRAILING_STOP},
-	{"trailing-stop-limit",	TRAILING_STOP_LIMIT},
-	{"stop-loss-and-limit",	STOP_LOSS_AND_LIMIT},
-	{"settle-position",	SETTLE_POSITION}
+	[MARKET]		=	{.name = "market"},
+	[LIMIT]			=	{.name = "limit"},
+	[STOP_LOSS]		=	{.name = "stop-loss"},
+	[TAKE_PROFIT]		=	{.name = "take-profit"},
+	[STOP_LOSS_PROFIT]	=	{.name = "stop-loss-profit"},
+	[STOP_LOSS_PROFIT_LIMIT]=	{.name = "stop-loss-profit-limit"},
+	[STOP_LOSS_LIMIT]	=	{.name = "stop-loss-limit"},
+	[TAKE_PROFIT_LIMIT]	=	{.name = "take-profit-limit"},
+	[TRAILING_STOP]		=	{.name = "trailing-stop"},
+	[TRAILING_STOP_LIMIT]	=	{.name = "trailing-stop-limit"},
+	[STOP_LOSS_AND_LIMIT]	=	{.name = "stop-loss-and-limit"},
+	[SETTLE_POSITION]	=	{.name = "settle-position"}
 
 };
 
@@ -239,7 +239,7 @@ switch (key_from_string(order, type_table, NKEYS)){
 
 
 }
-
+#if 0	/* construction site */
 	/* check for given LEVERAGE */		
 
 	if((tmp_char = (*kr_api)->priv_opt->opt_leverage)){
@@ -314,7 +314,7 @@ switch (key_from_string(order, type_table, NKEYS)){
 
 
 	}
-
+#endif
 	
 
 va_end(ap);
