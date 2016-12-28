@@ -14,13 +14,17 @@ const char *sec_key = "sec-key";
 
 kraken_init(&kr_api, api_key, sec_key);
 
-
+#if 1
 kraken_set_opt(&kr_api, "asset", "hellokitty2"); 
 kraken_set_opt(&kr_api, "aclass", "hellokitti"); 
+#endif
 #if 1
-kraken_set_opt(&kr_api, "close-pc-1", "hellokitty2"); 
-kraken_set_opt(&kr_api, "start", "start!!!"); 
-kraken_set_opt(&kr_api, "close-pc-2", "hier ist preis 2"); 
+kraken_set_opt(&kr_api, "trades", "trades_stephan"); 
+kraken_set_opt(&kr_api, "userref", "userref_stephan"); 
+kraken_set_opt(&kr_api, "start", "start_stephan"); 
+kraken_set_opt(&kr_api, "end", "end_stephan"); 
+kraken_set_opt(&kr_api, "ofs", "ofs_stephan"); 
+kraken_set_opt(&kr_api, "closetime", "closetime_stephan"); 
 #endif
 
 
