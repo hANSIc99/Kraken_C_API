@@ -9,6 +9,7 @@
 #include "url.h"
 #include "curl.h"
 #include "crypto.h"
+#include "kr_private_user_functions.h"
 
 #define MARKET			0
 #define LIMIT			1

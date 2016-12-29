@@ -15,16 +15,18 @@ const char *sec_key = "sec-key";
 kraken_init(&kr_api, api_key, sec_key);
 
 #if 1
-kraken_set_opt(&kr_api, "asset", "hellokitty2"); 
+kraken_set_opt(&kr_api, "assetbla", "asset"); 
+kraken_set_opt(&kr_api, "asset", "asset"); 
 kraken_set_opt(&kr_api, "aclass", "hellokitti"); 
+kraken_set_opt(&kr_api, "trades", "trades"); 
+kraken_set_opt(&kr_api, "validate", "true"); 
 #endif
 #if 1
-kraken_set_opt(&kr_api, "trades", "trades_stephan"); 
-kraken_set_opt(&kr_api, "userref", "userref_stephan"); 
-kraken_set_opt(&kr_api, "start", "start_stephan"); 
-kraken_set_opt(&kr_api, "end", "end_stephan"); 
-kraken_set_opt(&kr_api, "ofs", "ofs_stephan"); 
-kraken_set_opt(&kr_api, "closetime", "closetime_stephan"); 
+kraken_set_opt(&kr_api, "PAIR", "ZEUR"); 
+kraken_set_opt(&kr_api, "PAIR", "ZUSD"); 
+kraken_set_opt(&kr_api, "end", "1482998660"); 
+kraken_set_opt(&kr_api, "ofs", "ofs"); 
+kraken_set_opt(&kr_api, "closetime", "1482999660"); 
 #endif
 
 
@@ -33,7 +35,7 @@ kraken_set_opt(&kr_api, "closetime", "closetime_stephan");
 /* PRIVATE USER TRADING */
 
 /* add_order returns 0 on success */
-#if 0
+#if 1
 kr_api->priv_func->add_order(&kr_api, "buy", "trailing-stop-limit", "XXBTZEUR", "10.0", "755.00", "758.00");
 #endif
 /* market: add_order(&api, TYPE, ORDERTYPE, ASSET-PAIR, VOLUME) */
@@ -132,9 +134,38 @@ kr_api->priv_func->get_trade_balance(&kr_api);
 kr_api->priv_func->get_open_orders(&kr_api);
 #endif
 
-#if 1
+#if 0
 kr_api->priv_func->get_closed_orders(&kr_api);
 #endif
+
+#if 0
+kr_api->priv_func->query_order_info(&kr_api, "122343445");
+#endif
+
+#if 0
+kr_api->priv_func->get_trades_history(&kr_api);
+#endif
+
+#if 0
+kr_api->priv_func->query_trades_info(&kr_api, "TR7S3C-HQA5K-H65IMB");
+#endif
+
+#if 0
+kr_api->priv_func->get_open_positions(&kr_api, "TR7S3C-HQA5K-H65IMB");
+#endif
+
+#if 0
+kr_api->priv_func->get_ledgers_info(&kr_api);
+#endif
+
+#if 0
+kr_api->priv_func->query_ledgers(&kr_api, "123");
+#endif
+
+#if 0
+kr_api->priv_func->get_trade_volume(&kr_api);
+#endif
+
 
 #if 1
 PTRACE("BUFFER RESULT: %s", kr_api->s_result);

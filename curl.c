@@ -152,7 +152,6 @@ int query_private(struct kraken_api **kr_api){
 
 	/* HMAC decoding */
 
-	PTRACE("HI");
 	uc_hmac_output = hmac_sha512(uc_data, uc_b64_decoded, uc_hmac_output, uc_data_size);
 
 	hmac_out = base64_encode(uc_hmac_output);

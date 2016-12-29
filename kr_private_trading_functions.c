@@ -1,5 +1,6 @@
 #include "kr_private_trading_functions.h"
 
+extern uint8_t u8_count;
 
 static struct st_opt_list type_table[] = {
 
@@ -26,7 +27,6 @@ int addOrder(struct kraken_api **kr_api, const char *type, const char *order, co
 
 
 	va_list ap;
-	char* tmp_char = NULL;
 	const char *var_arg = NULL;
 	va_start(ap, volume);
 
@@ -38,15 +38,6 @@ int addOrder(struct kraken_api **kr_api, const char *type, const char *order, co
 	const char* url_price_1		= "price=";
 	const char* url_price_2		= "price2=";
 	const char* url_trading		= "trading_agreement=";
-	const char* url_leverage	= "leverage=";
-	const char* url_oflags		= "oflags=";
-	const char* url_starttm		= "starttm=";
-	const char* url_expiretm	= "expiretm=";
-	const char* url_userref		= "userref=";
-	const char* url_validate	= "validate=";
-	const char* url_close_type	= "close[ordertype]=";
-	const char* url_close_price_1	= "close[price]=";
-	const char* url_close_price_2	= "close[price2]=";
 	const char* var_agreement	= "agree";
 
 
@@ -239,83 +230,26 @@ switch (key_from_string(order, type_table, NKEYS)){
 
 
 }
-#if 0	/* construction site */
-	/* check for given LEVERAGE */		
 
-	if((tmp_char = (*kr_api)->priv_opt->opt_leverage)){
-		(*kr_api)->s_data = to_url((*kr_api)->s_data, url_seperator); 
-		(*kr_api)->s_data = to_url((*kr_api)->s_data, url_leverage); 
-		(*kr_api)->s_data = to_url((*kr_api)->s_data, tmp_char);
-	}
-
-	/* check for given ORDER-FLAGS */
-
-	if((tmp_char = (*kr_api)->priv_opt->opt_ofs)){
-		(*kr_api)->s_data = to_url((*kr_api)->s_data, url_seperator); 
-		(*kr_api)->s_data = to_url((*kr_api)->s_data, url_oflags); 
-		(*kr_api)->s_data = to_url((*kr_api)->s_data, tmp_char);
-	}
-
-	/* check for given START-TIME */
-
-	if((tmp_char = (*kr_api)->priv_opt->opt_starttm)){
-		(*kr_api)->s_data = to_url((*kr_api)->s_data, url_seperator); 
-		(*kr_api)->s_data = to_url((*kr_api)->s_data, url_starttm); 
-		(*kr_api)->s_data = to_url((*kr_api)->s_data, tmp_char);
-	}
-
-
-	/* check for given EXPIRE-TIME */
-
-	if((tmp_char = (*kr_api)->priv_opt->opt_expiretm)){
-		(*kr_api)->s_data = to_url((*kr_api)->s_data, url_seperator); 
-		(*kr_api)->s_data = to_url((*kr_api)->s_data, url_expiretm); 
-		(*kr_api)->s_data = to_url((*kr_api)->s_data, tmp_char);
-	}
-
-	/* check for given USER-REFERENCE  */
-
-	if((tmp_char = (*kr_api)->priv_opt->opt_userref)){
-		(*kr_api)->s_data = to_url((*kr_api)->s_data, url_seperator); 
-		(*kr_api)->s_data = to_url((*kr_api)->s_data, url_userref); 
-		(*kr_api)->s_data = to_url((*kr_api)->s_data, tmp_char);
-	}
-
-	/* check for given VALIDATE  */
-
-	if((tmp_char = (*kr_api)->priv_opt->opt_validate)){
-		(*kr_api)->s_data = to_url((*kr_api)->s_data, url_seperator); 
-		(*kr_api)->s_data = to_url((*kr_api)->s_data, url_validate); 
-		(*kr_api)->s_data = to_url((*kr_api)->s_data, tmp_char);
-	}
-
-	/* check for given CLOSE_TYPE */
+	/* set the appropriate optionals for this function */
 	
-	if((tmp_char = (*kr_api)->priv_opt->opt_close_type)){
-		(*kr_api)->s_data = to_url((*kr_api)->s_data, url_seperator); 
-		(*kr_api)->s_data = to_url((*kr_api)->s_data, url_close_type); 
-		(*kr_api)->s_data = to_url((*kr_api)->s_data, tmp_char);
+	(*kr_api)->opt_table[LEVERAGE].b_flag = TRUE;
+	(*kr_api)->opt_table[OFLAGS].b_flag = TRUE;
+	(*kr_api)->opt_table[STARTTM].b_flag = TRUE;
+	(*kr_api)->opt_table[EXPIRETM].b_flag = TRUE;
+	(*kr_api)->opt_table[USERREF].b_flag = TRUE;
+	(*kr_api)->opt_table[VALIDATE].b_flag = TRUE;
+	(*kr_api)->opt_table[CLOSE_TYPE].b_flag = TRUE;
+	(*kr_api)->opt_table[CLOSE_PRICE_1].b_flag = TRUE;
+	(*kr_api)->opt_table[CLOSE_PRICE_2].b_flag = TRUE;
 
-		/* check for given CLOSE_PRICE_! */
+	/* set the recursive counter to zero */
 
-		if((tmp_char = (*kr_api)->priv_opt->opt_close_pc_1)){
-			(*kr_api)->s_data = to_url((*kr_api)->s_data, url_seperator); 
-			(*kr_api)->s_data = to_url((*kr_api)->s_data, url_close_price_1); 
-			(*kr_api)->s_data = to_url((*kr_api)->s_data, tmp_char);
-		}
+	u8_count = 0;
 
-		/* check for given CLOSE_PRICE_2 */
+	/* check if optionals are given */	
 
-		if((tmp_char = (*kr_api)->priv_opt->opt_close_pc_2)){
-			(*kr_api)->s_data = to_url((*kr_api)->s_data, url_seperator); 
-			(*kr_api)->s_data = to_url((*kr_api)->s_data, url_close_price_2); 
-			(*kr_api)->s_data = to_url((*kr_api)->s_data, tmp_char);
-		}
-
-
-	}
-#endif
-	
+	switch_opt(kr_api);
 
 va_end(ap);
 	
@@ -332,18 +266,11 @@ int cancelOrder(struct kraken_api **kr_api, const char *txid){
 
 	/* create the temporary url for this type of api call */
 
-	if(!((*kr_api)->tmp_query_url = strdup((*kr_api)->s_uri_private))){
-		PERROR("ERROR on strdup");
-		return -1;
-	}
-
+	(*kr_api)->tmp_query_url = to_url((*kr_api)->tmp_query_url, (*kr_api)->s_uri_private);
 	(*kr_api)->tmp_query_url = to_url((*kr_api)->tmp_query_url, (*kr_api)->s_uri_cancel_order);
 
 	/* start the data string */
-	if(!((*kr_api)->s_data = strdup(url_txid))){
-		PERROR("ERROR on strdup");
-		return -1;
-	}	
+	(*kr_api)->s_data = to_url((*kr_api)->s_data, url_txid);
 
 	/* add XXBTZEUR to the string */
 	(*kr_api)->s_data = to_url((*kr_api)->s_data, txid);

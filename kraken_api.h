@@ -27,9 +27,10 @@
 #define EXPIRETM	13
 #define VALIDATE	14
 #define LEVERAGE	15
-#define CLOSE_TYPE	16
-#define CLOSE_PRICE_1	17
-#define CLOSE_PRICE_2	18
+#define TYPE		16
+#define CLOSE_TYPE	17
+#define CLOSE_PRICE_1	18
+#define CLOSE_PRICE_2	19
 
 #define BADARG -1
 
@@ -120,13 +121,13 @@ struct private_functions {
 	int (*get_trade_balance)(struct kraken_api**, ...);
 	int (*get_open_orders)(struct kraken_api**);
 	int (*get_closed_orders)(struct kraken_api**);
-	int (*query_order_info)(struct kraken_api**, int);
-	int (*get_trades_history)(struct kraken_api**, int);
-	int (*query_trades_info)(struct kraken_api**, int);
-	int (*get_open_positions)(struct kraken_api**, int);
-	int (*get_ledgers_info)(struct kraken_api**, int);
-	int (*query_ledgers)(struct kraken_api**, int);
-	int (*get_trade_volume)(struct kraken_api**, int);
+	int (*query_order_info)(struct kraken_api**, const char*);
+	int (*get_trades_history)(struct kraken_api**);
+	int (*query_trades_info)(struct kraken_api**, const char*);
+	int (*get_open_positions)(struct kraken_api**, const char*);
+	int (*get_ledgers_info)(struct kraken_api**);
+	int (*query_ledgers)(struct kraken_api**, const char*);
+	int (*get_trade_volume)(struct kraken_api**);
 
 };
 
