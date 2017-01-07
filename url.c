@@ -24,6 +24,16 @@ int make_url(struct kraken_api **kr_data){
 	const char* api_ledgers_info = "/Ledgers";
 	const char* api_query_ledgers = "/QueryLedgers";
 	const char* api_trade_volume = "/TradeVolume";
+	/* PUBLIC FUNCTIONS */
+	const char* api_server_time = "/Time";
+	const char* api_assets = "/Assets";
+	const char* api_asset_pairs = "/AssetPairs";
+	const char* api_ticker = "/Ticker";
+	const char* api_ohlc = "/OHLC";
+	const char* api_order_book = "/Depth";
+	const char* api_recent_trades = "/Trades";
+	const char* api_spread = "/Spread";
+
 
 	/* s_url contains just the domain */
 
@@ -84,6 +94,39 @@ int make_url(struct kraken_api **kr_data){
 	/* TRADE VOLUME */
 	(*kr_data)->s_uri_trade_volume = strdup(api_trade_volume);
 
+	/* ### PUBLIC FUNCTIONS */
+
+	/* SERVER TIME */
+
+	(*kr_data)->s_uri_server_time = strdup(api_server_time);
+
+	/* ASSET INFO */
+
+	(*kr_data)->s_uri_asset_info = strdup(api_assets);
+
+	/* ASSET PAIRS */
+
+	(*kr_data)->s_uri_asset_pairs = strdup(api_asset_pairs);
+
+	/* TICKER INFORMATION */
+
+	(*kr_data)->s_uri_ticker = strdup(api_ticker);
+
+	/* OHLC DATA */	
+
+	(*kr_data)->s_uri_ohlc = strdup(api_ohlc);
+	
+	/* ORDER BOOK */
+
+	(*kr_data)->s_uri_order_book = strdup(api_order_book);
+
+	/* RECENT TRADES */
+
+	(*kr_data)->s_uri_recent_trades = strdup(api_recent_trades);
+
+	/* SPREAD DATA */
+
+	(*kr_data)->s_uri_spread = strdup(api_spread);
 
 	PTRACE("s_url: %s", (*kr_data)->s_url);
 	PTRACE("s_uri_private: %s", (*kr_data)->s_uri_private);

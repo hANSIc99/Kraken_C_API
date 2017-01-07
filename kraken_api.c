@@ -177,6 +177,17 @@ void kraken_clean(struct kraken_api **kr_api){
 	free((*kr_api)->s_uri_balance);
 	free((*kr_api)->s_uri_trade_balance);
 
+	/* PUBLIC MARKET DATA */
+
+	free((*kr_api)->s_uri_server_time);
+	free((*kr_api)->s_uri_asset_info);
+	free((*kr_api)->s_uri_asset_pairs);
+	free((*kr_api)->s_uri_ticker);
+	free((*kr_api)->s_uri_ohlc);
+	free((*kr_api)->s_uri_order_book);
+	free((*kr_api)->s_uri_recent_trades);
+	free((*kr_api)->s_uri_spread);
+
 	/* BUFFER */
 	if((*kr_api)->s_result != NULL) free((*kr_api)->s_result);  
 

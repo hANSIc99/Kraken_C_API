@@ -97,6 +97,17 @@ struct kraken_api {
 	char* s_uri_query_ledgers;	/* e.g. /QueryLedgers */
 	char* s_uri_trade_volume;	/* e.g. /TradeVolume */
 
+	/* PUBLUC FUNTIONS */
+
+	char* s_uri_server_time;	/* e.g. /Time */
+	char* s_uri_asset_info;		/* e.g. /Assets */
+	char* s_uri_asset_pairs;	/* e.g. /AssetPairs */
+	char* s_uri_ticker;		/* e.g. /Ticker */
+	char* s_uri_ohlc;		/* e.g. /OHLC */
+	char* s_uri_order_book;		/* e.g. /Depth */
+	char* s_uri_recent_trades;	/* e.g. /Trades */
+	char* s_uri_spread;		/* e.g. /Spread */
+
 	/* temporary arrays */
 
 	char* tmp_query_url;		/* function specific url to query,
@@ -132,30 +143,6 @@ struct private_functions {
 };
 
 
-#if 0
-struct private_optionals {
-
-	char* opt_aclass;
-	char* opt_asset;
-	char* opt_trades;
-	char* opt_userref;
-	char* opt_start;
-	char* opt_end;
-	char* opt_ofs;
-	char* opt_closetime;
-	char* opt_docalcs;
-	char* opt_pair;
-	char* opt_fee_info;
-	char* opt_oflags;
-	char* opt_starttm;
-	char* opt_expiretm;
-	char* opt_validate;
-	char* opt_leverage;
-	char* opt_close_type;
-	char* opt_close_pc_1;
-	char* opt_close_pc_2;
-};
-#endif
 struct private_opt_listen {
 
 	uint8_t bool_aclass;

@@ -5,7 +5,6 @@
 #include <stdint.h>
 #include "kraken_api.h"
 #include "logging.h"
-#include "kraken_api.h"
 #include "url.h"
 #include "curl.h"
 #include "crypto.h"
