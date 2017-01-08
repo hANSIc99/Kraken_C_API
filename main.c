@@ -14,8 +14,8 @@ int main (void){
 struct kraken_api *kr_api = NULL;
 
 
-const char *api_key = "api_key";
-const char *sec_key = "sec_key";
+const char *api_key = "api-key";
+const char *sec_key = "sec-key";
 
 /* init function.... */
 
@@ -35,7 +35,6 @@ kraken_set_opt(&kr_api, "end", "1482998660");
 kraken_set_opt(&kr_api, "ofs", "ofs"); 
 kraken_set_opt(&kr_api, "closetime", "1482999660"); 
 #endif
-
 
 /* AVAILABLE ORDERS */
 
@@ -131,7 +130,7 @@ kr_api->priv_func->get_account_balance(&kr_api);
 /* get-trade-balance: get_trade_balance(&kr_api, "asset-class") */
 /* get-trade-balance: get_trade_balance(&kr_api)  asset class is optional */
 #if 0
-kr_api->priv_func->get_trade_balance(&kr_api);
+kr_api->priv_func->get_trade_balance(&kr_api, "ZEUR");
 #endif
 
 

@@ -7,8 +7,7 @@
 #include "logging.h"
 #include "url.h"
 #include "curl.h"
-#include "crypto.h"
-#include "kr_private_user_functions.h"
+#include "kr_helper.h"
 
 #define MARKET			0
 #define LIMIT			1

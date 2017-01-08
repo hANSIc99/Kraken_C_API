@@ -6,7 +6,6 @@
 #include <stdint.h>
 #include <ctype.h>
 #include "logging.h"
-#include "crypto.h"
 
 #define TRUE	1
 #define FALSE	0
@@ -34,28 +33,37 @@
 
 #define BADARG -1
 
+
+/*!
+ * \file kraken_api.h 
+ * Contains the definition of the API structures
+ *
+ * The structures are initialized in kraken_init() 
+ *
+ * \file kraken_api.c
+ * \var st_opt_list options_listen_table[]
+ * \brief Options Table
+ *
+ * This table contains all possible options that can be processed
+ * by specific API calls.
+ *
+ */
+
 /* this structure is used to distinguish diffrent commanline
  * arguments on kr_private_trading_functions
  * and on kr_private_user_functions */
 
 
 
+
 struct st_opt_list {
 
-	/*! \brief brieftesttesttest
-	 *
-	 * detailierte beschreibung
-	 */
+	uint8_t	b_flag;	/*!< If true, then switch_opt will check for content */
 
-	char*	name; 	uint8_t	b_flag;
-	char*	key;	/*!< beschreibung nach variable */
-	char*	val;
+	char*	name;	/*!< Overall name of the option */
+	char*	key;	/*!< String which is called */
+	char*	val;	/*!< Content which is appended to #key after in an REST call */
 };
-
-
-
-
-
 
 /* main api-structure */
 
@@ -182,8 +190,20 @@ struct public_functions {
 
 };
 
-
-int kraken_init(struct kraken_api **kr_api, const char* api_key, const char *sec_key);
+/*! 
+ * \brief Initialization of the required structures
+ * 
+ * \param **kr_api Adress of a pointer to the appropriate structure (not initialized)
+ *
+ * \param *api_key API Key (log into kraken.com and go to settings->API)
+ *
+ * \param *sec_key Secret API key (log into kraken.com and go to settings->API)
+ *
+ * This functions initialize the required structures with the addresses for the api calls.
+ * The memory which is allocated in this function will be freed in kraken_clean()
+ *
+ * */
+int kraken_init(struct kraken_api **kr_api, const char *api_key, const char *sec_key);
 void kraken_clean(struct kraken_api **kr_api);
 int key_from_string(const char *str, const struct st_opt_list *type_table, const uint8_t u8_n_keys);
 int kraken_set_opt(struct kraken_api **kr_api, const char* opt, const char* val);

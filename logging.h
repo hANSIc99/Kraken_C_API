@@ -1,6 +1,7 @@
 #ifndef __logging_h
 #define __logging_h
 
+#include <stdio.h>
 
 
 #undef PDEBUG             /* undef it, just in case */

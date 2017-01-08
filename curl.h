@@ -11,6 +11,7 @@
 #include "kraken_api.h"
 #include "url.h"
 #include "logging.h"
+#include "crypto.h"
 
 #define BUFFER_SIZE 8192
 

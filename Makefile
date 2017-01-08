@@ -37,9 +37,9 @@ LIBS = -L/usr/local/lib -L/usr/lib -L/usr/lib/x86_64-linux-gnu -lm -lssl -lcrypt
 
 PASSWORD= '"Default"'
 
-DEPS = logging.h kraken_api.h main_header.h curl.h url.h crypto.h kr_private_trading_functions.h kr_public_functions.h kr_private_user_functions.h 
+DEPS = logging.h kraken_api.h main_header.h curl.h url.h crypto.h kr_helper.h kr_private_trading_functions.h kr_public_functions.h kr_private_user_functions.h 
 
-OBJ = kraken_api.o main.o curl.o url.o crypto.o  kr_private_trading_functions.o kr_public_functions.o kr_private_user_functions.o
+OBJ = kraken_api.o main.o curl.o url.o crypto.o kr_helper.c kr_private_trading_functions.o kr_public_functions.o kr_private_user_functions.o
 
 all: REST
 	@echo "CFLAGS: $(CFLAGS)"

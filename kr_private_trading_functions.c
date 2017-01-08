@@ -1,6 +1,6 @@
 #include "kr_private_trading_functions.h"
 
-extern uint8_t u8_count;
+extern uint8_t u8_opt_count;
 
 static struct st_opt_list type_table[] = {
 
@@ -245,7 +245,7 @@ switch (key_from_string(order, type_table, NKEYS)){
 
 	/* set the recursive counter to zero */
 
-	u8_count = 0;
+	u8_opt_count = 0;
 
 	/* check if optionals are given */	
 

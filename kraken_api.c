@@ -3,8 +3,6 @@
 #include "kr_private_user_functions.h"
 #include "url.h"
 
-
-
 static struct st_opt_list options_listen_table[] = {
 
 	[ACLASS]	=	{.name = "aclass",	.b_flag =	FALSE,	.key = "aclass="},
@@ -34,7 +32,9 @@ static struct st_opt_list options_listen_table[] = {
 #undef NKEYS
 #define NKEYS (uint8_t)(sizeof(options_listen_table)/sizeof(options_listen_table[1]))
 
-int kraken_init(struct kraken_api **kr_api, const char* api_key, const char *sec_key){
+
+
+int kraken_init(struct kraken_api **kr_api, const char *api_key, const char *sec_key){
 
 	uint8_t u8_i;
 

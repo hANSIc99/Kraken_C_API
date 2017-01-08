@@ -62,7 +62,7 @@ char* base64_encode(unsigned char* data){
 
 
 	BIO *b64, *bio_mem;
-	char* output;	
+	char* output;	/*!< description */	
 	b64 = BIO_new(BIO_f_base64());
 	BIO_set_flags(b64, BIO_FLAGS_BASE64_NO_NL);
 
