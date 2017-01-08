@@ -42,12 +42,13 @@
 
 struct st_opt_list {
 
-	/*! \brief brieftesttesttest  
-	 * was auch immer
+	/*! \brief brieftesttesttest
+	 *
+	 * detailierte beschreibung
 	 */
 
 	char*	name; 	uint8_t	b_flag;
-	char*	key;
+	char*	key;	/*!< beschreibung nach variable */
 	char*	val;
 };
 
