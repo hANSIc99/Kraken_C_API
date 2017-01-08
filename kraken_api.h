@@ -42,8 +42,11 @@
 
 struct st_opt_list {
 
-	char*	name;
-	uint8_t	b_flag;
+	/*! \brief brieftesttesttest  
+	 * was auch immer
+	 */
+
+	char*	name; 	uint8_t	b_flag;
 	char*	key;
 	char*	val;
 };

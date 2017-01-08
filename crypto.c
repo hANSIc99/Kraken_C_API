@@ -62,8 +62,7 @@ char* base64_encode(unsigned char* data){
 
 
 	BIO *b64, *bio_mem;
-	char* output;
-
+	char* output;	
 	b64 = BIO_new(BIO_f_base64());
 	BIO_set_flags(b64, BIO_FLAGS_BASE64_NO_NL);
 
@@ -90,7 +89,7 @@ char* base64_encode(unsigned char* data){
 
 unsigned char* hmac_sha512(unsigned char* data, unsigned char* key, unsigned char* output, int data_size){
 	
-	unsigned int lenght = EVP_MAX_MD_SIZE;
+	unsigned int lenght = EVP_MAX_MD_SIZE; 
 
 	output = malloc(lenght);
 

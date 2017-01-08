@@ -1,5 +1,12 @@
 #include "main_header.h"
 
+/*! \brief	Brief description.
+ *		Brief description continued.
+ *
+ *	Detailed description starts here!
+ *
+ * */
+
 
 int main (void){
 
