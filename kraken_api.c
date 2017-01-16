@@ -120,6 +120,8 @@ int kraken_init(struct kraken_api **kr_api, const char *api_key, const char *sec
 
 	(*kr_api)->pub_func->get_server_time		= &server_time;
 	(*kr_api)->pub_func->get_asset_info		= &asset_info;
+	(*kr_api)->pub_func->get_tradable_asset_pairs	= &asset_pairs;
+	
 
 	make_url(kr_api);
 

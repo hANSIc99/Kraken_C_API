@@ -13,7 +13,7 @@
 #include "logging.h"
 #include "crypto.h"
 
-#define BUFFER_SIZE 8192
+#define BUFFER_SIZE 32768
 
 char* curl_get(char *query_string);
 int query_private(struct kraken_api **kr_api);

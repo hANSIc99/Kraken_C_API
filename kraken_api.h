@@ -182,7 +182,7 @@ struct public_functions {
 
 	int (*get_server_time)(struct kraken_api**);
 	int (*get_asset_info)(struct kraken_api**);
-	int (*get_tradable_asset_pairs)(struct kraken_api*, int);
+	int (*get_tradable_asset_pairs)(struct kraken_api**);
 	int (*get_ticker_info)(struct kraken_api*, int);
 	int (*get_ohlc_data)(struct kraken_api*, int);
 	int (*get_order_book)(struct kraken_api*, int);
