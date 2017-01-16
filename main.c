@@ -41,7 +41,7 @@ kraken_set_opt(&kr_api, "closetime", "1482999660");
 /* PRIVATE USER TRADING */
 
 /* add_order returns 0 on success */
-#if 1
+#if 0
 kr_api->priv_func->add_order(&kr_api, "buy", "trailing-stop-limit", "XXBTZEUR", "10.0", "755.00", "758.00");
 #endif
 /* market: add_order(&api, TYPE, ORDERTYPE, ASSET-PAIR, VOLUME) */
@@ -172,6 +172,7 @@ kr_api->priv_func->query_ledgers(&kr_api, "123");
 kr_api->priv_func->get_trade_volume(&kr_api);
 #endif
 
+kr_api->pub_func->get_server_time(&kr_api);
 
 #if 1
 PTRACE("BUFFER RESULT: %s", kr_api->s_result);

@@ -8,7 +8,7 @@
 #include "url.h"
 #include "curl.h"
 
-int server_time(void);
+int server_time(struct kraken_api **kr_api);
 
 
 

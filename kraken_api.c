@@ -1,6 +1,7 @@
 #include "kraken_api.h"
 #include "kr_private_trading_functions.h"
 #include "kr_private_user_functions.h"
+#include "kr_public_functions.h"
 #include "url.h"
 
 static struct st_opt_list options_listen_table[] = {
@@ -98,7 +99,7 @@ int kraken_init(struct kraken_api **kr_api, const char *api_key, const char *sec
 		(*kr_api)->opt_table[u8_i].val = NULL;
 
 
-	/* assign the functions */
+	/* assign the private functions */
 
 	(*kr_api)->priv_func->add_order			= &addOrder;
 	(*kr_api)->priv_func->cancel_order		= &cancelOrder;
@@ -113,6 +114,10 @@ int kraken_init(struct kraken_api **kr_api, const char *api_key, const char *sec
 	(*kr_api)->priv_func->get_ledgers_info		= &ledgers_info;	
 	(*kr_api)->priv_func->query_ledgers		= &query_ledgers;	
 	(*kr_api)->priv_func->get_trade_volume		= &trade_volume;	
+
+	/* assign the public functions */
+
+	(*kr_api)->pub_func->get_server_time		= &server_time;
 
 	make_url(kr_api);
 

@@ -17,6 +17,7 @@
 
 char* curl_get(char *query_string);
 int query_private(struct kraken_api **kr_api);
+int query_public(struct kraken_api **kr_api);
 
 
 #endif

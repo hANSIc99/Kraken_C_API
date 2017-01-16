@@ -179,7 +179,7 @@ struct private_opt_listen {
 };
 struct public_functions {
 
-	int (*get_server_time)(struct kraken_api*, int);
+	int (*get_server_time)(struct kraken_api*);
 	int (*get_asset_info)(struct kraken_api*, int);
 	int (*get_tradable_asset_pairs)(struct kraken_api*, int);
 	int (*get_ticker_info)(struct kraken_api*, int);

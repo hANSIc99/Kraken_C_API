@@ -1,7 +1,9 @@
 #include "url.h"
 
 
-/* create the standard query uri's */
+/* create the standard query uri's
+ *
+ * allocated memory gets freed in kraken_clean call */
 
 int make_url(struct kraken_api **kr_data){
 	

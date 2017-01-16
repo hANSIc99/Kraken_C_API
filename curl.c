@@ -206,3 +206,34 @@ int query_private(struct kraken_api **kr_api){
 
 	 return 0;
 }
+
+
+int query_public(struct kraken_api **kr_api){
+
+
+	char* curl_query_url	= NULL;
+	char* curl_query	= NULL;
+
+	/* create the curl query string:
+	 * complete tmp_query_url */
+
+	curl_query_url = strdup((*kr_api)->s_url);
+	curl_query_url = to_url(curl_query_url, (*kr_api)->tmp_query_url);
+
+	/* GENERATE THE CURL COMMAND LINE ARGUMENT STRING */
+
+	/* -tlsv1.3 to force TLS V1.3 support */
+
+	curl_query = strdup("curl -tlsv1.3 ");
+	curl_query = to_url(curl_query, "\"");
+	curl_query = to_url(curl_query, curl_query_url);
+	curl_query = to_url(curl_query, "\"");
+
+	PTRACE("curl query: %s", curl_query);
+
+	free((*kr_api)->tmp_query_url);
+
+	(*kr_api)->s_result = curl_get(curl_query);
+
+	return 0;
+}
