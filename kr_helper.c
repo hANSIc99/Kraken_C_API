@@ -17,7 +17,7 @@ void switch_opt(struct kraken_api **kr_api){
 	if(b_flag && value){
 
 		/* check if the string is not empty */
-		if((*kr_api)->s_data )
+		if((*kr_api)->s_data)
 			/* place a "&" behind the excisting data */
 			(*kr_api)->s_data = to_url((*kr_api)->s_data, url_seperator);	
 

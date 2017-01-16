@@ -6,6 +6,7 @@
 
 static struct st_opt_list options_listen_table[] = {
 
+	[INFO]		=	{.name = "info",	.b_flag =	FALSE,	.key = "info="},
 	[ACLASS]	=	{.name = "aclass",	.b_flag =	FALSE,	.key = "aclass="},
 	[ASSET]		=	{.name = "asset",	.b_flag =	FALSE,	.key = "asset="},	
 	[TRADES]	=	{.name = "trades",	.b_flag =	FALSE,	.key = "trades="},
@@ -118,6 +119,7 @@ int kraken_init(struct kraken_api **kr_api, const char *api_key, const char *sec
 	/* assign the public functions */
 
 	(*kr_api)->pub_func->get_server_time		= &server_time;
+	(*kr_api)->pub_func->get_asset_info		= &asset_info;
 
 	make_url(kr_api);
 

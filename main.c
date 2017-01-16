@@ -23,6 +23,7 @@ kraken_init(&kr_api, api_key, sec_key);
 
 #if 1
 kraken_set_opt(&kr_api, "assetbla", "asset"); 
+kraken_set_opt(&kr_api, "info", "Informationen"); 
 kraken_set_opt(&kr_api, "asset", "asset"); 
 kraken_set_opt(&kr_api, "aclass", "hellokitti"); 
 kraken_set_opt(&kr_api, "trades", "trades"); 
@@ -172,8 +173,13 @@ kr_api->priv_func->query_ledgers(&kr_api, "123");
 kr_api->priv_func->get_trade_volume(&kr_api);
 #endif
 
+#if 0
 kr_api->pub_func->get_server_time(&kr_api);
+#endif
 
+#if 1
+kr_api->pub_func->get_asset_info(&kr_api);
+#endif
 #if 1
 PTRACE("BUFFER RESULT: %s", kr_api->s_result);
 #endif

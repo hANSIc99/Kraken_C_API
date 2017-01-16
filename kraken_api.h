@@ -10,26 +10,27 @@
 #define TRUE	1
 #define FALSE	0
 
-#define ACLASS		0
-#define ASSET		1
-#define TRADES		2
-#define USERREF		3
-#define START		4
-#define END		5
-#define OFS		6
-#define CLOSETIME	7
-#define DOCALCS		8
-#define PAIR		9
-#define FEE_INFO	10
-#define OFLAGS		11
-#define STARTTM		12
-#define EXPIRETM	13
-#define VALIDATE	14
-#define LEVERAGE	15
-#define TYPE		16
-#define CLOSE_TYPE	17
-#define CLOSE_PRICE_1	18
-#define CLOSE_PRICE_2	19
+#define INFO		0
+#define ACLASS		1
+#define ASSET		2
+#define TRADES		3
+#define USERREF		4
+#define START		5
+#define END		6
+#define OFS		7
+#define CLOSETIME	8
+#define DOCALCS		9
+#define PAIR		10
+#define FEE_INFO	11
+#define OFLAGS		12
+#define STARTTM		13
+#define EXPIRETM	14
+#define VALIDATE	15
+#define LEVERAGE	16
+#define TYPE		17
+#define CLOSE_TYPE	18
+#define CLOSE_PRICE_1	19
+#define CLOSE_PRICE_2	20
 
 #define BADARG -1
 
@@ -179,8 +180,8 @@ struct private_opt_listen {
 };
 struct public_functions {
 
-	int (*get_server_time)(struct kraken_api*);
-	int (*get_asset_info)(struct kraken_api*, int);
+	int (*get_server_time)(struct kraken_api**);
+	int (*get_asset_info)(struct kraken_api**);
 	int (*get_tradable_asset_pairs)(struct kraken_api*, int);
 	int (*get_ticker_info)(struct kraken_api*, int);
 	int (*get_ohlc_data)(struct kraken_api*, int);

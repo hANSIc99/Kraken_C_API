@@ -93,7 +93,7 @@ int query_private(struct kraken_api **kr_api){
 
 	/*  create nonce url with the nonce + the specific data */
 
-	if((curl_nonce_url = strdup(url_nonce)) == NULL)
+	if(!(curl_nonce_url = strdup(url_nonce)))
 		PERROR("ERROR on strdup");
 	
 
@@ -101,7 +101,7 @@ int query_private(struct kraken_api **kr_api){
 
 	/* curl_nonce_url = "nonce=1234567890123456" */
 
-	if(((*kr_api)->s_data) != NULL){
+	if(((*kr_api)->s_data)){
 
 		/* add seperator to the string */
 
@@ -187,7 +187,7 @@ int query_private(struct kraken_api **kr_api){
 
 
 	/* free s_data only if it was used */
-	if((*kr_api)->s_data != NULL)
+	if((*kr_api)->s_data)
 		free((*kr_api)->s_data);
 
 	free(curl_query_url);
@@ -225,13 +225,28 @@ int query_public(struct kraken_api **kr_api){
 	/* -tlsv1.3 to force TLS V1.3 support */
 
 	curl_query = strdup("curl -tlsv1.3 ");
+
+
+	PTRACE("curl query: %s", (*kr_api)->s_data);
+
+	if((*kr_api)->s_data){
+		curl_query = to_url(curl_query, "--data ");
+		curl_query = to_url(curl_query, "\"");
+	        curl_query = to_url(curl_query, (*kr_api)->s_data);	
+		curl_query = to_url(curl_query, "\" ");
+	}
+
 	curl_query = to_url(curl_query, "\"");
 	curl_query = to_url(curl_query, curl_query_url);
 	curl_query = to_url(curl_query, "\"");
 
 	PTRACE("curl query: %s", curl_query);
 
+	/* free s_data only if it was used */
+	if((*kr_api)->s_data)
+		free((*kr_api)->s_data);
 	free((*kr_api)->tmp_query_url);
+	free(curl_query_url);
 
 	(*kr_api)->s_result = curl_get(curl_query);
 
