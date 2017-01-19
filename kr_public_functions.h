@@ -12,6 +12,8 @@
 int server_time(struct kraken_api **kr_api);
 int asset_info(struct kraken_api **kr_api);
 int asset_pairs(struct kraken_api **kr_api);
+int ticker_info(struct kraken_api **kr_api, const char *pair);
+int ohlc_data(struct kraken_api **kr_api, const char *pair);
 
 
 

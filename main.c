@@ -23,7 +23,8 @@ kraken_init(&kr_api, api_key, sec_key);
 
 #if 1
 kraken_set_opt(&kr_api, "assetbla", "asset"); 
-#if 1
+kraken_set_opt(&kr_api, "interval", "21600"); 
+#if 0
 kraken_set_opt(&kr_api, "pair", "ETCXBT"); 
 #endif
 kraken_set_opt(&kr_api, "aclass", "hellokitti"); 
@@ -180,8 +181,16 @@ kr_api->pub_func->get_server_time(&kr_api);
 kr_api->pub_func->get_asset_info(&kr_api);
 #endif
 
-#if 1
+#if 0
 kr_api->pub_func->get_tradable_asset_pairs(&kr_api);
+#endif
+
+#if 0
+kr_api->pub_func->get_ticker_info(&kr_api, "XETCZEUR");
+#endif
+
+#if 1
+kr_api->pub_func->get_ohlc_data(&kr_api, "XETCZEUR");
 #endif
 
 #if 1

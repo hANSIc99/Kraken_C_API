@@ -31,6 +31,8 @@
 #define CLOSE_TYPE	18
 #define CLOSE_PRICE_1	19
 #define CLOSE_PRICE_2	20
+#define INTERVAL	21
+#define SINCE		22
 
 #define BADARG -1
 
@@ -183,11 +185,11 @@ struct public_functions {
 	int (*get_server_time)(struct kraken_api**);
 	int (*get_asset_info)(struct kraken_api**);
 	int (*get_tradable_asset_pairs)(struct kraken_api**);
-	int (*get_ticker_info)(struct kraken_api*, int);
-	int (*get_ohlc_data)(struct kraken_api*, int);
-	int (*get_order_book)(struct kraken_api*, int);
-	int (*get_recent_trades)(struct kraken_api*, int);
-	int (*get_recent_spread_data)(struct kraken_api*, int);
+	int (*get_ticker_info)(struct kraken_api**, const char*);
+	int (*get_ohlc_data)(struct kraken_api**, const char*);
+	int (*get_order_book)(struct kraken_api**, int);
+	int (*get_recent_trades)(struct kraken_api**, int);
+	int (*get_recent_spread_data)(struct kraken_api**, int);
 
 };
 

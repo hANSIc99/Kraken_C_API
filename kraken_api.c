@@ -26,7 +26,9 @@ static struct st_opt_list options_listen_table[] = {
 	[TYPE]		=	{.name = "type",	.b_flag =	FALSE,	.key = "type="},
 	[CLOSE_TYPE]	=	{.name = "close-type",	.b_flag =	FALSE,	.key = "close[ordertype]="},
 	[CLOSE_PRICE_1]	=	{.name = "close-pc-1",	.b_flag =	FALSE,	.key = "close[price]="},
-	[CLOSE_PRICE_2]	=	{.name = "close-pc-2",	.b_flag =	FALSE,	.key = "close[price2]="}
+	[CLOSE_PRICE_2]	=	{.name = "close-pc-2",	.b_flag =	FALSE,	.key = "close[price2]="},
+	[INTERVAL]	=	{.name = "interval",	.b_flag =	FALSE,	.key = "interval="},
+	[SINCE]		=	{.name = "since",	.b_flag =	FALSE,	.key = "since="},
 };
 
 #define SZ_LIST_TABLE (sizeof(options_listen_table))
@@ -121,6 +123,8 @@ int kraken_init(struct kraken_api **kr_api, const char *api_key, const char *sec
 	(*kr_api)->pub_func->get_server_time		= &server_time;
 	(*kr_api)->pub_func->get_asset_info		= &asset_info;
 	(*kr_api)->pub_func->get_tradable_asset_pairs	= &asset_pairs;
+	(*kr_api)->pub_func->get_ticker_info		= &ticker_info;
+	(*kr_api)->pub_func->get_ohlc_data		= &ohlc_data;
 	
 
 	make_url(kr_api);
@@ -240,6 +244,10 @@ int key_from_string(const char *str, const struct st_opt_list *type_table, const
 	free(check_str);
 	return BADARG;
 }
+
+
+
+
 
 
 
