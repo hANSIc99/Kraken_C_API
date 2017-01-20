@@ -46,7 +46,26 @@ int asset_info(struct kraken_api **kr_api);
  * See further details on <a href=https://www.kraken.com/help/api#get-tradable-pairs>kraken api description</a>
  * */
 int asset_pairs(struct kraken_api **kr_api);
+/*! 
+ * \brief Get ticker information.
+ * \param **kr_api Initialized API structure.
+ * \param *pair Comma delimited list of asset pairs to get info on.
+ *
+ *
+ * Result: Array of pair names and their ticker info. 
+ * See further details on <a href=https://www.kraken.com/help/api#get-ticker-info>kraken api description</a>
+ * */
 int ticker_info(struct kraken_api **kr_api, const char *pair);
+/*! 
+ * \brief Get OHLC data.
+ * \param **kr_api Initialized API structure.
+ * \param *pair Asset pair to get OHLC data for.
+ *
+ * Optionals: <b>interval</b> and <b>since</b> \n\n 
+ *
+ * Result: Array of pair names and OHLC data. 
+ * See further details on <a href=https://www.kraken.com/help/api#get-ohlc-data>kraken api description</a>
+ * */
 int ohlc_data(struct kraken_api **kr_api, const char *pair);
 int order_book(struct kraken_api **kr_api, const char *pair);
 int recent_trades(struct kraken_api **kr_api, const char *pair);
