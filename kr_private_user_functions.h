@@ -11,24 +11,24 @@
  * \file kr_private_user_functions.h
  * \brief Contains private user functions.
  *
- * Further description 
- * 
+ * The file inherits the functions reffering to  
+ * <a href=https://www.kraken.com/help/api#private-user-data>Kraken Api: Private user data</a>.
  */
 
 /*! 
- * \brief Get account balance
+ * \brief Get account balance.
  * \param **kr_api Initialized API structure.
  *
- * Result: array of asset names and balance amount.
+ * Result: Array of asset names and balance amount.
  *
  * */
 int account_balance(struct kraken_api **kr_api);
 /*! 
- * \brief Get trade balance
+ * \brief Get trade balance.
  * \param **kr_api Initialized API structure.
  * \param ... <b>char*</b>: Asset: default = <b>ZUSD</b>, can be omitted.
  *
- * Result: array of trade balance info
+ * Result: Array of trade balance info.\n
  * 
  * eb = equivalent balance (combined balance of all currencies)\n
  * tb = trade balance (combined balance of all equity currencies)\n
@@ -43,76 +43,106 @@ int account_balance(struct kraken_api **kr_api);
  * */
 int trade_balance(struct kraken_api **kr_api, ...);
 /*! 
- * \brief Get open orders
+ * \brief Get open orders.
  * \param **kr_api Initialized API structure.
  *
  * Optionals: <b>trades</b> and <b>userref</b>\n\n 
  *
- * Result: array of order info in open array with txid as the key.\n
- * See further details on <a href=https://www.kraken.com/help/api#get-open-orders>kraken api description</a>
+ * Result: Array of order info in open array with txid as the key.\n
+ * See further details on <a href=https://www.kraken.com/help/api#get-open-orders>kraken api description</a>.
  *
  * */
 int open_orders(struct kraken_api **kr_api);
 /*! 
- * \brief Get closed orders
+ * \brief Get closed orders.
  * \param **kr_api Initialized API structure.
  *
  * Optionals: <b>trades</b>, <b>userref</b>, <b>start</b>, <b>end</b>, <b>ofs</b>, <b>closetime</b>\n\n 
  *
- * Result: array of order info
- * See further details on <a href=https://www.kraken.com/help/api#get-closed-orders>kraken api description</a>
+ * Result: Array of order info.\n
+ * See further details on <a href=https://www.kraken.com/help/api#get-closed-orders>kraken api description</a>.
  *
  * */
 int closed_orders(struct kraken_api **kr_api);
 /*! 
- * \brief Query orders info
+ * \brief Query orders info.
  * \param **kr_api Initialized API structure.
  * \param txid Comma delimited list of transaction ids to query info about (20 maximum)
  *
  * Optionals: <b>trades</b> and <b>userref</b>
  *
- * Result: associative array of orders info
+ * Result: Associative array of orders info.\n
  * <order_txid> = order info.  See Get open_orders() / closed_orders()
  *
  * */
 int query_orders(struct kraken_api **kr_api, const char* txid);
 /*! 
- * \brief Get trades history
+ * \brief Get trades history.
  * \param **kr_api Initialized API structure.
  *
  * Optionals: <b>type</b>, <b>trades</b>, <b>start</b>, <b>end</b>, <b>ofs</b>
  *
- * Result: array of trade info
- * See further details on <a href=https://www.kraken.com/help/api#get-trades-history>kraken api description</a>
+ * Result: Array of trade info.\n
+ * See further details on <a href=https://www.kraken.com/help/api#get-trades-history>kraken api description</a>.
  *
  * */
 int trades_history(struct kraken_api **kr_api);
 /*! 
- * \brief Query trades info
+ * \brief Query trades info.
  * \param **kr_api Initialized API structure.
  * \param txid Comma delimited list of transaction ids to query info about (20 maximum)
  *
  * Optionals: <b>trades</b>
  *
- * Result: associative array of trades ingo
+ * Result: Associative array of trades info.\n
  * <trade_txid> = trade info.  See Get trades_history()
  *
  * */
 int trades_info(struct kraken_api **kr_api, const char* txid);
 /*! 
- * \brief Query trades info
+ * \brief Query trades info.
  * \param **kr_api Initialized API structure.
  * \param txid Comma delimited list of transaction ids to query info about (20 maximum)
  *
  * Optionals: <b>docalcs</b>
  *
- * Result: associative array of open positions
- * See further details on <a href=https://www.kraken.com/help/api#get-open-positions>kraken api description</a>
+ * Result: Associative array of open positions.\n
+ * See further details on <a href=https://www.kraken.com/help/api#get-open-positions>kraken api description</a>.
  *
  * */
 int open_positions(struct kraken_api **kr_api, const char* txid);
+/*! 
+ * \brief Get ledgers info.
+ * \param **kr_api Initialized API structure.
+ *
+ * Optionals: <b>aclass</b>, <b>asset</b>, <b>type</b>, <b>start</b>, <b>end</b> and <b>ofs</b> 
+ *
+ * Result: Associative array of ledgers info.\n
+ * See further details on <a href=https://www.kraken.com/help/api#get-ledgers-info>kraken api description</a>.
+ *
+ * */
 int ledgers_info(struct kraken_api **kr_api);
+/*! 
+ * \brief Query ledgers info.
+ * \param **kr_api Initialized API structure.
+ * \param *id Comma delimited list of ledger ids to query info about (20 maximum).
+ *
+ *
+ * Result: Associative array of ledgers info.\n
+ * See further details on <a href=https://www.kraken.com/help/api#query-ledgers>kraken api description</a>.
+ *
+ * */
 int query_ledgers(struct kraken_api **kr_api, const char* id);
+/*! 
+ * \brief Get trade volume.
+ * \param **kr_api Initialized API structure.
+ *
+ * Optionals: <b>pair</b> and <b>fee-info</b>
+ *
+ * Result: Associative array.\n
+ * See further details on <a href=https://www.kraken.com/help/api#get-trade-volume>kraken api description</a>.
+ *
+ * */
 int trade_volume(struct kraken_api **kr_api);
 
 

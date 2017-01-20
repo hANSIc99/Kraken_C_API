@@ -219,7 +219,7 @@ void kraken_clean(struct kraken_api **kr_api){
 }
 
 
-/* helper functions to distinguish between command line arguments */
+/* helper functions to find names in the lookuptable */
 
 int key_from_string(const char *str, const struct st_opt_list *type_table, const uint8_t u8_n_keys){
 

@@ -1,13 +1,124 @@
 #include "main_header.h"
 
-/*! \brief	Brief description.
- *		Brief description continued.
+/*!
+ * \file main.c
+ * \brief API How To
  *
- *	Detailed description starts here!
+ * Contains examples of how to use this api.
+ */
+
+/*! \mainpage My Personal Index Page
+ *
+ * \section intro_sec Introduction
+ *
+ * This is the introduction.
+ *
+ * \section install_sec Installation
+ *
+ * \subsection step1 Step 1: Opening the box
+ *  
+ * etc...
+ */
+ 
+/*! 
+ *
+ * <b>Initialization</b>
+ * \code
+ *
+ * struct kraken_api *kr_api = NULL;
+ *
+ * const char *api_key = "api_key";
+ * const char *sec_key = "sec_key";
+ *
+ * kraken_init(&kr_api, api_key, sec_key);
+ *
+ * \endcode
+ * \n\n
+ *
+ * <b>Setting optional arguments</b>
+ *
+ * \code
+ * kraken_set_opt(&kr_api, "pair", "ETCXBT"); 
+ * \endcode
+ * \n\n
+ *
+ * <b>Private user trading functions</b>\n
+ * Add standard oder examples:\n
+ *
+ * <b>market</b>: add_order(&api, TYPE, ORDERTYPE, ASSET-PAIR, VOLUME)\n 
+ * Buy/sell assets at the best market price. 
+ * \code
+ * add_order(&kr_api, "buy", "market", "XXBTZEUR", "0.43");
+ * \endcode
+ * \n\n
+ *
+ * <b>limit</b>: add_order(&api, TYPE, ORDERTYPE, ASSET-PAIR, VOLUME, LIMIT-PRICE)\n 
+ * Buy/sell at a fixed price.  
+ * \code
+ * add_order(&kr_api, "buy", "limit", "XXBTZEUR", "0.43", "702.5432");
+ * \endcode
+ * \n\n
+ *
+ * <b>stop-loss</b>: add_order(&api, TYPE, ORDERTYPE, ASSET-PAIT, VOLUME, STOP-LOSS-PRICE)\n  
+ * Buy at market once market price >= stop price.\n 
+ * Sell at market once market price is <= stop price.\n
+ * \code
+ * add_order(&kr_api, "buy", "stop-loss", "XXBTZEUR", "0.43", "702.5432");
+ * \endcode
+ * \n\n
+ *
+ * <b>take-profit</b>: add_order(&api, TYPE, ORDERTYPE, ASSET-PAIT, VOLUME, TAKE-PROFIT-PRICE)\n
+ * Buy at market once market price <= take profit price.\n
+ * Sell at market once market price >= take profit price.\n 
+ * \code
+ * add_order(&kr_api, "buy", "take-profit", "XXBTZEUR", "0.43", "702.5432");
+ * \endcode
+ * \n\n
+ *
+ * <b>stop-loss-profit</b>: add_order(&api, TYPE, ORDERTYPE, ASSET-PAIT, VOLUME, STOP-PRICE, TAKE-PROFIT)\n
+ * Buy at market once market price >= stop-price or <= take-profit, therefore: stop > profit.\n
+ * Sell at market once market price <= stop-price or >= take-profit, therefore: stop < profit.\n
+ * \code
+ * add_order(&kr_api, "buy", "stop-loss-profit", "XXBTZEUR", "0.43", "758.00", "755.00");
+ * \endcode
+ * \n\n
+ *
+ * <b>stop-loss-profit-limit</b>: add_order(&api, TYPE, ORDERTYPE, ASSET-PAIT, VOLUME, STOP-PRICE, PROFIT/LIMIT)\n
+ * Buy at market if >= stop-price or a fixed price is market <= take-profit, therefore: stop > profit.\n
+ * Sell at market if <= stop or a fixed price if market >= limit, therefore: stop < profit.\n
+ * \code
+ * add_order(&kr_api, "buy", "stop-loss-profit", "XXBTZEUR", "0.43", "758.00", "755.00");
+ * \endcode
+ * \n\n
+ *
+ * <b>stop-loss-limit</b>: add_order(&api, TYPE, ORDERTYPE, ASSET-PAIT, VOLUME, STOP-LOSS-TRIGGER, TRIGGERED-LIMIT)\n
+ * buy at fixed price once market price >= stop price, therefore stop < limit.\n
+ * sell at fixed price once market price <= stop price.\n
+ * \code
+ * add_order(&kr_api, "buy", "stop-loss-profit", "XXBTZEUR", "0.43", "758.00", "755.00");
+ * \endcode
+ * \n\n
+ *
+ * <b>De-Initialization</b>. 
+ *
+ * \code
+ *
+ * kraken_clean(&kr_api);
+ *
+ * \endcode
+ *  
+ *
+ * <b>AddOrder</b>
+ *
+ */
+ 
+
+/*! 
+ * \brief Programm entry point.
+ *
+ * Here a some example of how to use this api:
  *
  * */
-
-
 int main (void){
 
 
@@ -38,6 +149,8 @@ kraken_set_opt(&kr_api, "ofs", "ofs");
 kraken_set_opt(&kr_api, "closetime", "1482999660"); 
 #endif
 
+
+
 /* AVAILABLE ORDERS */
 
 /* PRIVATE USER TRADING */
@@ -51,7 +164,6 @@ kr_api->priv_func->add_order(&kr_api, "buy", "trailing-stop-limit", "XXBTZEUR", 
 /* market: add_order(&kr_api, "buy", "market", "XXBTZEUR", "0.43") */
 
 /* limit: add_order(&api, TYPE, ORDERTYPE, ASSET-PAIT, VOLUME, LIMIT-PRICE)  */
-/* buy/sell at a fixed price  */
 /* limit: add_order(&kr_api, "buy", "limit", "XXBTZEUR", "0.43", "702.5432") */
 
 /* stop-loss: add_order(&api, TYPE, ORDERTYPE, ASSET-PAIT, VOLUME, STOP-LOSS-PRICE)  */

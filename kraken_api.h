@@ -208,8 +208,63 @@ struct public_functions {
  *
  * */
 int kraken_init(struct kraken_api **kr_api, const char *api_key, const char *sec_key);
+/*! 
+ * \brief De-initialization of the structures
+ * 
+ * \param **kr_api Adress of a pointer to the initialized structure.
+ *
+ *
+ * This function frees the memory which was allocated by kraken_init().
+ *
+ * */
 void kraken_clean(struct kraken_api **kr_api);
+/*! 
+ * \brief Helper function for the lookup-table
+ * 
+ * \param *str String to search for .
+ * \param *type_table Lookup-table structure.
+ * \param u8_n_keys Number of keywords in the lookup-table.
+ *
+ *
+ * The function returns the number of the (defined) option.
+ *
+ * */
 int key_from_string(const char *str, const struct st_opt_list *type_table, const uint8_t u8_n_keys);
+/*! 
+ * \brief Helper function to set optional arguments in api calls.
+ *  
+ * \param **kr_api Adress of a pointer to the initialized structure.
+ * \param *opt Name of the optional to be set (to be found in lookup-table).
+ *
+ *
+ * This function frees the memory which was allocated by kraken_init().\n\n
+ *
+ * Available options: \n
+ * <b>info</b>\n
+ * <b>aclass</b>\n
+ * <b>asset</b>\n
+ * <b>trades</b>\n
+ * <b>userref</b>\n
+ * <b>start</b>\n
+ * <b>end</b>\n
+ * <b>ofs</b>\n
+ * <b>closetime</b>\n
+ * <b>pair</b>\n
+ * <b>fee-info</b>\n
+ * <b>oflags</b>\n
+ * <b>starttm</b>\n
+ * <b>expiretm</b>\n
+ * <b>validate</b>\n
+ * <b>leverage</b>\n
+ * <b>type</b>\n
+ * <b>close-type</b>\n
+ * <b>close-pc-1</b>\n
+ * <b>close-pc-2</b>\n
+ * <b>interval</b>\n
+ * <b>since</b>\n
+ * <b>count</b>\n
+ *
+ * */
 int kraken_set_opt(struct kraken_api **kr_api, const char* opt, const char* val);
 
 
