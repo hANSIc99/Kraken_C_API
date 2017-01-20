@@ -29,6 +29,7 @@ static struct st_opt_list options_listen_table[] = {
 	[CLOSE_PRICE_2]	=	{.name = "close-pc-2",	.b_flag =	FALSE,	.key = "close[price2]="},
 	[INTERVAL]	=	{.name = "interval",	.b_flag =	FALSE,	.key = "interval="},
 	[SINCE]		=	{.name = "since",	.b_flag =	FALSE,	.key = "since="},
+	[COUNT]		=	{.name = "count",	.b_flag =	FALSE,	.key = "count="}
 };
 
 #define SZ_LIST_TABLE (sizeof(options_listen_table))
@@ -125,6 +126,9 @@ int kraken_init(struct kraken_api **kr_api, const char *api_key, const char *sec
 	(*kr_api)->pub_func->get_tradable_asset_pairs	= &asset_pairs;
 	(*kr_api)->pub_func->get_ticker_info		= &ticker_info;
 	(*kr_api)->pub_func->get_ohlc_data		= &ohlc_data;
+	(*kr_api)->pub_func->get_order_book		= &order_book;
+	(*kr_api)->pub_func->get_recent_trades		= &recent_trades;
+	(*kr_api)->pub_func->get_recent_spread_data	= &spread_data;
 	
 
 	make_url(kr_api);

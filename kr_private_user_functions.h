@@ -4,7 +4,6 @@
 #include <stdarg.h>
 #include <stdint.h>
 #include "kraken_api.h"
-#include "logging.h"
 #include "curl.h"
 #include "kr_helper.h"
 

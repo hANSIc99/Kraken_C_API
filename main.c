@@ -14,8 +14,8 @@ int main (void){
 struct kraken_api *kr_api = NULL;
 
 
-const char *api_key = "api-key";
-const char *sec_key = "sec-key";
+const char *api_key = "api_key";
+const char *sec_key = "sec_key";
 
 /* init function.... */
 
@@ -24,6 +24,7 @@ kraken_init(&kr_api, api_key, sec_key);
 #if 1
 kraken_set_opt(&kr_api, "assetbla", "asset"); 
 kraken_set_opt(&kr_api, "interval", "21600"); 
+kraken_set_opt(&kr_api, "count", "2"); 
 #if 0
 kraken_set_opt(&kr_api, "pair", "ETCXBT"); 
 #endif
@@ -173,7 +174,7 @@ kr_api->priv_func->query_ledgers(&kr_api, "123");
 kr_api->priv_func->get_trade_volume(&kr_api);
 #endif
 
-#if 0
+#if 1
 kr_api->pub_func->get_server_time(&kr_api);
 #endif
 
@@ -189,8 +190,20 @@ kr_api->pub_func->get_tradable_asset_pairs(&kr_api);
 kr_api->pub_func->get_ticker_info(&kr_api, "XETCZEUR");
 #endif
 
-#if 1
+#if 0
 kr_api->pub_func->get_ohlc_data(&kr_api, "XETCZEUR");
+#endif
+
+#if 0
+kr_api->pub_func->get_order_book(&kr_api, "XETCZEUR");
+#endif
+
+#if 0
+kr_api->pub_func->get_recent_trades(&kr_api, "XETCZEUR");
+#endif
+
+#if 0
+kr_api->pub_func->get_recent_spread_data(&kr_api, "XETCZEUR");
 #endif
 
 #if 1
