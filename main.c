@@ -84,20 +84,67 @@
  * \n\n
  *
  * <b>stop-loss-profit-limit</b>: add_order(&api, TYPE, ORDERTYPE, ASSET-PAIT, VOLUME, STOP-PRICE, PROFIT/LIMIT)\n
- * Buy at market if >= stop-price or a fixed price is market <= take-profit, therefore: stop > profit.\n
- * Sell at market if <= stop or a fixed price if market >= limit, therefore: stop < profit.\n
+ * Buy at <em>market</em> if >= <em>stop-price</em> or at fixed price if <em>market</em> <= <em>take-profit</em>, therefore: <em>stop</em> > <em>profit</em>.\n
+ * Sell at <em>market</em> if <= <em>stop-price</em> or a fixed price if <em>market</em> >= <em>limit</em>, therefore: <em>stop</em> < <em>profit</em>.\n
  * \code
  * add_order(&kr_api, "buy", "stop-loss-profit", "XXBTZEUR", "0.43", "758.00", "755.00");
  * \endcode
  * \n\n
  *
  * <b>stop-loss-limit</b>: add_order(&api, TYPE, ORDERTYPE, ASSET-PAIT, VOLUME, STOP-LOSS-TRIGGER, TRIGGERED-LIMIT)\n
- * buy at fixed price once market price >= stop price, therefore stop < limit.\n
- * sell at fixed price once market price <= stop price.\n
+ * Buy at fixed price once <em>market price</em> >= <em>stop price</em>, therefore <em>stop</em> < <em>limit</em>.\n
+ * Sell at fixed price once <em>market price</em> <= <em>stop price</em>.\n
  * \code
  * add_order(&kr_api, "buy", "stop-loss-profit", "XXBTZEUR", "0.43", "758.00", "755.00");
  * \endcode
  * \n\n
+ *
+ * <b>take-profit-limit</b>: add_order(&api, TYPE, ORDERTYPE, ASSET-PAIT, VOLUME, TAKE-PROFIT-TRIGGER, TRIGGERED-LIMIT)\n
+ * Buy at fixed price once <em>market price</em> <= <em>take profit price</em>.\n
+ * Sell at fixed price once <em>market price</em> >= <em>take profit price</em>.\n
+ * \code
+ * add_order(&kr_api, "buy", "stop-loss-profit", "XXBTZEUR", "0.43", "758.00", "755.00");
+ * \endcode
+ * \n\n
+ *
+ * <b>trailing-stop</b>: add_order(&api, TYPE, ORDERTYPE, ASSET-PAIT, VOLUME, TRAILING-STOP-OFFSET)\n
+ * Buy at market once <em>price</em> >= <em>stop offset</em> from low.\n
+ * Sell at market once <em>price</em> <= <em>stop offset</em> from high.\n
+ * \code
+ * add_order(&kr_api, "buy", "stop-loss-profit", "XXBTZEUR", "0.43", "758.00");
+ * \endcode
+ * \n\n
+ *
+ * <b>trailing-stop-limit</b>: add_order(&api, TYPE, ORDERTYPE, ASSET-PAIT, VOLUME, TRAILING-STOP-OFFSET, TRIGGERED-LIMIT-OFFSET)\n
+ * Buy at fixed price once <em>market</em> >= <em>stop offset</em> from low.\n
+ * Sell at fixed price once <em>market</em> <= <em>stop offset</em> from high.\n
+ * \code
+ * add_order(&kr_api, "buy", "stop-loss-profit", "XXBTZEUR", "0.43", "0.4", "0.2");
+ * \endcode
+ * \n\n
+ *
+ * <b>stop-loss-and-limit</b>: add_order(&api, TYPE, ORDERTYPE, ASSET-PAIT, VOLUME, STOP-LOSS-PRICE, LIMIT-PRICE)\n
+ * Buy at fixed price or at <em>market</em> if >= <em>stop price</em>.\n
+ * Sell at fixed price or at <em>market</em> if <= <em>stop price</em>.\n
+ * \code
+ * add_order(&kr_api, "buy", "stop-loss-profit", "XXBTZEUR", "0.43", "753.00", "755.00");
+ * \endcode
+ * \n\n
+ *
+ * <b>settle-position</b>: add_order(&api, TYPE, ORDERTYPE, ASSET-PAIT, VOLUME)\n
+ * Settle position at the original order price.\n
+ * \code
+ * add_order(&kr_api, "buy", "stop-loss-profit", "XXBTZEUR", "0.43");
+ * \endcode
+ * \n\n
+ *
+ * <b>cancel-order</b>: cancel_order(&api, "ORDER-ID")\n
+ * \code
+ * cancel_order(&kr_api, "OBH2CQ-KGH4B-YFF3PA");
+ * \endcode
+ * \n\n
+ *
+ *
  *
  * <b>De-Initialization</b>. 
  *
@@ -125,9 +172,9 @@ int main (void){
 struct kraken_api *kr_api = NULL;
 
 
+
 const char *api_key = "api_key";
 const char *sec_key = "sec_key";
-
 /* init function.... */
 
 kraken_init(&kr_api, api_key, sec_key);
@@ -159,68 +206,11 @@ kraken_set_opt(&kr_api, "closetime", "1482999660");
 #if 0
 kr_api->priv_func->add_order(&kr_api, "buy", "trailing-stop-limit", "XXBTZEUR", "10.0", "755.00", "758.00");
 #endif
-/* market: add_order(&api, TYPE, ORDERTYPE, ASSET-PAIR, VOLUME) */
-/* buy/sell assets at the best market price */
-/* market: add_order(&kr_api, "buy", "market", "XXBTZEUR", "0.43") */
-
-/* limit: add_order(&api, TYPE, ORDERTYPE, ASSET-PAIT, VOLUME, LIMIT-PRICE)  */
-/* limit: add_order(&kr_api, "buy", "limit", "XXBTZEUR", "0.43", "702.5432") */
-
-/* stop-loss: add_order(&api, TYPE, ORDERTYPE, ASSET-PAIT, VOLUME, STOP-LOSS-PRICE)  */
-/* buy at market once market price >= stop price */
-/* sell at market once market price is <= stop price */
-/* stop-loss: add_order(&kr_api, "buy", "stop-loss", "XXBTZEUR", "0.43", "702.5432") */
-
-/* take-profit: add_order(&api, TYPE, ORDERTYPE, ASSET-PAIT, VOLUME, TAKE-PROFIT-PRICE)  */
-/* buy at market once market price <= take profit price */
-/* sell at market once market price >= take profit price */
-/* take-profit: add_order(&kr_api, "buy", "take-profit", "XXBTZEUR", "0.43", "702.5432") */
-
-/* stop-loss-profit: add_order(&api, TYPE, ORDERTYPE, ASSET-PAIT, VOLUME, STOP-PRICE, TAKE-PROFIT)  */
-/* buy at market once market price >= STOP-PRICE or <= TAKE-PROFIT, therefore: STOP > PROFIT */
-/* sell at market once market price <= STOP-PRICE or >= TAKE-PROFIT, therefore: STOP < PROFIT */
-/* stop-loss-profit: add_order(&kr_api, "buy", "stop-loss-profit", "XXBTZEUR", "0.43", "758.00", "755.00") */
-
-/* stop-loss-profit-limit: add_order(&api, TYPE, ORDERTYPE, ASSET-PAIT, VOLUME, STOP-PRICE, PROFIT/LIMIT)  */
-/* buy at market if >= STOP-PRICE or a fixed price is market <= TAKE-PROFIT, therefore: STOP > PROFIT */
-/* sell at market if <= stop or a fixed price if market >= limit, therefore: STOP < PROFIT */
-/* stop-loss-profit-limit: add_order(&kr_api, "buy", "stop-loss-profit", "XXBTZEUR", "0.43", "758.00", "755.00") */
-
-/* stop-loss-limit: add_order(&api, TYPE, ORDERTYPE, ASSET-PAIT, VOLUME, STOP-LOSS-TRIGGER, TRIGGERED-LIMIT) */
-/* buy at fixed price once market price >= stop price, therefore STOP < LIMIT */
-/* sell at fixed price once market price <= stop price */
-/* stop-loss-limit: add_order(&kr_api, "buy", "stop-loss-profit", "XXBTZEUR", "0.43", "758.00", "755.00") */
-
-/* take-profit-limit: add_order(&api, TYPE, ORDERTYPE, ASSET-PAIT, VOLUME, TAKE-PROFIT-TRIGGER, TRIGGERED-LIMIT) */
-/* buy at fixed price once market price <= take profit price */
-/* sell at fixed price once market price >= take profit price */
-/* take-profit-limit: add_order(&kr_api, "buy", "stop-loss-profit", "XXBTZEUR", "0.43", "758.00", "755.00") */
-
-/* trailing-stop: add_order(&api, TYPE, ORDERTYPE, ASSET-PAIT, VOLUME, TRAILING-STOP-OFFSET) */
-/* buy at market once price >= stop offset from low */
-/* sell at market once price <= stop offset from high  */
-/* trailing-stop: add_order(&kr_api, "buy", "stop-loss-profit", "XXBTZEUR", "0.43", "758.00") */
-
-/* trailing-stop-limit: add_order(&api, TYPE, ORDERTYPE, ASSET-PAIT, VOLUME, TRAILING-STOP-OFFSET, TRIGGERED-LIMIT-OFFSET) */
-/* buy at fixed price once market >= stop offset from low */
-/* sell at fixed price once market <= stop offset from high */
-/* trailing-stop-limit: add_order(&kr_api, "buy", "stop-loss-profit", "XXBTZEUR", "0.43", "0.4", "0.2") */
-
-/* stop-loss-and-limit: add_order(&api, TYPE, ORDERTYPE, ASSET-PAIT, VOLUME, STOP-LOSS-PRICE, LIMIT-PRICE) */
-/* buy at fixed price or at market if >= stop price */
-/* sell at fixed price or at market if <= stop price */
-/* stop-loss-and-limit: add_order(&kr_api, "buy", "stop-loss-profit", "XXBTZEUR", "0.43", "753.00", "755.00") */
-
-/* settle-position: add_order(&api, TYPE, ORDERTYPE, ASSET-PAIT, VOLUME) */
-/* Settle position at the original order price */
-/* settle-position: add_order(&kr_api, "buy", "stop-loss-profit", "XXBTZEUR", "0.43") */
-
-/* cancel-order: cancel_order(&api, "ORDER-ID"); */
-/* cancel-order: cancel_order(&kr_api, "OBH2CQ-KGH4B-YFF3PA") */
 
 #if 0
 kr_api->priv_func->cancel_order(&kr_api, "OBH2CQ-KGH4B-YFF3PA");
 #endif
+
 
 /* PRIVATE USER DATA */
 
@@ -243,7 +233,7 @@ kr_api->priv_func->get_account_balance(&kr_api);
 
 /* get-trade-balance: get_trade_balance(&kr_api, "asset-class") */
 /* get-trade-balance: get_trade_balance(&kr_api)  asset class is optional */
-#if 0
+#if 1
 kr_api->priv_func->get_trade_balance(&kr_api, "ZEUR");
 #endif
 
@@ -286,7 +276,7 @@ kr_api->priv_func->query_ledgers(&kr_api, "123");
 kr_api->priv_func->get_trade_volume(&kr_api);
 #endif
 
-#if 1
+#if 0
 kr_api->pub_func->get_server_time(&kr_api);
 #endif
 

@@ -29,11 +29,11 @@ unsigned char* sha256(const char* data, unsigned char digest[SHA256_DIGEST_LENGT
 
 
 unsigned char* base64_decode(const char* data, unsigned char* output){ 
-//Decodes a base64 encoded string
 
 	BIO *bio_mem, *b64;
 	int decode_lenght, decoded_size;
         decode_lenght = calcDecodeLength(data);
+
 
 	output = malloc(BIO_DECODE_SIZE);
 
@@ -63,6 +63,8 @@ char* base64_encode(unsigned char* data){
 
 	BIO *b64, *bio_mem;
 	char* output;	/*!< description */	
+
+
 	b64 = BIO_new(BIO_f_base64());
 	BIO_set_flags(b64, BIO_FLAGS_BASE64_NO_NL);
 
@@ -90,6 +92,7 @@ char* base64_encode(unsigned char* data){
 unsigned char* hmac_sha512(unsigned char* data, unsigned char* key, unsigned char* output, int data_size){
 	
 	unsigned int lenght = EVP_MAX_MD_SIZE; 
+
 
 	output = malloc(lenght);
 

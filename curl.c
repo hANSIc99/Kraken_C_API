@@ -74,6 +74,10 @@ int query_private(struct kraken_api **kr_api){
 	struct timezone sys_tz;
 
 
+	if(strlen((*kr_api)->s_sec_key) != 88){
+		PDEBUG("Error: Private key must be 88 characters long");
+		return -1;
+	}
 	/* create nonce */
 
 	sys_tz.tz_minuteswest = 0;
@@ -147,6 +151,7 @@ int query_private(struct kraken_api **kr_api){
 
 
 	/* BASE64 decoding */
+
 
 	uc_b64_decoded = base64_decode((*kr_api)->s_sec_key, uc_b64_decoded);
 
