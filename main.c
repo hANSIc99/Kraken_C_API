@@ -1,23 +1,28 @@
-#include "main_header.h"
-
+#include "kraken_api.h"
 /*!
  * \file main.c
- * \brief API How To
+ * \brief <b>Open me! I'm full of examples!</b>
  *
  * Contains examples of how to use this api.
  */
 
-/*! \mainpage My Personal Index Page
+/*! \mainpage Application interface for Kraken.com written in C
  *
  * \section intro_sec Introduction
  *
- * This is the introduction.
+ * This API ist intended for use in Linux/Unix-like systems.\n\n
+ *
+ * The API depends on <em>Curl</em>.\n
+ * On the most distributions, <em>Curl</em> is installed by default, if not, you can get it here:
+ * <a href=https://curl.haxx.se/>https://curl.haxx.se/</a>.
  *
  * \section install_sec Installation
  *
- * \subsection step1 Step 1: Opening the box
+ * \subsection step1 Step 1: Include kraken_api.h to your project.
+ * Set/unset *DEBUG* or *TRACE* in the makefile to get trace/debug information 
+ * printed to stdout.
+ * \subsection step2 Step 2: Look into the documentation of main.c for exaples.
  *  
- * etc...
  */
  
 /*! 
@@ -179,15 +184,13 @@ const char *sec_key = "sec_key";
 
 kraken_init(&kr_api, api_key, sec_key);
 
+/* EXAMPLES */
 #if 1
-kraken_set_opt(&kr_api, "assetbla", "asset"); 
-kraken_set_opt(&kr_api, "interval", "21600"); 
+kraken_set_opt(&kr_api, "asset", "ZUSD"); 
 kraken_set_opt(&kr_api, "count", "2"); 
-#if 0
+#if 1
 kraken_set_opt(&kr_api, "pair", "ETCXBT"); 
 #endif
-kraken_set_opt(&kr_api, "aclass", "hellokitti"); 
-kraken_set_opt(&kr_api, "trades", "trades"); 
 kraken_set_opt(&kr_api, "validate", "true"); 
 #endif
 #if 1
@@ -198,7 +201,6 @@ kraken_set_opt(&kr_api, "closetime", "1482999660");
 
 
 
-/* AVAILABLE ORDERS */
 
 /* PRIVATE USER TRADING */
 
@@ -233,8 +235,8 @@ kr_api->priv_func->get_account_balance(&kr_api);
 
 /* get-trade-balance: get_trade_balance(&kr_api, "asset-class") */
 /* get-trade-balance: get_trade_balance(&kr_api)  asset class is optional */
-#if 1
-kr_api->priv_func->get_trade_balance(&kr_api, "ZEUR");
+#if 0
+kr_api->priv_func->get_trade_balance(&kr_api);
 #endif
 
 
@@ -280,7 +282,7 @@ kr_api->priv_func->get_trade_volume(&kr_api);
 kr_api->pub_func->get_server_time(&kr_api);
 #endif
 
-#if 0
+#if 1
 kr_api->pub_func->get_asset_info(&kr_api);
 #endif
 

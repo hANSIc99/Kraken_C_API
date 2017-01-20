@@ -18,13 +18,12 @@ int account_balance(struct kraken_api **kr_api){
 }
 
 
-int trade_balance(struct kraken_api **kr_api, ...){
+int trade_balance(struct kraken_api **kr_api){
 
-	const char* url_asset = "asset=";
-	const char* var_arg = NULL;
-	va_list ap;
+	/* set the appropriate optionals for this function */
+	
+	(*kr_api)->opt_table[ASSET].b_flag	= TRUE;
 
-	va_start(ap, kr_api);
 
 	/* create the temporary url for this type of api call */
 
@@ -33,17 +32,6 @@ int trade_balance(struct kraken_api **kr_api, ...){
 
 	PTRACE("Query URL: %s", (*kr_api)->tmp_query_url);
 	
-	if((strlen(var_arg = va_arg(ap, char*))) == 0){
-
-		PDEBUG("No Argument");
-	}else{
-		(*kr_api)->s_data = to_url((*kr_api)->s_data, url_asset);
-		(*kr_api)->s_data = to_url((*kr_api)->s_data, var_arg);
-		PTRACE("s_data = %s", (*kr_api)->s_data);
-	}
-
-	va_end(ap);
-
 	/* set the recursive counter to zero */
 
 	u8_opt_count = 0;

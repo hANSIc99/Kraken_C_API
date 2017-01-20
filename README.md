@@ -1,7 +1,7 @@
 # Kraken C API
 
 This API is intended for use on Linux/Unix-like systems.
-Furthermore, it depends on *Curl*.
+The API depends on *Curl*.
 
 On the most distributions curl is installed by default,
 if not, you can get it here:
@@ -17,20 +17,23 @@ printed to stdout.
 
 ## Usage
 
-Just include *kraken_api.h* and the source files to your own program.
+Just include *kraken_api.h* in the sources of your own project.
 
-Look into *main.c* to see how to execute a trade.
+Get doxygen and create documentation. 
+You can get it from here:
+
+www.doxygen.org
+
+Once you have run doxygen, look in the documentation of *main.c*,
+there you can find many examples.
+
+If you dont want to use doxygen, simply look into *main.c*
+to see how to execute a trade.
 
 ## ToDo's
 
 A lot:
 
 - rework trace/debug output
-- add private user data queries
-- add puplic market data query
-
-
-
-
-
+- documentation
 

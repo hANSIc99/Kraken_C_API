@@ -15,14 +15,13 @@ char* curl_get(char *query_string){
 	curl_out = popen(query_string, "r");
 
 	if(curl_out == NULL)
+
 		return NULL;	/* ERROR */
 
 	do {
 		i_char = fgetc(curl_out);
 
 		memcount++;
-
-		/* allocate memory for every char */
 
 		/* skip newline chars */
 		i_char == '\n' ? i_char = ' ' : i_char;  
@@ -36,16 +35,12 @@ char* curl_get(char *query_string){
 
 	*(result + (memcount-1)) = '\0';
 
-	printf("\n\n");
-
 
 	if((ext_status = pclose(curl_out)) != 0){
 		PERROR("ERROR on pclose");
 		PERROR("ERRNO-String: %s\n",strerror(errno));
 	}
 
-
-	PTRACE("Exit status: %d", ext_status);
 
 	/* free memory allocated in query_private() */
 
@@ -85,25 +80,23 @@ int query_private(struct kraken_api **kr_api){
 
 	gettimeofday(&sys_time, &sys_tz);
 
-	/* malloc 16 digits + '\0' */
 
 	u64_nonce = (sys_time.tv_sec * 1000000) + sys_time.tv_usec;
+
+	/* create string from nonce */
 
 	asprintf(&str_nonce, "%lu", u64_nonce); 
 
 	PTRACE("Nonce: %s", str_nonce);
 
-	/* baustelle */
-
 	/*  create nonce url with the nonce + the specific data */
 
-	if(!(curl_nonce_url = strdup(url_nonce)))
-		PERROR("ERROR on strdup");
-	
-
+	/* set the "nonce=" to the string */
+	curl_nonce_url = to_url(curl_nonce_url, url_nonce);
+	/* append the nonce string to the url */
 	curl_nonce_url = to_url(curl_nonce_url, str_nonce);
 
-	/* curl_nonce_url = "nonce=1234567890123456" */
+	/* e.g. curl_nonce_url = "nonce=1234567890123456" */
 
 	if(((*kr_api)->s_data)){
 
@@ -124,14 +117,17 @@ int query_private(struct kraken_api **kr_api){
 
 	/* s_sha256 = "1234567890123456nonce=12332.....pair=XBT.."  */
 
-	s_sha256 = strdup(str_nonce);
+	s_sha256 = to_url(s_sha256, str_nonce);
 	s_sha256 = to_url(s_sha256, curl_nonce_url);
 
 	PTRACE("s_sha256 nonce: %s", s_sha256);
 
 	/* execute SHA256 hash-algorithm */
 
-	sha256(s_sha256, digest);
+	if((sha256(s_sha256, digest)) != 0){
+		PDEBUG("Error calling SHA256"); 
+		return -1;
+	}
 
 	uri_length = (int)strlen((*kr_api)->tmp_query_url);
 
@@ -144,10 +140,8 @@ int query_private(struct kraken_api **kr_api){
 
 	uc_data = malloc(uc_data_size);
 
-
 	memcpy(uc_data, (*kr_api)->tmp_query_url, uri_length);
 	memcpy(uc_data+uri_length, digest, SHA256_DIGEST_LENGTH);
-
 
 
 	/* BASE64 decoding */
@@ -207,9 +201,9 @@ int query_private(struct kraken_api **kr_api){
 
 	PTRACE("\n%s\n", curl_query);
 	
-	 (*kr_api)->s_result = curl_get(curl_query);
+	(*kr_api)->s_result = curl_get(curl_query);
 
-	 return 0;
+	return 0;
 }
 
 

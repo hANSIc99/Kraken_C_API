@@ -26,7 +26,8 @@ int account_balance(struct kraken_api **kr_api);
 /*! 
  * \brief Get trade balance.
  * \param **kr_api Initialized API structure.
- * \param ... <b>char*</b>: Asset: default = <b>ZUSD</b>, can be omitted.
+ *
+ * Optionals: <b>asset</b> (default = "ZUSD")\n\n 
  *
  * Result: Array of trade balance info.\n
  * 
@@ -41,7 +42,7 @@ int account_balance(struct kraken_api **kr_api);
  * ml = margin level = (equity / initial margin) * 100*\n
  *
  * */
-int trade_balance(struct kraken_api **kr_api, ...);
+int trade_balance(struct kraken_api **kr_api);
 /*! 
  * \brief Get open orders.
  * \param **kr_api Initialized API structure.

@@ -40,11 +40,14 @@
 
 /*!
  * \file kraken_api.h 
- * Contains the definition of the API structures
+ * \brief Contains the definition of the API structures
  *
  * The structures are initialized in kraken_init() 
  *
- * \file kraken_api.c
+ */
+
+/*! \file kraken_api.c
+ *  
  * \var st_opt_list options_listen_table[]
  * \brief Options Table
  *
@@ -145,7 +148,7 @@ struct private_functions {
 	int (*cancel_order)(struct kraken_api**, const char*);
 
 	int (*get_account_balance)(struct kraken_api**);
-	int (*get_trade_balance)(struct kraken_api**, ...);
+	int (*get_trade_balance)(struct kraken_api**);
 	int (*get_open_orders)(struct kraken_api**);
 	int (*get_closed_orders)(struct kraken_api**);
 	int (*query_order_info)(struct kraken_api**, const char*);
