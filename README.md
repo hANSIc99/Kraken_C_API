@@ -22,7 +22,7 @@ Just include *kraken_api.h* in the sources of your own project.
 Get doxygen and create documentation. 
 You can get it from here:
 
-www.doxygen.org
+http://www.doxygen.org
 
 Once you have run doxygen, look in the documentation of *main.c*,
 there you can find many examples.
@@ -31,8 +31,6 @@ If you dont want to use doxygen, simply look into *main.c*
 to see how to execute a trade.
 
 ## ToDo's
-
-A lot:
 
 - rework trace/debug output
 - documentation

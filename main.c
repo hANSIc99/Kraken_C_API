@@ -22,9 +22,16 @@
  * Set/unset *DEBUG* or *TRACE* in the makefile to get trace/debug information 
  * printed to stdout.
  * \subsection step2 Step 2: Look into the documentation of main.c for exaples.
+ *
+ * Find examples of all API calls in the documentation of main.c.
+ * \n\n
+ * If you have any suggestions feel free to contact me on s.avenwedde@gmail.com
+ *
  *  
  */
  
+
+
 /*! 
  *
  * <h3>Initialization</h3>
