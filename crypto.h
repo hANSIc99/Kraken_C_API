@@ -27,9 +27,9 @@
   * \brief SHA256 hashing function
   *
   * \param data = Const char array; data to be encoded.
-  * \param digest = Unsigned shar array; the result is written to it.
+  * \param digest = Unsigned char array; the result is written to it.
   *
-  * Return the result in an unsigned char array.
+  * Returns the result in an unsigned char array.
   */
 int sha256(const char* data, unsigned char digest[SHA256_DIGEST_LENGTH]);
   /*!
@@ -38,7 +38,7 @@ int sha256(const char* data, unsigned char digest[SHA256_DIGEST_LENGTH]);
   * \param data = Const char array; data to be encoded.
   * \param output = Pointer to an unsigned char array which gets the result.
   *
-  * Return the result in an unsigned char array.
+  * Returns the result in an unsigned char array.
   */
 unsigned char* base64_decode(const char* data, unsigned char* output); 
   /*!
