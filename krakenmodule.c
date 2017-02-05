@@ -1,5 +1,6 @@
 #include <Python.h>
 #include <structmember.h>
+#include <stdio.h>
 #include "kraken_api.h"
 
 typedef struct {
@@ -17,14 +18,32 @@ typedef struct {
 	struct kraken_api *kr_api;
 } Kraken;
 
+static int Kraken_traverse(Kraken *self, visitproc visit, void *arg){
+
+	Py_VISIT(self->first);
+	Py_VISIT(self->last);
+
+	return 0;
+}
+
+static int Kraken_clear(Kraken *self){
+
+	Py_CLEAR(self->first);
+	Py_CLEAR(self->last);
+
+	return 0;
+}
+
 static void Kraken_dealloc(Kraken* self){
 
-	Py_XDECREF(self->first);
-	Py_XDECREF(self->last);
+	printf("dealloc called\n");
+	Kraken_clear(self);
 	Py_TYPE(self)->tp_free((PyObject*)self);
 }
 
 static PyObject *Kraken_new(PyTypeObject *type, PyObject *args, PyObject *kwds){
+
+	printf("Kraken new executed\n");
 
 	Kraken *self;
 
@@ -51,51 +70,109 @@ static PyObject *Kraken_new(PyTypeObject *type, PyObject *args, PyObject *kwds){
 
 }
 
+/* pass api- and secret-key durin initialization */
+
 static int Kraken_init(Kraken *self, PyObject *args, PyObject *kwds){
+
+	printf("Kraken init executed\n");
 
 	PyObject *first = NULL, *last = NULL, *tmp;
 
 	static char *kwlist[] = {"first", "last", "number", NULL};
 
-	if(!PyArg_ParseTupleAndKeywords(args, kwds, "|00i", kwlist, &first, &last, &self->number))
+	if(!PyArg_ParseTupleAndKeywords(args, kwds, "|SSi", kwlist, &first, &last, &self->number))
 		return -1;
 
 	if(first){
 		tmp = self->first;
 		Py_INCREF(first);
 		self->first = first;
-		Py_XDECREF(tmp);
+		Py_DECREF(tmp);
 	}
 
 	if(last){
 		tmp = self->last;
 		Py_INCREF(last);
 		self->last = last;
-		Py_XDECREF(tmp);
+		Py_DECREF(tmp);
 	}
 
 	return 0;
 }
 
 static PyMemberDef Kraken_members[] = {
-	{"first", T_OBJECT_EX, offsetof(Kraken, first), 0, "first name"},
-	{"last", T_OBJECT_EX, offsetof(Kraken, last), 0, "last name"},
 	{"number", T_INT, offsetof(Kraken, number), 0, "Kraken number"},
 	{NULL} /* Sentinel */
 };
 
+static PyObject* Kraken_getfirst(Kraken *self, void *closure){
+
+	printf("Kraken_getfirst called\n");
+	Py_INCREF(self->first);
+	return self->first;
+
+}
+
+static int Kraken_setfirst(Kraken *self, PyObject *value, void *closure){
+
+	if(value==NULL){
+		PyErr_SetString(PyExc_TypeError, "Cannot delete the first attribute");
+		return -1;
+	}
+
+	if(!PyUnicode_Check(value)){
+		PyErr_SetString(PyExc_TypeError, "The first attribute value must be a string");
+		return -1;
+	}
+
+
+	Py_DECREF(self->first);
+
+	Py_INCREF(value);
+	self->first = value;
+
+	printf("Kraken_setfirst called\n");
+	return 0;
+}
+
+static PyObject* Kraken_getlast(Kraken *self, void *closure){
+
+	printf("Kraken_getlast called\n");
+	Py_INCREF(self->last);
+	return self->last;
+
+}
+
+static int Kraken_setlast(Kraken *self, PyObject *value, void *closure){
+
+	printf("Kraken_setlast called\n");
+	if(value==NULL){
+		PyErr_SetString(PyExc_TypeError, "Cannot delete the last attribute");
+		return -1;
+	}
+
+	if(!PyUnicode_Check(value)){
+		PyErr_SetString(PyExc_TypeError, "The first attribute value must be a string");
+		return -1;
+	}
+
+	Py_DECREF(self->last);
+	Py_INCREF(value);
+	self->last = value;
+
+	return 0;
+}
+
+static PyGetSetDef Kraken_getseters[] = {
+
+	{"first", (getter)Kraken_getfirst, (setter)Kraken_setfirst, "first name", NULL},
+	{"last", (getter)Kraken_getlast, (setter)Kraken_setlast, "last name", NULL},
+	{NULL}
+};
+
 static PyTypeObject *Kraken_name(Kraken* self){
 
-	if(self->first == NULL){
-		PyErr_SetString(PyExc_AttributeError, "first");
-		return NULL;
-	}
-
-
-	if(self->last == NULL){
-		PyErr_SetString(PyExc_AttributeError, "last");
-		return NULL;
-	}
+	printf("Kraken_name called\n");
 
 	return PyUnicode_FromFormat("%S %S", self->first, self->last);
 }
@@ -105,12 +182,12 @@ static PyMethodDef Kraken_methods[] = {
 	{NULL}	/* Sentinel */
 };
 
-static PyTypeObject kraken_NoddyType = {
+static PyTypeObject kraken_Type = {
 	PyVarObject_HEAD_INIT(NULL, 0)
 		"kraken.Kraken",             /* tp_name */
 	sizeof(Kraken), /* tp_basicsize */
 	0,                         /* tp_itemsize */
-	0,                         /* tp_dealloc */
+	(destructor)Kraken_dealloc,   /* tp_dealloc */
 	0,                         /* tp_print */
 	0,                         /* tp_getattr */
 	0,                         /* tp_setattr */
@@ -125,7 +202,7 @@ static PyTypeObject kraken_NoddyType = {
 	0,                         /* tp_getattro */
 	0,                         /* tp_setattro */
 	0,                         /* tp_as_buffer */
-	Py_TPFLAGS_DEFAULT | Py_TPFLAGS_BASETYPE,        /* tp_flags */
+	Py_TPFLAGS_DEFAULT | Py_TPFLAGS_BASETYPE | Py_TPFLAGS_HAVE_GC,        /* tp_flags */
 	"Kraken objects",           /* tp_doc */
 	0,
 	0,
@@ -135,7 +212,7 @@ static PyTypeObject kraken_NoddyType = {
 	0,
 	Kraken_methods,
 	Kraken_members,
-	0,
+	Kraken_getseters,
 	0,
 	0,
 	0,
@@ -158,16 +235,15 @@ PyMODINIT_FUNC PyInit_kraken(void){
 
 	PyObject* m;
 
-	kraken_NoddyType.tp_new = PyType_GenericNew;
-	if (PyType_Ready(&kraken_NoddyType) < 0)
+	if (PyType_Ready(&kraken_Type) < 0)
 		return NULL;
 
 	m = PyModule_Create(&krakenmodule);
 	if (m == NULL)
 		return NULL;
 
-	Py_INCREF(&kraken_NoddyType);
-	PyModule_AddObject(m, "Kraken", (PyObject *)&kraken_NoddyType);
+	Py_INCREF(&kraken_Type);
+	PyModule_AddObject(m, "Kraken", (PyObject *)&kraken_Type);
 	return m;
 }
 
