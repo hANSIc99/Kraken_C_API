@@ -10,5 +10,7 @@ setup (name = 'PackageName', version = '0.1',
 setup(name="kraken", version="1.0",
       ext_modules=[
          Extension("kraken", ["krakenmodule.c"]),
+         Extension("private", ["krakenprivatemodule.c"]),
+         Extension("public", ["krakenpublicmodule.c"]),
          Extension("noddy", ["noddy.c"]),
          ])

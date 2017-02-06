@@ -105,68 +105,12 @@ static PyMemberDef Kraken_members[] = {
 	{NULL} /* Sentinel */
 };
 
-static PyObject* Kraken_getfirst(Kraken *self, void *closure){
-
-	printf("Kraken_getfirst called\n");
-	Py_INCREF(self->first);
-	return self->first;
-
-}
-
-static int Kraken_setfirst(Kraken *self, PyObject *value, void *closure){
-
-	if(value==NULL){
-		PyErr_SetString(PyExc_TypeError, "Cannot delete the first attribute");
-		return -1;
-	}
-
-	if(!PyUnicode_Check(value)){
-		PyErr_SetString(PyExc_TypeError, "The first attribute value must be a string");
-		return -1;
-	}
 
 
-	Py_DECREF(self->first);
 
-	Py_INCREF(value);
-	self->first = value;
-
-	printf("Kraken_setfirst called\n");
-	return 0;
-}
-
-static PyObject* Kraken_getlast(Kraken *self, void *closure){
-
-	printf("Kraken_getlast called\n");
-	Py_INCREF(self->last);
-	return self->last;
-
-}
-
-static int Kraken_setlast(Kraken *self, PyObject *value, void *closure){
-
-	printf("Kraken_setlast called\n");
-	if(value==NULL){
-		PyErr_SetString(PyExc_TypeError, "Cannot delete the last attribute");
-		return -1;
-	}
-
-	if(!PyUnicode_Check(value)){
-		PyErr_SetString(PyExc_TypeError, "The first attribute value must be a string");
-		return -1;
-	}
-
-	Py_DECREF(self->last);
-	Py_INCREF(value);
-	self->last = value;
-
-	return 0;
-}
 
 static PyGetSetDef Kraken_getseters[] = {
 
-	{"first", (getter)Kraken_getfirst, (setter)Kraken_setfirst, "first name", NULL},
-	{"last", (getter)Kraken_getlast, (setter)Kraken_setlast, "last name", NULL},
 	{NULL}
 };
 
