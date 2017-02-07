@@ -1,4 +1,5 @@
 from distutils.core import setup, Extension
+import subprocess
 """
 kraken = Extension('kraken', sources = ['krakenmodule.c'])
 
@@ -7,8 +8,11 @@ setup (name = 'PackageName', version = '0.1',
         ext_modules = [kraken])
 """
 
-setup(name="kraken", version="1.0",
-      ext_modules=[
-         Extension("kraken", ["krakenmodule.c"]),
-         Extension("noddy", ["noddy.c"]),
-         ])
+krakenprivatemodule = Extension('kraken',
+        library_dirs = ['.'],
+        libraries = ['kraken'],
+        sources = ['krakenprivatemodule.c'])
+
+
+setup (name="kraken", version="1.0",
+      ext_modules=[krakenprivatemodule])

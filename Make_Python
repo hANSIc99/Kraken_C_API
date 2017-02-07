@@ -5,8 +5,7 @@ ERROR =y
 DEBUG =y
 TRACE =y
 
-CFLAGS= -std=c1x -c -Wall -Wextra -Woverlength-strings -g -O0 -D_POSIX_C_SOURCE=200112L -D_GNU_SOURCE -I/usr/include/python3.5/
-
+CFLAGS= -std=c1x -c -Wall -Wextra -Woverlength-strings -g -O0 -D_POSIX_C_SOURCE=200112L -D_GNU_SOURCE -I/usr/include/python3.5/  
 
 
 # PROGRAM DEBUG FUNCTIONS
@@ -34,19 +33,20 @@ endif
 
 DEFINES= -DPASSWORD='"$(PASSWORD)"'
 # LIBS muss im lezten Schritt angehängt werden
-LIBS = -L/usr/local/lib -L/usr/lib -L/usr/lib/x86_64-linux-gnu -lm -lssl -lcrypto 
+LIBS = -L/usr/local/lib -L/usr/lib -L/usr/lib/x86_64-linux-gnu -lm -lssl -lcrypto
+
 PASSWORD= '"Default"'
 
-DEPS = 
+DEPS = logging.h kraken_api.h main_header.h curl.h url.h crypto.h kr_helper.h kr_private_trading_functions.h kr_public_functions.h kr_private_user_functions.h 
 
-OBJ = krakenmodule.o
+OBJ = kraken_api.o krakenprivatemodule.o curl.o url.o crypto.o kr_helper.o kr_private_trading_functions.o kr_public_functions.o kr_private_user_functions.o
 
-all: pymod
+all: private
 	@echo "CFLAGS: $(CFLAGS)"
 	@echo "Compiled with PASSWORD= $(PASSWORD)"
 
 # PHONY !
-pymod: $(OBJ)
+private: $(OBJ)
 	$(CC) $(OBJ) $(LIBS) -o $@ 
 
 
