@@ -1,56 +1,26 @@
-/*
- * =====================================================================================
- *
- *       Filename:  krakenprivatemodule.c
- *
- *    Description:  Private API functions
- *
- *        Version:  1.0
- *        Created:  06.02.2017 17:37:51
- *       Revision:  none
- *       Compiler:  gcc
- *
- *         Author:  YOUR NAME (), 
- *   Organization:  
- *
- * =====================================================================================
- */
 #include <Python.h>
 #include <structmember.h>
 #include <stdio.h>
 #include "kraken_api.h"
+
 typedef struct {
 	/* makro that brings in the standard python object fields */	
 	PyObject_HEAD
 	/* Type-specific fields go here. */
-#if 0
-	PyObject *api_key;
-	PyObject *sec_key;
-#endif
 
-	const char *api_key;
-	const char *sec_key;
+	char* sec_key;
+	char* api_key;
+
+	int number;
 
 	struct kraken_api *kr_api;
 } private;
 
-static int private_traverse(private *self, visitproc visit, void *arg){
-
-	Py_VISIT(self->sec_key);
-	Py_VISIT(self->api_key);
-
-	return 0;
-}
 
 static int private_clear(private *self){
 
 	printf("clear calles\n");
-	Py_CLEAR(self->sec_key);
-	Py_CLEAR(self->api_key);
-
-	return 0;
 }
-
 /* 
 module = PyImport_ImportModule("testPython");
 */
@@ -67,26 +37,16 @@ static PyObject *private_new(PyTypeObject *type, PyObject *args, PyObject *kwds)
 	private *self;
 
 	self = (private *)type->tp_alloc(type, 0);
-#if 0
-	if(self != NULL){
-		self->api_key = PyUnicode_FromString("");
-		if(self->api_key == NULL){
-			Py_DECREF(self);
-			return NULL;
-		}
-
-		self->sec_key = PyUnicode_FromString("");
-		if(self->sec_key == NULL){
-			Py_DECREF(self);
-			return NULL;				
-		}
-
-
-	}
-#endif
-	return (PyObject*)self;
-
 }
+
+static void public_dealloc(Kraken* self){
+
+	printf("dealloc called\n");
+	public_clear(self);
+	Py_TYPE(self)->tp_free((PyObject*)self);
+}
+
+
 /* fehler bei self pointer irgendwo */
 static int private_set_api_char(private *self){
 
@@ -97,9 +57,13 @@ static int private_set_api_char(private *self){
 
 
 	printf("value of my_result: %s\n", self->api_key);
+		self->number = 0;
 
-	return 0;
+
+	return (PyObject*)self;
+
 }
+
 
 /* pass api- and secret-key durin initialization */
 static int private_init(private *self, PyObject *args, PyObject *kwds){
@@ -148,6 +112,7 @@ static PyMethodDef private_methods[] = {
 };
 
 static PyTypeObject krakenprivate_Type = {
+
 	PyVarObject_HEAD_INIT(NULL, 0)
 		"kraken.private",             /* tp_name */
 	sizeof(private), /* tp_basicsize */
@@ -209,6 +174,7 @@ PyMODINIT_FUNC PyInit_private(void){
 
 	Py_INCREF(&krakenprivate_Type);
 	PyModule_AddObject(m, "private", (PyObject *)&krakenprivate_Type);
+
 	return m;
 }
 

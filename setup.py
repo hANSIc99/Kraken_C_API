@@ -16,3 +16,4 @@ krakenprivatemodule = Extension('kraken',
 
 setup (name="kraken", version="1.0",
       ext_modules=[krakenprivatemodule])
+

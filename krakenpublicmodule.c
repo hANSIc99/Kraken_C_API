@@ -207,8 +207,3 @@ PyMODINIT_FUNC PyInit_public(void){
 	return m;
 }
 
-
-
-
-
-
