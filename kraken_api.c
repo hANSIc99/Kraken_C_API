@@ -76,6 +76,12 @@ int kraken_init(struct kraken_api **kr_api, const char *api_key, const char *sec
 	(*kr_api)->s_api_key = NULL;
 	(*kr_api)->s_sec_key = NULL;
 
+	if(!((*kr_api)->s_api_key || (*kr_api)->s_sec_key)){
+		PERROR("No String found on api_key or sec_key");
+		return -1;
+	}
+
+
 	(*kr_api)->s_api_key = strdup(api_key);
 	(*kr_api)->s_sec_key = strdup(sec_key);
 	

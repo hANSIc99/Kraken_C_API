@@ -39,7 +39,7 @@ static PyObject *private_new(PyTypeObject *type, PyObject *args, PyObject *kwds)
 	self = (private *)type->tp_alloc(type, 0);
 }
 
-static void public_dealloc(Kraken* self){
+static void public_dealloc(private* self){
 
 	printf("dealloc called\n");
 	public_clear(self);
