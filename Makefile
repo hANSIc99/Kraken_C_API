@@ -7,6 +7,7 @@ TRACE =y
 
 CFLAGS= -std=c1x -c -Wall -Wextra -Woverlength-strings -g -O0 -D_POSIX_C_SOURCE=200112L -D_GNU_SOURCE  
 
+LIB_NAME = libkraken.a
 
 # PROGRAM DEBUG FUNCTIONS
 
@@ -39,13 +40,13 @@ PASSWORD= '"Default"'
 
 DEPS = logging.h kraken_api.h main_header.h curl.h url.h crypto.h kr_helper.h kr_private_trading_functions.h kr_public_functions.h kr_private_user_functions.h 
 
-OBJ = kraken_api.o main.o curl.o url.o crypto.o kr_helper.c kr_private_trading_functions.o kr_public_functions.o kr_private_user_functions.o
+OBJ = kraken_api.o main.o curl.o url.o crypto.o kr_helper.o kr_private_trading_functions.o kr_public_functions.o kr_private_user_functions.o
 
 all: REST
 	@echo "CFLAGS: $(CFLAGS)"
 	@echo "Compiled with PASSWORD= $(PASSWORD)"
 
-# PHONY !
+
 REST: $(OBJ)
 	$(CC) $(OBJ) $(LIBS) -o $@ 
 
@@ -53,6 +54,14 @@ REST: $(OBJ)
 %.o: %.c $(DEPS)
 	$(CC) $(DEFINES) $(CFLAGS) -c -o $@ $<
 
+.PHONY: clean
+clean:
+	rm -f $(OBJ) $(LIB_NAME) REST
 
-
-
+.PHONY: LIBRARY
+LIBRARY: CFLAGS += -fPIC
+LIBRARY: clean REST LINK
+	@echo "Library compiled with CFLAGS: $(CFLAGS)"
+	
+LINK: $(OBJ)
+	ar -cvq $(LIB_NAME) *.o
