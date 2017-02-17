@@ -370,13 +370,9 @@ kr_api->priv_func->cancel_order(&kr_api, "OBH2CQ-KGH4B-YFF3PA");
 /* get-account-balance: get_account_balance(&api) - no further arguments or optionals */
 /* get-account-balance: get_account_balance(&kr_api) */
 
-#if 0
+#if 1
 kr_api->priv_func->get_account_balance(&kr_api);
 #endif
-
-
-
-
 
 
 /* the result is stored in the buffer: kr_api->s_result */
@@ -429,7 +425,7 @@ kr_api->priv_func->get_trade_volume(&kr_api);
 kr_api->pub_func->get_server_time(&kr_api);
 #endif
 
-#if 1
+#if 0
 kr_api->pub_func->get_asset_info(&kr_api);
 #endif
 

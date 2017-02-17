@@ -186,12 +186,15 @@ int query_private(struct kraken_api **kr_api){
 
 
 	/* free s_data only if it was used */
-	if((*kr_api)->s_data)
+	if((*kr_api)->s_data){
 		free((*kr_api)->s_data);
+		(*kr_api)->s_data = NULL;
+	}
 
 	free(curl_query_url);
 	free(curl_nonce_url);
 	free((*kr_api)->tmp_query_url);
+	(*kr_api)->tmp_query_url = NULL;
 	free(str_nonce);
 	free(s_sha256);
 	free(uc_data);
@@ -242,9 +245,14 @@ int query_public(struct kraken_api **kr_api){
 	PTRACE("curl query: %s", curl_query);
 
 	/* free s_data only if it was used */
-	if((*kr_api)->s_data)
+	if((*kr_api)->s_data){
 		free((*kr_api)->s_data);
+		(*kr_api)->s_data = NULL;
+	}
+
 	free((*kr_api)->tmp_query_url);
+	(*kr_api)->tmp_query_url = NULL;
+
 	free(curl_query_url);
 
 	(*kr_api)->s_result = curl_get(curl_query);
