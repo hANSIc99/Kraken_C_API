@@ -1,9 +1,9 @@
 
 CC=gcc 
 
-ERROR =y
-DEBUG =y
-TRACE =y
+ERROR =n
+DEBUG =n
+TRACE =n
 
 CFLAGS= -std=c1x -c -Wall -Wextra -Woverlength-strings -g -O0 -D_POSIX_C_SOURCE=200112L -D_GNU_SOURCE  
 

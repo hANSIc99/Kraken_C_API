@@ -66,8 +66,9 @@ unsigned char* base64_decode(const char* data, unsigned char* output){
 
 	if (decoded_size < 0)
 		PDEBUG("ERROR in decoding");
-	else
+	else{
 		PTRACE("b64 decoding successfull; decoded_size: %d", decoded_size);
+	}
 	return output;
 }	
 
