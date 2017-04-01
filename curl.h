@@ -13,7 +13,7 @@
 #include "logging.h"
 #include "crypto.h"
 
-#define BUFFER_SIZE 32768
+#define BUFFER_SIZE 65536
 
 /*!
  * \file curl.h

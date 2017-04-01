@@ -333,15 +333,15 @@ const char *sec_key = "sec_key";
 kraken_init(&kr_api, api_key, sec_key);
 
 /* EXAMPLES */
-#if 1
+#if 0
 kraken_set_opt(&kr_api, "asset", "ZUSD"); 
 kraken_set_opt(&kr_api, "count", "2"); 
-#if 1
-kraken_set_opt(&kr_api, "pair", "ETCXBT"); 
 #endif
+#if 0
+kraken_set_opt(&kr_api, "pair", "ETCXBT"); 
 kraken_set_opt(&kr_api, "validate", "true"); 
 #endif
-#if 1
+#if 0
 kraken_set_opt(&kr_api, "end", "1482998660"); 
 kraken_set_opt(&kr_api, "ofs", "ofs"); 
 kraken_set_opt(&kr_api, "closetime", "1482999660"); 
@@ -370,7 +370,7 @@ kr_api->priv_func->cancel_order(&kr_api, "OBH2CQ-KGH4B-YFF3PA");
 /* get-account-balance: get_account_balance(&api) - no further arguments or optionals */
 /* get-account-balance: get_account_balance(&kr_api) */
 
-#if 1
+#if 0
 kr_api->priv_func->get_account_balance(&kr_api);
 #endif
 
@@ -437,7 +437,7 @@ kr_api->pub_func->get_tradable_asset_pairs(&kr_api);
 kr_api->pub_func->get_ticker_info(&kr_api, "XETCZEUR");
 #endif
 
-#if 0
+#if 1
 kr_api->pub_func->get_ohlc_data(&kr_api, "XETCZEUR");
 #endif
 
