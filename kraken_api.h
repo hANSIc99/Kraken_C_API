@@ -200,7 +200,7 @@ struct public_functions {
 /*! 
  * \brief Initialization of the required structures
  * 
- * \param **kr_api Adress of a pointer to the appropriate structure (not initialized)
+ * \param **kr_api Address of a pointer to the appropriate structure (not initialized)
  *
  * \param *api_key API Key (log into kraken.com and go to settings->API)
  *
@@ -214,7 +214,7 @@ int kraken_init(struct kraken_api **kr_api, const char *api_key, const char *sec
 /*! 
  * \brief De-initialization of the structures
  * 
- * \param **kr_api Adress of a pointer to the initialized structure.
+ * \param **kr_api Address of a pointer to the initialized structure.
  *
  *
  * This function frees the memory which was allocated by kraken_init().
