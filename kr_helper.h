@@ -10,7 +10,7 @@
  * \brief Helper functions for private API calls. 
  * This file contains helper functions used by private trading and user functions.
  *
- * Currently only switch_opt(struct kraken_api **kr_api) is used by both parts; the private trading and user functions.
+ * Currently switch_opt(struct kraken_api **kr_api) is used by both parts; the private trading and user functions.
  *
  * \file kr_helper.c
  * \var u8_opt_count
@@ -31,14 +31,14 @@
  * This functions checks if options flags are set. Possible options are defined
  * in #options_listen_table[] in kraken_api.c
  *
- * The functions sets the appropriate content so the s_data variable. When or
- * not content was found, the flag will be set to FALSE again.
+ * The functions sets the appropriate content so the s_data variable. When
+ * no content was found, the flag will be set to FALSE again.
  *
  * After this procedure the function calls itself again till all possible
  * options were checked.
  *
  * */
-void switch_opt(struct kraken_api **kr_api);
 
+void switch_opt(struct kraken_api **kr_api);
 
 #endif

@@ -6,30 +6,30 @@
 
 static struct st_opt_list options_listen_table[] = {
 
-	[INFO]		=	{.name = "info",	.b_flag =	FALSE,	.key = "info="},
-	[ACLASS]	=	{.name = "aclass",	.b_flag =	FALSE,	.key = "aclass="},
-	[ASSET]		=	{.name = "asset",	.b_flag =	FALSE,	.key = "asset="},	
-	[TRADES]	=	{.name = "trades",	.b_flag =	FALSE,	.key = "trades="},
-	[USERREF]	=	{.name ="userref",	.b_flag =	FALSE,	.key = "userref="},
-	[START]		=	{.name = "start",	.b_flag =	FALSE,	.key = "start="},
-	[END]		=	{.name = "end",		.b_flag =	FALSE,	.key = "end="},
-	[OFS]		=	{.name = "ofs",		.b_flag =	FALSE,	.key = "ofs="},
-	[CLOSETIME]	=	{.name = "closetime",	.b_flag =	FALSE,	.key = "closetime="},
-	[DOCALCS]	=	{.name = "docalcs",	.b_flag =	FALSE,	.key = "docalcs="},
-	[PAIR]		=	{.name = "pair",	.b_flag =	FALSE,	.key = "pair="},
-	[FEE_INFO]	=	{.name = "fee-info",	.b_flag =	FALSE,	.key = "fee-info="},
-	[OFLAGS]	=	{.name = "oflags",	.b_flag =	FALSE,	.key = "oflags="},
-	[STARTTM]	=	{.name = "starttm",	.b_flag =	FALSE,	.key = "starttm="},
-	[EXPIRETM]	=	{.name = "expiretm",	.b_flag =	FALSE,	.key = "expiretm="},
-	[VALIDATE]	=	{.name = "validate",	.b_flag =	FALSE,	.key = "validate="},
-	[LEVERAGE]	=	{.name = "leverage",	.b_flag =	FALSE,	.key = "leverage="},
-	[TYPE]		=	{.name = "type",	.b_flag =	FALSE,	.key = "type="},
+	[INFO]	    	=	{.name = "info",	    .b_flag =	FALSE,	.key = "info="      },
+	[ACLASS]    	=	{.name = "aclass",	    .b_flag =	FALSE,	.key = "aclass="    },
+	[ASSET]	    	=	{.name = "asset",	    .b_flag =	FALSE,	.key = "asset="     },	
+	[TRADES]    	=	{.name = "trades",	    .b_flag =	FALSE,	.key = "trades="    },
+	[USERREF]   	=	{.name ="userref",  	.b_flag =	FALSE,	.key = "userref="   },
+	[START]	    	=	{.name = "start",   	.b_flag =	FALSE,	.key = "start="     },
+	[END]	    	=	{.name = "end",	    	.b_flag =	FALSE,	.key = "end="       },
+	[OFS]	    	=	{.name = "ofs",	    	.b_flag =	FALSE,	.key = "ofs="       },
+	[CLOSETIME] 	=	{.name = "closetime",	.b_flag =	FALSE,	.key = "closetime=" },
+	[DOCALCS]   	=	{.name = "docalcs", 	.b_flag =	FALSE,	.key = "docalcs="   },
+	[PAIR]	    	=	{.name = "pair",    	.b_flag =	FALSE,	.key = "pair="      },
+	[FEE_INFO]  	=	{.name = "fee-info",	.b_flag =	FALSE,	.key = "fee-info="  },
+	[OFLAGS]    	=	{.name = "oflags",  	.b_flag =	FALSE,	.key = "oflags="    },
+	[STARTTM]   	=	{.name = "starttm", 	.b_flag =	FALSE,	.key = "starttm="   },
+	[EXPIRETM]  	=	{.name = "expiretm",	.b_flag =	FALSE,	.key = "expiretm="  },
+	[VALIDATE]  	=	{.name = "validate",	.b_flag =	FALSE,	.key = "validate="  },
+	[LEVERAGE]  	=	{.name = "leverage",	.b_flag =	FALSE,	.key = "leverage="  },
+	[TYPE]	    	=	{.name = "type",    	.b_flag =	FALSE,	.key = "type="      },
 	[CLOSE_TYPE]	=	{.name = "close-type",	.b_flag =	FALSE,	.key = "close[ordertype]="},
 	[CLOSE_PRICE_1]	=	{.name = "close-pc-1",	.b_flag =	FALSE,	.key = "close[price]="},
 	[CLOSE_PRICE_2]	=	{.name = "close-pc-2",	.b_flag =	FALSE,	.key = "close[price2]="},
-	[INTERVAL]	=	{.name = "interval",	.b_flag =	FALSE,	.key = "interval="},
-	[SINCE]		=	{.name = "since",	.b_flag =	FALSE,	.key = "since="},
-	[COUNT]		=	{.name = "count",	.b_flag =	FALSE,	.key = "count="}
+	[INTERVAL]  	=	{.name = "interval",	.b_flag =	FALSE,	.key = "interval="  },
+	[SINCE]	    	=	{.name = "since",   	.b_flag =	FALSE,	.key = "since="     },
+	[COUNT]	    	=	{.name = "count",   	.b_flag =	FALSE,	.key = "count="     }
 };
 
 #define SZ_LIST_TABLE (sizeof(options_listen_table))
@@ -87,8 +87,8 @@ int kraken_init(struct kraken_api **kr_api, const char *api_key, const char *sec
 	
 	/* initialize with default values */
 
-	(*kr_api)->s_url =			NULL;
-	(*kr_api)->s_data =			NULL;
+	(*kr_api)->s_url =		    	NULL;
+	(*kr_api)->s_data =			    NULL;
 	(*kr_api)->s_result =			NULL;
 	(*kr_api)->s_uri_private =		NULL;
 	(*kr_api)->s_uri_addorder =		NULL;
@@ -111,8 +111,8 @@ int kraken_init(struct kraken_api **kr_api, const char *api_key, const char *sec
 
 	/* assign the private functions */
 
-	(*kr_api)->priv_func->add_order			= &addOrder;
-	(*kr_api)->priv_func->cancel_order		= &cancelOrder;
+	(*kr_api)->priv_func->add_order	    		= &addOrder;
+	(*kr_api)->priv_func->cancel_order	    	= &cancelOrder;
 	(*kr_api)->priv_func->get_account_balance	= &account_balance;
 	(*kr_api)->priv_func->get_trade_balance		= &trade_balance;
 	(*kr_api)->priv_func->get_open_orders		= &open_orders;
@@ -122,19 +122,19 @@ int kraken_init(struct kraken_api **kr_api, const char *api_key, const char *sec
 	(*kr_api)->priv_func->query_trades_info		= &trades_info;	
 	(*kr_api)->priv_func->get_open_positions	= &open_positions;	
 	(*kr_api)->priv_func->get_ledgers_info		= &ledgers_info;	
-	(*kr_api)->priv_func->query_ledgers		= &query_ledgers;	
+	(*kr_api)->priv_func->query_ledgers	    	= &query_ledgers;	
 	(*kr_api)->priv_func->get_trade_volume		= &trade_volume;	
 
 	/* assign the public functions */
 
-	(*kr_api)->pub_func->get_server_time		= &server_time;
-	(*kr_api)->pub_func->get_asset_info		= &asset_info;
+	(*kr_api)->pub_func->get_server_time	    	= &server_time;
+	(*kr_api)->pub_func->get_asset_info	        	= &asset_info;
 	(*kr_api)->pub_func->get_tradable_asset_pairs	= &asset_pairs;
-	(*kr_api)->pub_func->get_ticker_info		= &ticker_info;
-	(*kr_api)->pub_func->get_ohlc_data		= &ohlc_data;
-	(*kr_api)->pub_func->get_order_book		= &order_book;
-	(*kr_api)->pub_func->get_recent_trades		= &recent_trades;
-	(*kr_api)->pub_func->get_recent_spread_data	= &spread_data;
+	(*kr_api)->pub_func->get_ticker_info	    	= &ticker_info;
+	(*kr_api)->pub_func->get_ohlc_data	        	= &ohlc_data;
+	(*kr_api)->pub_func->get_order_book	        	= &order_book;
+	(*kr_api)->pub_func->get_recent_trades	    	= &recent_trades;
+	(*kr_api)->pub_func->get_recent_spread_data 	= &spread_data;
 	
 
 	make_url(kr_api);

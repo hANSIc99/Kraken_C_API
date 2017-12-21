@@ -236,11 +236,9 @@ int key_from_string(const char *str, const struct st_opt_list *type_table, const
 /*! 
  * \brief Helper function to set optional arguments in api calls.
  *  
- * \param **kr_api Adress of a pointer to the initialized structure.
- * \param *opt Name of the optional to be set (to be found in lookup-table).
+ * \param **kr_api Address of a pointer to the initialized structure.
+ * \param *opt Name of the optional to be set (to be found in the lookup-table).
  *
- *
- * This function frees the memory which was allocated by kraken_init().\n\n
  *
  * Available options: \n
  * <b>info</b>\n
