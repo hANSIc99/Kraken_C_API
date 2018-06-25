@@ -1,3 +1,5 @@
+#include <inttypes.h>
+
 #include "curl.h"
 #include "kraken_api.h"
 
@@ -81,11 +83,11 @@ int query_private(struct kraken_api **kr_api){
 	gettimeofday(&sys_time, &sys_tz);
 
 
-	u64_nonce = (sys_time.tv_sec * 1000000) + sys_time.tv_usec;
+	u64_nonce = ((uint64_t)sys_time.tv_sec * 1000000) + sys_time.tv_usec;
 
 	/* create string from nonce */
 
-	asprintf(&str_nonce, "%lu", u64_nonce); 
+	asprintf(&str_nonce, "%" PRIu64, u64_nonce);
 
 	PTRACE("Nonce: %s", str_nonce);
 
