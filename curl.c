@@ -9,21 +9,26 @@ char* curl_get(char *query_string){
 	FILE *curl_out;
 	char *result;
 	int ext_status, i_char;
-	int memcount = 0;
+	size_t memcount = 0;
 	result = NULL;
+	size_t buf_size = 0;
 
-
-	result = calloc(BUFFER_SIZE, sizeof(char));
 	curl_out = popen(query_string, "r");
-
-	if(curl_out == NULL)
-
-		return NULL;	/* ERROR */
 
 	do {
 		i_char = fgetc(curl_out);
 
 		memcount++;
+
+		if (memcount > buf_size) {
+			buf_size += BUFFER_SIZE;
+			char *newres = realloc(result, buf_size);
+			if (newres == NULL) {
+				free(result);
+				return NULL;	/* ERROR */
+			}
+			result = newres;
+		}
 
 		/* skip newline chars */
 		i_char == '\n' ? i_char = ' ' : i_char;  
