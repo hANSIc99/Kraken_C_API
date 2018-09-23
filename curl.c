@@ -169,7 +169,7 @@ int query_private(struct kraken_api **kr_api){
 
 	/* -tlsv1.3 to force TLS V1.3 support */
 
-	curl_query = strdup("curl -tlsv1.3 --data ");
+	curl_query = strdup("curl -sS -tlsv1.3 --data ");
 	curl_query = to_url(curl_query, "\"");
 	curl_query = to_url(curl_query, curl_nonce_url);
 	curl_query = to_url(curl_query, "\" ");
@@ -228,7 +228,7 @@ int query_public(struct kraken_api **kr_api){
 
 	/* -tlsv1.3 to force TLS V1.3 support */
 
-	curl_query = strdup("curl -tlsv1.3 ");
+	curl_query = strdup("curl -sS -tlsv1.3 ");
 
 
 	PTRACE("curl query: %s", (*kr_api)->s_data);
