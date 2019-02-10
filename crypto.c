@@ -18,7 +18,7 @@ static size_t calcDecodeLength(const char* b64input) {
 
 int sha256(const char* data, unsigned char digest[SHA256_DIGEST_LENGTH]){
 	
-	PTRACE("SHA256 input data: %s", data);
+	PTRACEX("SHA256 input data: %s", data);
 
 	SHA256_CTX ctx;
 	if((SHA256_Init(&ctx)) != 1){
@@ -36,7 +36,7 @@ int sha256(const char* data, unsigned char digest[SHA256_DIGEST_LENGTH]){
 		return -1;
 	}
 
-	PTRACE("SHA256 digest lenght: %d", SHA256_DIGEST_LENGTH);
+	PTRACEX("SHA256 digest lenght: %d", SHA256_DIGEST_LENGTH);
 
 	return 0;
 }
@@ -62,12 +62,12 @@ unsigned char* base64_decode(const char* data, unsigned char* output){
 
 	BIO_free_all(bio_mem);
 
-	PTRACE("B64 decoded_lenght: %d", decode_lenght);
+	PTRACEX("B64 decoded_lenght: %d", decode_lenght);
 
 	if (decoded_size < 0)
 		PDEBUG("ERROR in decoding");
 	else{
-		PTRACE("b64 decoding successfull; decoded_size: %d", decoded_size);
+		PTRACEX("b64 decoding successfull; decoded_size: %d", decoded_size);
 	}
 	return output;
 }	
