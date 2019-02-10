@@ -321,15 +321,11 @@
 
 int main (void){
 
-
 struct kraken_api *kr_api = NULL;
-
-
-
 const char *api_key = "api_key";
 const char *sec_key = "sec_key";
-/* init function.... */
 
+/* We need to call the init function: */
 kraken_init(&kr_api, api_key, sec_key);
 
 /* EXAMPLES */
@@ -347,16 +343,11 @@ kraken_set_opt(&kr_api, "ofs", "ofs");
 kraken_set_opt(&kr_api, "closetime", "1482999660"); 
 #endif
 
-
-
-
 /* PRIVATE USER TRADING */
-
 /* add_order returns 0 on success */
 #if 0
 kr_api->priv_func->add_order(&kr_api, "buy", "trailing-stop-limit", "XXBTZEUR", "10.0", "755.00", "758.00");
 #endif
-
 #if 0
 kr_api->priv_func->cancel_order(&kr_api, "OBH2CQ-KGH4B-YFF3PA");
 #endif
@@ -437,7 +428,7 @@ kr_api->pub_func->get_tradable_asset_pairs(&kr_api);
 kr_api->pub_func->get_ticker_info(&kr_api, "XETCZEUR");
 #endif
 
-#if 1
+#if 0
 kr_api->pub_func->get_ohlc_data(&kr_api, "XETCZEUR");
 #endif
 
@@ -453,9 +444,36 @@ kr_api->pub_func->get_recent_trades(&kr_api, "XETCZEUR");
 kr_api->pub_func->get_recent_spread_data(&kr_api, "XETCZEUR");
 #endif
 
-#if 1
-PTRACE("BUFFER RESULT: %s", kr_api->s_result);
+#if 0
+PTRACEX("BUFFER RESULT: %s", kr_api->s_result);
+free(kr_api->s_result);
+kr_api->s_result=NULL;
 #endif
+
+/* Simple test */
+#if 1
+/* asset_info with not compatible option */
+kraken_set_opt(&kr_api, "pair", "XETHZEUR,XETHZUSD");
+
+kr_api->pub_func->get_asset_info(&kr_api);
+PTRACEX("BUFFER RESULT: %s", kr_api->s_result);
+
+free(kr_api->s_result);
+kr_api->s_result=NULL;
+
+/* tradable_asset_pairs with some options */
+kraken_set_opt(&kr_api, "pair", "XETHZEUR,XETHZUSD");
+kraken_set_opt(&kr_api, "info", "info");
+
+kr_api->pub_func->get_tradable_asset_pairs(&kr_api);
+if ( kr_api->s_result == NULL )
+	PERROR("Failed to get the data");
+PTRACEX("BUFFER RESULT: %s", kr_api->s_result);
+
+free(kr_api->s_result);
+kr_api->s_result=NULL;
+#endif
+
 
 /* cleanup function must be called to free allocated memory */
 #if 1
