@@ -7,36 +7,35 @@
 #include <ctype.h>
 #include "logging.h"
 
-#define TRUE	1
-#define FALSE	0
+#define TRUE            1
+#define FALSE           0
 
-#define INFO		0
-#define ACLASS		1
-#define ASSET		2
-#define TRADES		3
-#define USERREF		4
-#define START		5
-#define END		6
-#define OFS		7
-#define CLOSETIME	8
-#define DOCALCS		9
-#define PAIR		10
-#define FEE_INFO	11
-#define OFLAGS		12
-#define STARTTM		13
-#define EXPIRETM	14
-#define VALIDATE	15
-#define LEVERAGE	16
-#define TYPE		17
-#define CLOSE_TYPE	18
-#define CLOSE_PRICE_1	19
-#define CLOSE_PRICE_2	20
-#define INTERVAL	21
-#define SINCE		22
-#define COUNT		23
+#define INFO            0
+#define ACLASS          1
+#define ASSET           2
+#define TRADES          3
+#define USERREF         4
+#define START           5
+#define END             6
+#define OFS             7
+#define CLOSETIME       8
+#define DOCALCS         9
+#define PAIR            10
+#define FEE_INFO        11
+#define OFLAGS          12
+#define STARTTM         13
+#define EXPIRETM        14
+#define VALIDATE        15
+#define LEVERAGE        16
+#define TYPE            17
+#define CLOSE_TYPE      18
+#define CLOSE_PRICE_1   19
+#define CLOSE_PRICE_2   20
+#define INTERVAL        21
+#define SINCE           22
+#define COUNT           23
 
-#define BADARG -1
-
+#define BADARG          -1
 
 /*!
  * \file kraken_api.h 
@@ -60,23 +59,16 @@
  * arguments on kr_private_trading_functions
  * and on kr_private_user_functions */
 
-
-
-
 struct st_opt_list {
-
-	uint8_t	b_flag;	/*!< If true, then switch_opt will check for content */
-
-	char*	name;	/*!< Overall name of the option */
-	char*	key;	/*!< String which is called */
-	char*	val;	/*!< Content which is appended to #key after in an REST call */
+	uint8_t b_flag; /*!< If true, then switch_opt will check for content */
+	char*   name;   /*!< Overall name of the option */
+	char*   key;    /*!< String which is called */
+	char*   val;    /*!< Content which is appended to #key after in an REST call */
 };
 
 /* main api-structure */
-
 struct kraken_api {
-
-	struct private_functions *priv_func; 
+	struct private_functions *priv_func;
 	struct public_functions *pub_func;
 	struct private_optionals *priv_opt;
 	struct private_opt_listen *priv_opt_list;
@@ -87,63 +79,54 @@ struct kraken_api {
 
 
 	/* KEY'S */
-
-	char* s_api_key;		/* account specific api-key */
-	char* s_sec_key;		/* account specific secret key */
+	char* s_api_key;                    /* account specific api-key */
+	char* s_sec_key;                    /* account specific secret key */
 
 	/* GENERAL URI'S */
-
-	char* s_uri_private;		/* e.g. /0/private */
-	char* s_uri_public;		/* e.g. /0/public */
-	char* s_url;			/* https://api.kraken.com */
+	char* s_uri_private;                /* e.g. /0/private */
+	char* s_uri_public;                 /* e.g. /0/public */
+	char* s_url;                        /* https://api.kraken.com */
 
 	/* PRIVATE USER TRADING */
-
-	char* s_uri_addorder;		/* e.g. /AddOrder */
-	char* s_uri_cancel_order;	/* e.g. /CancelOrder */
+	char* s_uri_addorder;               /* e.g. /AddOrder */
+	char* s_uri_cancel_order;           /* e.g. /CancelOrder */
 
 	/* PRIVATE USER DATA */
-
-	char* s_uri_balance;		/* e.g. /Balance */
-	char* s_uri_trade_balance;	/* e.g. /TradeBalance */
-	char* s_uri_open_orders;	/* e.g. /OpenOrders */
-	char* s_uri_closed_orders;	/* e.g. /ClosedOrders */
-	char* s_uri_query_orders;	/* e.g. /QueryOrders */
-	char* s_uri_trades_history;	/* e.g. /TradesHistory */
-	char* s_uri_query_trades_info;	/* e.g. /QueryTrades */
-	char* s_uri_open_positions;	/* e.g. /OpenPositions */
-	char* s_uri_ledgers_info;	/* e.g. /Ledgers */
-	char* s_uri_query_ledgers;	/* e.g. /QueryLedgers */
-	char* s_uri_trade_volume;	/* e.g. /TradeVolume */
+	char* s_uri_balance;                /* e.g. /Balance */
+	char* s_uri_trade_balance;          /* e.g. /TradeBalance */
+	char* s_uri_open_orders;            /* e.g. /OpenOrders */
+	char* s_uri_closed_orders;          /* e.g. /ClosedOrders */
+	char* s_uri_query_orders;           /* e.g. /QueryOrders */
+	char* s_uri_trades_history;         /* e.g. /TradesHistory */
+	char* s_uri_query_trades_info;      /* e.g. /QueryTrades */
+	char* s_uri_open_positions;         /* e.g. /OpenPositions */
+	char* s_uri_ledgers_info;           /* e.g. /Ledgers */
+	char* s_uri_query_ledgers;          /* e.g. /QueryLedgers */
+	char* s_uri_trade_volume;           /* e.g. /TradeVolume */
 
 	/* PUBLUC FUNTIONS */
-
-	char* s_uri_server_time;	/* e.g. /Time */
-	char* s_uri_asset_info;		/* e.g. /Assets */
-	char* s_uri_asset_pairs;	/* e.g. /AssetPairs */
-	char* s_uri_ticker;		/* e.g. /Ticker */
-	char* s_uri_ohlc;		/* e.g. /OHLC */
-	char* s_uri_order_book;		/* e.g. /Depth */
-	char* s_uri_recent_trades;	/* e.g. /Trades */
-	char* s_uri_spread;		/* e.g. /Spread */
+	char* s_uri_server_time;            /* e.g. /Time */
+	char* s_uri_asset_info;             /* e.g. /Assets */
+	char* s_uri_asset_pairs;            /* e.g. /AssetPairs */
+	char* s_uri_ticker;                 /* e.g. /Ticker */
+	char* s_uri_ohlc;                   /* e.g. /OHLC */
+	char* s_uri_order_book;             /* e.g. /Depth */
+	char* s_uri_recent_trades;          /* e.g. /Trades */
+	char* s_uri_spread;                 /* e.g. /Spread */
 
 	/* temporary arrays */
-
-	char* tmp_query_url;		/* function specific url to query,
-					  * not initialized */
-	char* s_data;			/* e.g. pair=XXBTZEUR&type=buy 
-					* not initialized! */
+	char* tmp_query_url;                /* function specific url to query, 
+										   not initialized! */
+	char* s_data;                       /* e.g. pair=XXBTZEUR&type=buy,
+										   not initialized! */
 	/* BUFFER */
-
-	char* s_result;			/* contains the answer from kraken */
-
+	char* s_result;                     /* contains the answer from kraken */
 };
 
 struct private_functions {
-
-	/* add_order = variable lenght argument list (p. 155 K&R) */
-
 	/* order in function: type, ordertype, asset-pair */
+
+	/* add_order: variable lenght argument list (p. 155 K&R) */
 	int (*add_order)(struct kraken_api**, const char*, const char*, const char*, const char*, ...);
 	int (*cancel_order)(struct kraken_api**, const char*);
 
@@ -158,12 +141,9 @@ struct private_functions {
 	int (*get_ledgers_info)(struct kraken_api**);
 	int (*query_ledgers)(struct kraken_api**, const char*);
 	int (*get_trade_volume)(struct kraken_api**);
-
 };
 
-
 struct private_opt_listen {
-
 	uint8_t bool_aclass;
 	uint8_t bool_asset;
 	uint8_t bool_trades;
@@ -184,8 +164,8 @@ struct private_opt_listen {
 	uint8_t bool_close_pc_1;
 	uint8_t bool_close_pc_2;
 };
-struct public_functions {
 
+struct public_functions {
 	int (*get_server_time)(struct kraken_api**);
 	int (*get_asset_info)(struct kraken_api**);
 	int (*get_tradable_asset_pairs)(struct kraken_api**);
@@ -194,7 +174,6 @@ struct public_functions {
 	int (*get_order_book)(struct kraken_api**, const char*);
 	int (*get_recent_trades)(struct kraken_api**, const char*);
 	int (*get_recent_spread_data)(struct kraken_api**, const char*);
-
 };
 
 /*! 
@@ -267,8 +246,5 @@ int key_from_string(const char *str, const struct st_opt_list *type_table, const
  *
  * */
 int kraken_set_opt(struct kraken_api **kr_api, const char* opt, const char* val);
-
-
-
 
 #endif
