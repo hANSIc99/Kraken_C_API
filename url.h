@@ -11,9 +11,9 @@
 #define FALSE 0
 
 /*!
- * \file url.h 
+ * \file url.h
  * \brief Inherits the functions which create the url strings.
- * 
+ *
  */
 
   /*!
@@ -25,7 +25,7 @@
   */
 int make_url(struct kraken_api **kr_data);
   /*!
-  * \brief Creates or concatenates char arrays.
+  * \brief Copies or concatenates char arrays.
   *
   * \param dest = Pointer to the destination char array.
   * \param source = Pointer to const char array which is added.
