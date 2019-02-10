@@ -1,5 +1,8 @@
 #include "url.h"
 
+#ifndef _GNU_SOURCE
+#include "my_strings.h"
+#endif
 
 /* create the standard query uri's
  *
@@ -7,39 +10,37 @@
 
 int make_url(struct kraken_api **kr_data){
 	
-	const char* domain = "https://api.kraken.com";
-	const char* api_version = "/0";
-	const char* api_private = "/private";
-	const char* api_public = "/public";
+	const char* domain                  = "https://api.kraken.com";
+	const char* api_version             = "/0";
+	const char* api_private             = "/private";
+	const char* api_public              = "/public";
 	/* PRIVATE USER TRADING */
-	const char* api_add_order = "/AddOrder";
-	const char* api_cancel_order = "/CancelOrder";
+	const char* api_add_order           = "/AddOrder";
+	const char* api_cancel_order        = "/CancelOrder";
 	/* PRIVATE USER DATA */
-	const char* api_balance = "/Balance";
-	const char* api_trade_balance = "/TradeBalance";
-	const char* api_open_orders = "/OpenOrders";
-	const char* api_closed_orders = "/ClosedOrders";
-	const char* api_query_orders = "/QueryOrders";
-	const char* api_trades_history = "/TradesHistory";
-	const char* api_query_trades_info = "/QueryTrades";
-	const char* api_open_positions = "/OpenPositions";
-	const char* api_ledgers_info = "/Ledgers";
-	const char* api_query_ledgers = "/QueryLedgers";
-	const char* api_trade_volume = "/TradeVolume";
+	const char* api_balance             = "/Balance";
+	const char* api_trade_balance       = "/TradeBalance";
+	const char* api_open_orders         = "/OpenOrders";
+	const char* api_closed_orders       = "/ClosedOrders";
+	const char* api_query_orders        = "/QueryOrders";
+	const char* api_trades_history      = "/TradesHistory";
+	const char* api_query_trades_info   = "/QueryTrades";
+	const char* api_open_positions      = "/OpenPositions";
+	const char* api_ledgers_info        = "/Ledgers";
+	const char* api_query_ledgers       = "/QueryLedgers";
+	const char* api_trade_volume        = "/TradeVolume";
 	/* PUBLIC FUNCTIONS */
-	const char* api_server_time = "/Time";
-	const char* api_assets = "/Assets";
-	const char* api_asset_pairs = "/AssetPairs";
-	const char* api_ticker = "/Ticker";
-	const char* api_ohlc = "/OHLC";
-	const char* api_order_book = "/Depth";
-	const char* api_recent_trades = "/Trades";
-	const char* api_spread = "/Spread";
-
+	const char* api_server_time         = "/Time";
+	const char* api_assets              = "/Assets";
+	const char* api_asset_pairs         = "/AssetPairs";
+	const char* api_ticker              = "/Ticker";
+	const char* api_ohlc                = "/OHLC";
+	const char* api_order_book          = "/Depth";
+	const char* api_recent_trades       = "/Trades";
+	const char* api_spread              = "/Spread";
 
 	/* s_url contains just the domain */
-
-	(*kr_data)->s_url = strdup(domain); 
+	(*kr_data)->s_url = strdup(domain);
 
 	/* s_uri_path contains the way to the private uri */
 	/* add api version to the string */
@@ -99,64 +100,55 @@ int make_url(struct kraken_api **kr_data){
 	/* ### PUBLIC FUNCTIONS */
 
 	/* SERVER TIME */
-
 	(*kr_data)->s_uri_server_time = strdup(api_server_time);
 
 	/* ASSET INFO */
-
 	(*kr_data)->s_uri_asset_info = strdup(api_assets);
 
 	/* ASSET PAIRS */
-
 	(*kr_data)->s_uri_asset_pairs = strdup(api_asset_pairs);
 
 	/* TICKER INFORMATION */
-
 	(*kr_data)->s_uri_ticker = strdup(api_ticker);
 
 	/* OHLC DATA */	
-
 	(*kr_data)->s_uri_ohlc = strdup(api_ohlc);
 	
 	/* ORDER BOOK */
-
 	(*kr_data)->s_uri_order_book = strdup(api_order_book);
 
 	/* RECENT TRADES */
-
 	(*kr_data)->s_uri_recent_trades = strdup(api_recent_trades);
 
 	/* SPREAD DATA */
-
 	(*kr_data)->s_uri_spread = strdup(api_spread);
 
-	PTRACE("s_url: %s", (*kr_data)->s_url);
-	PTRACE("s_uri_private: %s", (*kr_data)->s_uri_private);
-	PTRACE("s_uri_public: %s", (*kr_data)->s_uri_public);
-	PTRACE("s_uri_addorder: %s", (*kr_data)->s_uri_addorder);
-
+	PTRACEX("s_url: %s", (*kr_data)->s_url);
+	PTRACEX("s_uri_private: %s", (*kr_data)->s_uri_private);
+	PTRACEX("s_uri_public: %s", (*kr_data)->s_uri_public);
+	PTRACEX("s_uri_addorder: %s", (*kr_data)->s_uri_addorder);
 
 	return 0;
 }
 
-char *to_url(char* dest, const char *source){
+char *to_url(char *original_st, const char *add_st){
 
-	char* ptr = NULL;
+	char* new_st = NULL;
 
-	if(!dest){
-		if(!(ptr = strdup(source))){
-			PERROR("ERROR on strdup");
+	if( original_st == NULL ){
+		if( ( new_st = strdup(add_st)) == NULL ){
+			PERROR("ERROR - strdup malloc failed");
 			return NULL;
 		}
-	}else{
-		if((asprintf(&ptr, "%s%s", dest, source)) < 0){
-			PDEBUG("ERROR");
+	}
+	else {
+		if( ( asprintf(&new_st, "%s%s", original_st, add_st) ) < 0 ){
+			PDEBUG("ERROR - asprintf malloc failed");
 			return NULL;
 		}
-}
-	free(dest);
+		free(original_st); /* Only needs to be freed in this case */
+	}
 
-	return ptr;
-
+	return new_st;
 }
 
