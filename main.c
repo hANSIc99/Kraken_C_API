@@ -35,7 +35,7 @@
 /*! 
  *
  * <h3>Initialization</h3>
- *s.avenwedde@gmail.com See the description of <em>kraken_init()</em>.\n
+ * See the description of <em>kraken_init()</em>.\n
  * Memory which is allocated here is freed in <em>kraken_clean()</em>.
  * \code
  *
@@ -318,135 +318,168 @@
  */
  
 
+int print_n_reset(struct kraken_api *kr_api);
+
+int print_n_reset(struct kraken_api *kr_api){
+	if ( kr_api->s_result == NULL ) {
+		PERROR("Failed to get the data");
+		printf("Failed to get the data\n");
+		return -1;
+	}
+	printf("RESULT BUFFER: %s\n\n", kr_api->s_result);
+	free(kr_api->s_result);
+	kr_api->s_result=NULL;
+	return 0;
+}
 
 int main (void){
+	struct kraken_api *kr_api = NULL;
+	const char *api_key = "api_key";
+	const char *sec_key = "sec_key";
 
-struct kraken_api *kr_api = NULL;
-const char *api_key = "api_key_";
-const char *sec_key = "sec_key_";
-
-kraken_init(&kr_api, api_key, sec_key);
+	/* We need to call the init function: */
+	kraken_init(&kr_api, api_key, sec_key);
 
 /* EXAMPLES */
 #if 0
-kraken_set_opt(&kr_api, "asset", "ZUSD"); 
-kraken_set_opt(&kr_api, "count", "2"); 
+	kraken_set_opt(&kr_api, "asset", "ZUSD"); 
+	kraken_set_opt(&kr_api, "count", "2"); 
 #endif
 #if 0
-kraken_set_opt(&kr_api, "pair", "ETCXBT"); 
-kraken_set_opt(&kr_api, "validate", "true"); 
+	kraken_set_opt(&kr_api, "pair", "ETCXBT"); 
+	kraken_set_opt(&kr_api, "validate", "true"); 
 #endif
 #if 0
-kraken_set_opt(&kr_api, "end", "1482998660"); 
-kraken_set_opt(&kr_api, "ofs", "ofs"); 
-kraken_set_opt(&kr_api, "closetime", "1482999660"); 
+	kraken_set_opt(&kr_api, "end", "1482998660"); 
+	kraken_set_opt(&kr_api, "ofs", "ofs"); 
+	kraken_set_opt(&kr_api, "closetime", "1482999660"); 
 #endif
 
-/* PRIVATE USER TRADING */
-/* add_order returns 0 on success */
+	/* PRIVATE USER TRADING */
+	/* add_order returns 0 on success */
 #if 0
-kr_api->priv_func->add_order(&kr_api, "buy", "trailing-stop-limit", "XXBTZEUR", "10.0", "755.00", "758.00");
+	kr_api->priv_func->add_order(&kr_api, "buy", "trailing-stop-limit", "XXBTZEUR", "10.0", "755.00", "758.00");
 #endif
 #if 0
-kr_api->priv_func->cancel_order(&kr_api, "OBH2CQ-KGH4B-YFF3PA");
+	kr_api->priv_func->cancel_order(&kr_api, "OBH2CQ-KGH4B-YFF3PA");
 #endif
 
+	/* PRIVATE USER DATA */
 
-/* PRIVATE USER DATA */
+	/* get open orders: get_open_orders(&kr_api) */
+	/* the function takes the optionals USERREF and TRADES into account (if given) */
 
-/* get open orders: get_open_orders(&kr_api) */
-/* the function takes the optionals USERREF and TRADES into account (if given) */
-
-/* get-account-balance: get_account_balance(&api) - no further arguments or optionals */
-/* get-account-balance: get_account_balance(&kr_api) */
+	/* get-account-balance: get_account_balance(&api) - no further arguments or optionals */
+	/* get-account-balance: get_account_balance(&kr_api) */
 
 #if 0
-kr_api->priv_func->get_account_balance(&kr_api);
+	kr_api->priv_func->get_account_balance(&kr_api);
 #endif
 
-/* the result is stored in the buffer: kr_api->s_result */
-
-/* get-trade-balance: get_trade_balance(&kr_api)   */
+	/* the result is stored in the buffer: kr_api->s_result */
 #if 0
-kr_api->priv_func->get_trade_balance(&kr_api);
+	kr_api->priv_func->get_trade_balance(&kr_api);
 #endif
 
 #if 0
-kr_api->priv_func->get_open_orders(&kr_api);
+	kr_api->priv_func->get_open_orders(&kr_api);
 #endif
 
 #if 0
-kr_api->priv_func->get_closed_orders(&kr_api);
+	kr_api->priv_func->get_closed_orders(&kr_api);
 #endif
 
 #if 0
-kr_api->priv_func->query_order_info(&kr_api, "122343445");
+	kr_api->priv_func->query_order_info(&kr_api, "122343445");
 #endif
 
 #if 0
-kr_api->priv_func->get_trades_history(&kr_api);
+	kr_api->priv_func->get_trades_history(&kr_api);
 #endif
 
 #if 0
-kr_api->priv_func->query_trades_info(&kr_api, "TR7S3C-HQA5K-H65IMB");
+	kr_api->priv_func->query_trades_info(&kr_api, "TR7S3C-HQA5K-H65IMB");
 #endif
 
 #if 0
-kr_api->priv_func->get_open_positions(&kr_api, "TR7S3C-HQA5K-H65IMB");
+	kr_api->priv_func->get_open_positions(&kr_api, "TR7S3C-HQA5K-H65IMB");
 #endif
 
 #if 0
-kr_api->priv_func->get_ledgers_info(&kr_api);
+	kr_api->priv_func->get_ledgers_info(&kr_api);
 #endif
 
 #if 0
-kr_api->priv_func->query_ledgers(&kr_api, "123");
+	kr_api->priv_func->query_ledgers(&kr_api, "123");
+	print_n_reset(kr_api);
 #endif
 
 #if 0
-kr_api->priv_func->get_trade_volume(&kr_api);
-#endif
-
-#if 0
-kr_api->pub_func->get_server_time(&kr_api);
-#endif
-
-#if 0
-kr_api->pub_func->get_asset_info(&kr_api);
-#endif
-
-#if 0
-kr_api->pub_func->get_tradable_asset_pairs(&kr_api);
-#endif
-
-#if 0
-kr_api->pub_func->get_ticker_info(&kr_api, "XETCZEUR");
-#endif
-
-#if 0
-kr_api->pub_func->get_ohlc_data(&kr_api, "XETCZEUR");
-#endif
-
-#if 0
-kr_api->pub_func->get_order_book(&kr_api, "XETCZEUR");
-#endif
-
-#if 0
-kr_api->pub_func->get_recent_trades(&kr_api, "XETCZEUR");
-#endif
-
-#if 0
-kr_api->pub_func->get_recent_spread_data(&kr_api, "XETCZEUR");
+	kr_api->priv_func->get_trade_volume(&kr_api);
+	print_n_reset(kr_api);
 #endif
 
 #if 1
-PTRACEX("BUFFER RESULT: %s", kr_api->s_result);
-free(kr_api->s_result);
-kr_api->s_result=NULL;
+	kr_api->pub_func->get_server_time(&kr_api);
+	print_n_reset(kr_api);
 #endif
 
-/* cleanup function must be called to free allocated memory */
-kraken_clean(&kr_api);
+#if 0
+	kr_api->pub_func->get_asset_info(&kr_api);
+	print_n_reset(kr_api);
+#endif
+
+#if 0
+	kr_api->pub_func->get_tradable_asset_pairs(&kr_api);
+	print_n_reset(kr_api);
+#endif
+
+#if 0
+	kr_api->pub_func->get_ticker_info(&kr_api, "XETCZEUR");
+	print_n_reset(kr_api);
+#endif
+
+#if 0
+	kr_api->pub_func->get_ohlc_data(&kr_api, "XETCZEUR");
+	print_n_reset(kr_api);
+#endif
+
+#if 0
+	kr_api->pub_func->get_order_book(&kr_api, "XETCZEUR");
+	print_n_reset(kr_api);
+#endif
+
+#if 0
+	kr_api->pub_func->get_recent_trades(&kr_api, "XETCZEUR");
+	print_n_reset(kr_api);
+#endif
+
+#if 0
+	kr_api->pub_func->get_recent_spread_data(&kr_api, "XETCZEUR");
+	print_n_reset(kr_api);
+#endif
+
+#if 0
+	PTRACEX("BUFFER RESULT: %s", kr_api->s_result);
+	free(kr_api->s_result);
+	kr_api->s_result=NULL;
+#endif
+
+	/* Simple test */
+#if 0
+	/* asset_info with not compatible option */
+	kraken_set_opt(&kr_api, "pair", "XETHZEUR,XETHZUSD");
+	kr_api->pub_func->get_asset_info(&kr_api);
+	print_n_reset(kr_api);
+	/* tradable_asset_pairs with some options */
+
+	kraken_set_opt(&kr_api, "pair", "XETHZEUR,XETHZUSD");
+	kraken_set_opt(&kr_api, "info", "info");
+	kr_api->pub_func->get_tradable_asset_pairs(&kr_api);
+	print_n_reset(kr_api);
+#endif
+	/* cleanup function must be called to free allocated memory */
+	kraken_clean(&kr_api);
 }
 
 
