@@ -35,7 +35,7 @@
 /*! 
  *
  * <h3>Initialization</h3>
- * See the description of <em>kraken_init()</em>.\n
+ *s.avenwedde@gmail.com See the description of <em>kraken_init()</em>.\n
  * Memory which is allocated here is freed in <em>kraken_clean()</em>.
  * \code
  *
@@ -322,10 +322,9 @@
 int main (void){
 
 struct kraken_api *kr_api = NULL;
-const char *api_key = "api_key";
-const char *sec_key = "sec_key";
+const char *api_key = "api_key_";
+const char *sec_key = "sec_key_";
 
-/* We need to call the init function: */
 kraken_init(&kr_api, api_key, sec_key);
 
 /* EXAMPLES */
@@ -365,16 +364,12 @@ kr_api->priv_func->cancel_order(&kr_api, "OBH2CQ-KGH4B-YFF3PA");
 kr_api->priv_func->get_account_balance(&kr_api);
 #endif
 
-
 /* the result is stored in the buffer: kr_api->s_result */
 
 /* get-trade-balance: get_trade_balance(&kr_api)   */
 #if 0
 kr_api->priv_func->get_trade_balance(&kr_api);
 #endif
-
-
-
 
 #if 0
 kr_api->priv_func->get_open_orders(&kr_api);
@@ -444,42 +439,14 @@ kr_api->pub_func->get_recent_trades(&kr_api, "XETCZEUR");
 kr_api->pub_func->get_recent_spread_data(&kr_api, "XETCZEUR");
 #endif
 
-#if 0
-PTRACEX("BUFFER RESULT: %s", kr_api->s_result);
-free(kr_api->s_result);
-kr_api->s_result=NULL;
-#endif
-
-/* Simple test */
 #if 1
-/* asset_info with not compatible option */
-kraken_set_opt(&kr_api, "pair", "XETHZEUR,XETHZUSD");
-
-kr_api->pub_func->get_asset_info(&kr_api);
 PTRACEX("BUFFER RESULT: %s", kr_api->s_result);
-
-free(kr_api->s_result);
-kr_api->s_result=NULL;
-
-/* tradable_asset_pairs with some options */
-kraken_set_opt(&kr_api, "pair", "XETHZEUR,XETHZUSD");
-kraken_set_opt(&kr_api, "info", "info");
-
-kr_api->pub_func->get_tradable_asset_pairs(&kr_api);
-if ( kr_api->s_result == NULL )
-	PERROR("Failed to get the data");
-PTRACEX("BUFFER RESULT: %s", kr_api->s_result);
-
 free(kr_api->s_result);
 kr_api->s_result=NULL;
 #endif
-
 
 /* cleanup function must be called to free allocated memory */
-#if 1
 kraken_clean(&kr_api);
-#endif
-
 }
 
 
