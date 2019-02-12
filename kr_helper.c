@@ -31,7 +31,7 @@ void switch_opt(struct kraken_api **kr_api){
 			(*kr_api)->opt_table[u8_opt_count].b_flag = FALSE;
 		}
 		else if(cur_val != NULL) {
-			/* only cur_val present. free & reset val so we are ready for new calls. 
+			/* only cur_val present. free & reset val so we are ready for new calls.
 			 * we need to have this since the library user could erroneusly set an option which
 			 * is not accepted by the current function thus making the option to appear in an
 			 * sunsequent call to a function which allows it.
