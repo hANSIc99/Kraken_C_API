@@ -4,7 +4,7 @@ ERROR =y
 DEBUG =y
 TRACE =y
 
-CFLAGS= -std=c11 -c -Wpedantic -Wall -Wextra -Woverlength-strings -fomit-frame-pointer -Wmissing-prototypes -Wstrict-prototypes -g  -D_GNU_SOURCE -O
+CFLAGS= -std=c11 -c -Wpedantic -Wall -Wextra -Woverlength-strings -fomit-frame-pointer -Wmissing-prototypes -Wstrict-prototypes -g -O2 -D_GNU_SOURCE
 
 LIB_NAME = libkraken.a
 
