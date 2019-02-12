@@ -5,30 +5,30 @@
 #include "url.h"
 
 static struct st_opt_list options_listen_table[] = {
-	[INFO]          =   {.name = "info",        .b_flag =   FALSE,  .key = "info="      },
-	[ACLASS]        =   {.name = "aclass",      .b_flag =   FALSE,  .key = "aclass="    },
-	[ASSET]         =   {.name = "asset",       .b_flag =   FALSE,  .key = "asset="     },
-	[TRADES]        =   {.name = "trades",      .b_flag =   FALSE,  .key = "trades="    },
-	[USERREF]       =   {.name = "userref",     .b_flag =   FALSE,  .key = "userref="   },
-	[START]         =   {.name = "start",       .b_flag =   FALSE,  .key = "start="     },
-	[END]           =   {.name = "end",         .b_flag =   FALSE,  .key = "end="       },
-	[OFS]           =   {.name = "ofs",         .b_flag =   FALSE,  .key = "ofs="       },
-	[CLOSETIME]     =   {.name = "closetime",   .b_flag =   FALSE,  .key = "closetime=" },
-	[DOCALCS]       =   {.name = "docalcs",     .b_flag =   FALSE,  .key = "docalcs="   },
-	[PAIR]          =   {.name = "pair",        .b_flag =   FALSE,  .key = "pair="      },
-	[FEE_INFO]      =   {.name = "fee-info",    .b_flag =   FALSE,  .key = "fee-info="  },
-	[OFLAGS]        =   {.name = "oflags",      .b_flag =   FALSE,  .key = "oflags="    },
-	[STARTTM]       =   {.name = "starttm",     .b_flag =   FALSE,  .key = "starttm="   },
-	[EXPIRETM]      =   {.name = "expiretm",    .b_flag =   FALSE,  .key = "expiretm="  },
-	[VALIDATE]      =   {.name = "validate",    .b_flag =   FALSE,  .key = "validate="  },
-	[LEVERAGE]      =   {.name = "leverage",    .b_flag =   FALSE,  .key = "leverage="  },
-	[TYPE]          =   {.name = "type",        .b_flag =   FALSE,  .key = "type="      },
-	[CLOSE_TYPE]    =   {.name = "close-type",  .b_flag =   FALSE,  .key = "close[ordertype]="},
-	[CLOSE_PRICE_1] =   {.name = "close-pc-1",  .b_flag =   FALSE,  .key = "close[price]="},
-	[CLOSE_PRICE_2] =   {.name = "close-pc-2",  .b_flag =   FALSE,  .key = "close[price2]="},
-	[INTERVAL]      =   {.name = "interval",    .b_flag =   FALSE,  .key = "interval="  },
-	[SINCE]         =   {.name = "since",       .b_flag =   FALSE,  .key = "since="     },
-	[COUNT]         =   {.name = "count",       .b_flag =   FALSE,  .key = "count="     }
+	[INFO]          = {.name = "info",        .b_flag =   FALSE,  .key = "info=",             .val = NULL },
+	[ACLASS]        = {.name = "aclass",      .b_flag =   FALSE,  .key = "aclass=",           .val = NULL },
+	[ASSET]         = {.name = "asset",       .b_flag =   FALSE,  .key = "asset=",            .val = NULL },
+	[TRADES]        = {.name = "trades",      .b_flag =   FALSE,  .key = "trades=",           .val = NULL },
+	[USERREF]       = {.name = "userref",     .b_flag =   FALSE,  .key = "userref=",          .val = NULL },
+	[START]         = {.name = "start",       .b_flag =   FALSE,  .key = "start=",            .val = NULL },
+	[END]           = {.name = "end",         .b_flag =   FALSE,  .key = "end=",              .val = NULL },
+	[OFS]           = {.name = "ofs",         .b_flag =   FALSE,  .key = "ofs=",              .val = NULL },
+	[CLOSETIME]     = {.name = "closetime",   .b_flag =   FALSE,  .key = "closetime=",        .val = NULL },
+	[DOCALCS]       = {.name = "docalcs",     .b_flag =   FALSE,  .key = "docalcs=",          .val = NULL },
+	[PAIR]          = {.name = "pair",        .b_flag =   FALSE,  .key = "pair=",             .val = NULL },
+	[FEE_INFO]      = {.name = "fee-info",    .b_flag =   FALSE,  .key = "fee-info=",         .val = NULL },
+	[OFLAGS]        = {.name = "oflags",      .b_flag =   FALSE,  .key = "oflags=",           .val = NULL },
+	[STARTTM]       = {.name = "starttm",     .b_flag =   FALSE,  .key = "starttm=",          .val = NULL },
+	[EXPIRETM]      = {.name = "expiretm",    .b_flag =   FALSE,  .key = "expiretm=",         .val = NULL },
+	[VALIDATE]      = {.name = "validate",    .b_flag =   FALSE,  .key = "validate=",         .val = NULL },
+	[LEVERAGE]      = {.name = "leverage",    .b_flag =   FALSE,  .key = "leverage=",         .val = NULL },
+	[TYPE]          = {.name = "type",        .b_flag =   FALSE,  .key = "type=",             .val = NULL },
+	[CLOSE_TYPE]    = {.name = "close-type",  .b_flag =   FALSE,  .key = "close[ordertype]=", .val = NULL },
+	[CLOSE_PRICE_1] = {.name = "close-pc-1",  .b_flag =   FALSE,  .key = "close[price]=",     .val = NULL },
+	[CLOSE_PRICE_2] = {.name = "close-pc-2",  .b_flag =   FALSE,  .key = "close[price2]=",    .val = NULL },
+	[INTERVAL]      = {.name = "interval",    .b_flag =   FALSE,  .key = "interval=",         .val = NULL },
+	[SINCE]         = {.name = "since",       .b_flag =   FALSE,  .key = "since=",            .val = NULL },
+	[COUNT]         = {.name = "count",       .b_flag =   FALSE,  .key = "count=",            .val = NULL }
 };
 
 #define SZ_LIST_TABLE (sizeof(options_listen_table))
@@ -89,10 +89,6 @@ int kraken_init(struct kraken_api **kr_api, const char *api_key, const char *sec
 
 	/* set table lenght */
 	(*kr_api)->opt_table_lenght = NKEYS;
-
-	/* initialize option values */
-	for(uint8_t u8_i = 0; u8_i < NKEYS; u8_i++)
-		(*kr_api)->opt_table[u8_i].val = NULL;
 
 	/* assign the private functions */
 	(*kr_api)->priv_func->add_order           = &addOrder;
