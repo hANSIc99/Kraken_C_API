@@ -40,7 +40,6 @@ char* curl_get(char *curl_cmd_string){
 		*(result + memcount) = (char)i_char;
 		memcount++;
 	}
-
 	/* replace the EOF char with the terminate string char */
 	memcount--;
 	*(result + memcount) = '\0';
@@ -52,7 +51,7 @@ char* curl_get(char *curl_cmd_string){
 		return NULL;
 	}
 
-	/* free memory allocated in query_private() */
+	/* free memory allocated by query_[private/public]() */
 	free(curl_cmd_string);
 	return result;
 }
@@ -170,7 +169,7 @@ int query_private(struct kraken_api **kr_api){
 	curl_cmd_string = to_url(curl_cmd_string, curl_query_url);
 
 	/* free s_data only if it was used */
-	if((*kr_api)->s_data){
+	if( (*kr_api)->s_data != NULL ){
 		free((*kr_api)->s_data);
 		(*kr_api)->s_data = NULL;
 	}
@@ -221,7 +220,7 @@ int query_public(struct kraken_api **kr_api){
 	PTRACEX("curl query: %s", curl_cmd_string);
 
 	/* free s_data only if it was used */
-	if((*kr_api)->s_data){
+	if( (*kr_api)->s_data != NULL ){
 		free((*kr_api)->s_data);
 		(*kr_api)->s_data = NULL;
 	}
