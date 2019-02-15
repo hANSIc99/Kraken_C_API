@@ -104,17 +104,22 @@ unsigned char* hmac_sha512(unsigned char* data, unsigned char* key, unsigned cha
 
 	output = malloc(lenght);
 
+#ifdef OPENSSL_1_1
+        HMAC_CTX *ctx = HMAC_CTX_new();
+        /* 64 = decoded size of base64 key decoding */
+        HMAC_Init_ex(ctx, key, KEY_LENGHT, EVP_sha512(), NULL);
+        HMAC_Update(ctx, data, data_size);
+        HMAC_Final(ctx, output, &lenght);
+        HMAC_CTX_free(ctx);
+#else
 	HMAC_CTX ctx;
 	HMAC_CTX_init(&ctx);
-
 	/* 64 = decoded size of base64 key decoding */
 	HMAC_Init_ex(&ctx, key, KEY_LENGHT, EVP_sha512(), NULL);
-
 	HMAC_Update(&ctx, data, data_size);
 	HMAC_Final(&ctx, output, &lenght);
-
 	HMAC_CTX_cleanup(&ctx);
-
+#endif
 	return output;
 }
 
