@@ -1,52 +1,83 @@
 #ifndef __logging_h
 #define __logging_h
 
+/*
+ * __FUNCTION__ -> __func__
+ * * see: https://gcc.gnu.org/gcc-5/porting_to.html
+ *https://gcc.gnu.org/gcc-5/porting_to.html
+ */
+
 #include <stdio.h>
 
-
-#undef PDEBUG             /* undef it, just in case */
+#undef PDEBUGX
 #ifdef API_DEBUG
-     /* This one if debugging is on, and kernel space */
-     /* This one for user space */
-#    define PDEBUG(fmt, ...)	do{ \
-					fprintf(stderr, "%s(): ", __FUNCTION__); \
+#    define PDEBUGX(fmt, ...)	do{ \
+					fprintf(stderr, "%s(): ", __func__); \
 					fprintf(stderr, fmt, ##__VA_ARGS__); \
 					fprintf(stderr, "\n"); \
 				} while(0)
+/* The do - while loop allows several statements in the macro
+ * and reuires semicolon after the marco: PDEBUG("%s.\n", some_var);
+ * This makes PDEBUG to looke a function.
+ * do - while will probably be eliminated by the compiler optmisation.
+ */
 #else
-#  define PDEBUG(fmt, ...) /* not debugging: nothing */
+#  define PDEBUGX(fmt, ...)
 #endif
 
+#undef PDEBUG
+#ifdef API_DEBUG
+#    define PDEBUG(fmt)	do{ \
+					fprintf(stderr, "%s(): ", __func__); \
+					fprintf(stderr, fmt); \
+					fprintf(stderr, "\n"); \
+				} while(0)
+#else
+#  define PDEBUG(fmt)
+#endif
 
-/* SAME FOR TRACE FUNCTIONS */
-
-#undef PTRACE             /* undef it, just in case */
+#undef PTRACEX
 #ifdef API_TRACE
-     /* This one if debugging is on, and kernel space */
-     /* This one for user space */
-#    define PTRACE(fmt, ...)	do{ \
-					fprintf(stderr, "%s(): ", __FUNCTION__); \
+#    define PTRACEX(fmt, ...)	do{ \
+					fprintf(stderr, "%s(): ", __func__); \
 					fprintf(stderr, fmt, ##__VA_ARGS__); \
 					fprintf(stderr, "\n"); \
 				} while(0)
 #else
-#  define PTRACE(fmt, ...) /* not debugging: nothing */
+#  define PTRACEX(fmt, ...)
 #endif
 
-/* SAME FOR ERROR FUNCTIONS */
+#undef PTRACE
+#ifdef API_TRACE
+#    define PTRACE(fmt)	do{ \
+					fprintf(stderr, "%s(): ", __func__); \
+					fprintf(stderr, fmt); \
+					fprintf(stderr, "\n"); \
+				} while(0)
+#else
+#  define PTRACE(fmt)
+#endif
 
-#undef PERROR             /* undef it, just in case */
+#undef PERRORX
 #ifdef API_ERROR
-     /* This one if debugging is on, and kernel space */
-     /* This one for user space */
-#    define PERROR(fmt, ...)	do{ \
-					fprintf(stderr, "%s(): ", __FUNCTION__); \
+#    define PERRORX(fmt, ...)	do{ \
+					fprintf(stderr, "%s(): ", __func__); \
 					fprintf(stderr, fmt, ##__VA_ARGS__); \
 					fprintf(stderr, "\n"); \
 				} while(0)
 #else
-#  define PERROR(fmt, ...) /* not debugging: nothing */
+#  define PERRORX(fmt, ...) /* not debugging: nothing */
 #endif
 
+#undef PERROR
+#ifdef API_ERROR
+#    define PERROR(fmt)	do{ \
+					fprintf(stderr, "%s(): ", __func__); \
+					fprintf(stderr, fmt); \
+					fprintf(stderr, "\n"); \
+				} while(0)
+#else
+#  define PERROR(fmt) /* not debugging: nothing */
+#endif
 
 #endif

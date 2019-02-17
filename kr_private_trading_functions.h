@@ -61,7 +61,12 @@
  *
  * Result: See further details on <a href=https://www.kraken.com/help/api#add-standard-order>kraken api description</a>.
  * */
-int addOrder(struct kraken_api **kr_api, const char *type, const char *order, const char *asset, const char* volume, ...);
+int addOrder(struct kraken_api **kr_api,
+		const char *type,
+		const char *order,
+		const char *asset,
+		const char* volume,
+		...);
 
 int cancelOrder(struct kraken_api **kr_api, const char *txid);
 

@@ -2,13 +2,9 @@
 #define __crypto_h
 
 /*!
- * \file crypto.h 
+ * \file crypto.h
  * \brief Inherits the crypto functions.
- * 
  */
-
-
-
 
 #include <string.h>
 #include <openssl/hmac.h>
