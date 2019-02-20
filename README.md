@@ -32,8 +32,17 @@ to see how to execute a trade.
 
 ## Build
 
-To build the examples inside the main.c, simply
-call make inside the folder
+**Prerequisites**
+
+To be able to build the API, you need the SSL-devel files on your system.
+On Debian, Ubuntu or similar distributions type:
+`sudo apt install libssl-dev`  
+
+On Fedora, RHEL or similar distributions type:
+`sudo dnf install openssl-devel` 
+
+To build the examples inside main.c, simply
+call `make` from within the source folder.
 
 **Build with libssl < 1.10**
 
