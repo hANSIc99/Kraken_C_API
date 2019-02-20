@@ -35,12 +35,13 @@ to see how to execute a trade.
 To build the examples inside the main.c, simply
 call make inside the folder
 
-### Build with libssl < 1.10
-make CFLAGS=-DOPENSSL_1_0
+**Build with libssl < 1.10**
 
-### Build static library
+`make CFLAGS=-DOPENSSL_1_0`
 
-make LIBRARY
+**Build static library**
+
+`make LIBRARY`
 
 
 
