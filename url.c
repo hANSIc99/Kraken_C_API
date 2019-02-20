@@ -1,9 +1,5 @@
 #include "url.h"
 
-#ifndef _GNU_SOURCE
-#include "my_strings.h"
-#endif
-
 /* create the standard query uri's
  *
  * allocated memory gets freed in kraken_clean call */
