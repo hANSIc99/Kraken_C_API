@@ -30,8 +30,18 @@ there you can find many examples.
 If you dont want to use doxygen, simply look into *main.c*
 to see how to execute a trade.
 
-## ToDo's
+## Build
 
-- rework trace/debug output
-- documentation
+To build the examples inside the main.c, simply
+call make inside the folder
+
+**Build with libssl < 1.10**
+
+`make CFLAGS=-DOPENSSL_1_0`
+
+**Build static library**
+
+`make LIBRARY`
+
+
 
