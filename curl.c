@@ -22,7 +22,7 @@ char* curl_get(char *curl_cmd_string){
 	while (i_char != EOF) {
 		i_char = fgetc(curl_out);
 
-		if (memcount > buf_size) {
+		if (memcount >= buf_size) {
 			buf_size += BUFFER_SIZE;
 			char *newres = realloc(result, buf_size);
 			if (newres == NULL) {
