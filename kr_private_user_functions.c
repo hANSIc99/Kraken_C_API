@@ -26,7 +26,7 @@ int trade_balance(struct kraken_api **kr_api){
 	
 	/* set the recursive counter to zero */
 
-	/* check if optionals are given */  
+	/* check if optionals are given */
 	switch_opt(kr_api);
 
 	PTRACEX("(*kr_api)->s_data = %s", (*kr_api)->s_data);
@@ -49,7 +49,7 @@ int open_orders(struct kraken_api **kr_api){
 
 	/* set the recursive counter to zero */
 
-	/* check if optionals are given */  
+	/* check if optionals are given */
 	switch_opt(kr_api);
 
 	PTRACEX("(*kr_api)->s_data = %s", (*kr_api)->s_data);
@@ -203,7 +203,7 @@ int ledgers_info(struct kraken_api **kr_api){
 
 
 	/* create the temporary url for this type of api call */
-	(*kr_api)->tmp_query_url = to_url((*kr_api)->tmp_query_url, (*kr_api)->s_uri_private);  
+	(*kr_api)->tmp_query_url = to_url((*kr_api)->tmp_query_url, (*kr_api)->s_uri_private);
 	(*kr_api)->tmp_query_url = to_url((*kr_api)->tmp_query_url, (*kr_api)->s_uri_ledgers_info);
 
 	PTRACEX("Query URL: %s", (*kr_api)->tmp_query_url);

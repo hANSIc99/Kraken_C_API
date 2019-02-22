@@ -27,11 +27,11 @@
  * \file kr_private_trading_functions.h
  * \brief Contains private user trading functions.
  *
- * The file inherits the functions reffering to  
+ * The file inherits the functions reffering to
  * <a href=https://www.kraken.com/help/api#private-user-trading>Kraken Api: Private user trading</a>.
  */
 
-/*! 
+/*!
  * \brief Add standard order.
  * \param **kr_api Initialized API structure.
  * \param *type String: Type ("buy"/"sell").
@@ -41,10 +41,10 @@
  * \param *... String: Argument depending upon ordertype.
  *
  * Optionals: <b>leverage</b>, <b>oflags</b>, <b>starttm</b>, <b>expiretm</b>, <b>userref</b>, <b>validate</b>,
- * <b>close-type</b>, <b>close-pc-1</b>, <b>close-pc-2</b>\n\n 
+ * <b>close-type</b>, <b>close-pc-1</b>, <b>close-pc-2</b>\n\n
  *
  * Available order types (passed as <b>String</b>):\n
- * <b>market</b>\n 
+ * <b>market</b>\n
  * <b>limit</b> (price = limit price)\n
  * <b>stop-loss</b> (price = stop loss price)\n
  * <b>take-profit</b> (price = take profit price)\n

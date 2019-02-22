@@ -19,11 +19,11 @@
  * \file curl.h
  * \brief Executes the API calls.
  *
- * This function calls curl directly  - curl has to be installed. 
+ * This function calls curl directly  - curl has to be installed.
  *
  */
 
-/*! 
+/*!
  * \brief Call the curl binary
  * \param query_string = Command line arguments for curl
  *
@@ -32,7 +32,7 @@
  *
  * */
 char* curl_get(char* query_string);
-/*! 
+/*!
  * \brief Creates the query string for private api calls
  * \param kraken_api = Initialized kraken_api structure.
  *
@@ -41,7 +41,7 @@ char* curl_get(char* query_string);
  *
  * */
 int query_private(struct kraken_api **kr_api);
-/*! 
+/*!
  * \brief Creates the query string for public api calls
  * \param kraken_api = Initialized kraken_api structure.
  *
