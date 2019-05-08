@@ -19,7 +19,7 @@
  * \section install_sec Installation
  *
  * \subsection step1 Step 1: Include kraken_api.h to your project.
- * Set/unset *DEBUG* or *TRACE* in the makefile to get trace/debug information 
+ * Set/unset *DEBUG* or *TRACE* in the makefile to get trace/debug information
  * printed to stdout.
  * \subsection step2 Step 2: Look into the documentation of main.c for exaples.
  *
@@ -27,12 +27,12 @@
  * \n\n
  * If you have any suggestions feel free to contact me on s.avenwedde@gmail.com
  *
- *  
+ *
  */
- 
 
 
-/*! 
+
+/*!
  *
  * <h3>Initialization</h3>
  * See the description of <em>kraken_init()</em>.\n
@@ -54,28 +54,28 @@
  * or at <a href=https://www.kraken.com/help/api>kraken api description</a>.
  *
  * \code
- * kraken_set_opt(&kr_api, "pair", "ETCXBT"); 
+ * kraken_set_opt(&kr_api, "pair", "ETCXBT");
  * \endcode
  * \n\n
  *
  * <h3>Private user trading examples:\n</h3>
  *
- * <b>market</b>: add_order(&api, TYPE, ORDERTYPE, ASSET-PAIR, VOLUME)\n 
- * Buy/sell assets at the best market price. 
+ * <b>market</b>: add_order(&api, TYPE, ORDERTYPE, ASSET-PAIR, VOLUME)\n
+ * Buy/sell assets at the best market price.
  * \code
  * kr_api->priv_func->add_order(&kr_api, "buy", "market", "XXBTZEUR", "0.43");
  * \endcode
  * \n\n
  *
- * <b>limit</b>: add_order(&api, TYPE, ORDERTYPE, ASSET-PAIR, VOLUME, LIMIT-PRICE)\n 
- * Buy/sell at a fixed price.  
+ * <b>limit</b>: add_order(&api, TYPE, ORDERTYPE, ASSET-PAIR, VOLUME, LIMIT-PRICE)\n
+ * Buy/sell at a fixed price.
  * \code
  * kr_api->priv_func->add_order(&kr_api, "buy", "limit", "XXBTZEUR", "0.43", "702.5432");
  * \endcode
  * \n\n
  *
- * <b>stop-loss</b>: add_order(&api, TYPE, ORDERTYPE, ASSET-PAIT, VOLUME, STOP-LOSS-PRICE)\n  
- * Buy at market once market price >= stop price.\n 
+ * <b>stop-loss</b>: add_order(&api, TYPE, ORDERTYPE, ASSET-PAIT, VOLUME, STOP-LOSS-PRICE)\n
+ * Buy at market once market price >= stop price.\n
  * Sell at market once market price is <= stop price.\n
  * \code
  * kr_api->priv_func->add_order(&kr_api, "buy", "stop-loss", "XXBTZEUR", "0.43", "702.5432");
@@ -84,7 +84,7 @@
  *
  * <b>take-profit</b>: add_order(&api, TYPE, ORDERTYPE, ASSET-PAIT, VOLUME, TAKE-PROFIT-PRICE)\n
  * Buy at market once market price <= take profit price.\n
- * Sell at market once market price >= take profit price.\n 
+ * Sell at market once market price >= take profit price.\n
  * \code
  * kr_api->priv_func->add_order(&kr_api, "buy", "take-profit", "XXBTZEUR", "0.43", "702.5432");
  * \endcode
@@ -158,7 +158,7 @@
  * kr_api->priv_func->cancel_order(&kr_api, "OBH2CQ-KGH4B-YFF3PA");
  * \endcode
  * \n\n
- * 
+ *
  * <h3>Private user data examples:\n</h3>
  *
  * <b>get account balance</b>: get_account_balance(&api)\n
@@ -194,9 +194,9 @@
  * \code
  * kr_api->priv_func->query_order_info(&kr_api, "TR7S3C-HQA5K-H65IMX");
  * \endcode
- * \n\n 
+ * \n\n
  *
- * <b>get trades history</b>: get_trades_history(&api)\n 
+ * <b>get trades history</b>: get_trades_history(&api)\n
  * The function takes the optionals <b>type</b>, <b>trades</b>, <b>start</b>, <b>end</b>, <b>ofs</b> into account.\n
  * \code
  * kr_api->priv_func->get_trades_history(&api);
@@ -306,17 +306,17 @@
  * \endcode
  * \n\n
  *
- * <h3>De-Initialization</h3> 
+ * <h3>De-Initialization</h3>
  * Freeing the memory that was allocated in <em>kraken_init()</em>.
  * \code
  * kraken_clean(&kr_api);
  * \endcode
  * \n
- *  
+ *
  *
  *
  */
- 
+
 
 int print_n_reset(struct kraken_api *kr_api);
 
@@ -342,17 +342,17 @@ int main (void){
 
 /* EXAMPLES */
 #if 0
-	kraken_set_opt(&kr_api, "asset", "ZUSD"); 
-	kraken_set_opt(&kr_api, "count", "2"); 
+	kraken_set_opt(&kr_api, "asset", "ZUSD");
+	kraken_set_opt(&kr_api, "count", "2");
 #endif
 #if 0
-	kraken_set_opt(&kr_api, "pair", "ETCXBT"); 
-	kraken_set_opt(&kr_api, "validate", "true"); 
+	kraken_set_opt(&kr_api, "pair", "ETCXBT");
+	kraken_set_opt(&kr_api, "validate", "true");
 #endif
 #if 0
-	kraken_set_opt(&kr_api, "end", "1482998660"); 
-	kraken_set_opt(&kr_api, "ofs", "ofs"); 
-	kraken_set_opt(&kr_api, "closetime", "1482999660"); 
+	kraken_set_opt(&kr_api, "end", "1482998660");
+	kraken_set_opt(&kr_api, "ofs", "ofs");
+	kraken_set_opt(&kr_api, "closetime", "1482999660");
 #endif
 
 	/* PRIVATE USER TRADING */

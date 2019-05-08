@@ -2,14 +2,14 @@
 
 /* Helper function to calculate of a b64 decoded string */
 
-static size_t calcDecodeLength(const char* b64input) { 
+static size_t calcDecodeLength(const char* b64input) {
 	size_t len = strlen(b64input),
 		padding = 0;
 
 	/* the last two chars are '=' */
-	if (b64input[len-1] == '=' && b64input[len-2] == '=') 
+	if (b64input[len-1] == '=' && b64input[len-2] == '=')
 		padding = 2;
-	else if (b64input[len-1] == '=') 
+	else if (b64input[len-1] == '=')
 		/* the last char is '=' */
 		padding = 1;
 
@@ -42,7 +42,7 @@ int sha256(const char* data, unsigned char digest[SHA256_DIGEST_LENGTH]){
 }
 
 
-unsigned char* base64_decode(const char* data, unsigned char* output){ 
+unsigned char* base64_decode(const char* data, unsigned char* output){
 
 	BIO *bio_mem, *b64;
 	int decode_lenght, decoded_size;
@@ -100,7 +100,7 @@ char* base64_encode(unsigned char* data){
 
 unsigned char* hmac_sha512(unsigned char* data, unsigned char* key, unsigned char* output, int data_size){
 	
-	unsigned int lenght = EVP_MAX_MD_SIZE; 
+	unsigned int lenght = EVP_MAX_MD_SIZE;
 
 	output = malloc(lenght);
 

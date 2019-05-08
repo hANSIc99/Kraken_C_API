@@ -7,7 +7,7 @@
 
 /*!
  * \file kr_helper.h
- * \brief Helper functions for private API calls. 
+ * \brief Helper functions for private API calls.
  * This file contains helper functions used by private trading and user functions.
  *
  * Currently switch_opt(struct kraken_api **kr_api) is used by both parts; the private trading and user functions.
@@ -23,7 +23,7 @@
 
 
 
-/*! 
+/*!
  * \brief Set the optional arguments in API calls
  *
  * \param **kr_api Initialized API structure.

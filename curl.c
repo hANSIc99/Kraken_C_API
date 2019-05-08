@@ -12,6 +12,10 @@ char* curl_get(char *curl_cmd_string){
 	size_t buf_size = BUFFER_SIZE;
 
 	curl_out = popen(curl_cmd_string, "r");
+	if(curl_out == NULL) {
+		free(curl_cmd_string);
+		return NULL;    /* ERROR */
+	}
 
 	if ( (result = malloc(buf_size)) == NULL ) {
 		PERROR("malloc failed");
@@ -22,7 +26,7 @@ char* curl_get(char *curl_cmd_string){
 	while (i_char != EOF) {
 		i_char = fgetc(curl_out);
 
-		if (memcount > buf_size) {
+		if (memcount >= buf_size) {
 			buf_size += BUFFER_SIZE;
 			char *newres = realloc(result, buf_size);
 			if (newres == NULL) {

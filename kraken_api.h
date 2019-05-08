@@ -38,15 +38,15 @@
 #define BADARG          -1
 
 /*!
- * \file kraken_api.h 
+ * \file kraken_api.h
  * \brief Contains the definition of the API structures
  *
- * The structures are initialized in kraken_init() 
+ * The structures are initialized in kraken_init()
  *
  */
 
 /*! \file kraken_api.c
- *  
+ *
  * \var st_opt_list options_listen_table[]
  * \brief Options Table
  *
@@ -115,7 +115,7 @@ struct kraken_api {
 	char* s_uri_spread;                 /* e.g. /Spread */
 
 	/* temporary arrays */
-	char* tmp_query_url;                /* function specific url to query, 
+	char* tmp_query_url;                /* function specific url to query,
 										   not initialized! */
 	char* s_data;                       /* e.g. pair=XXBTZEUR&type=buy,
 										   not initialized! */
@@ -176,9 +176,9 @@ struct public_functions {
 	int (*get_recent_spread_data)(struct kraken_api**, const char*);
 };
 
-/*! 
+/*!
  * \brief Initialization of the required structures
- * 
+ *
  * \param **kr_api Address of a pointer to the appropriate structure (not initialized)
  *
  * \param *api_key API Key (log into kraken.com and go to settings->API)
@@ -190,9 +190,9 @@ struct public_functions {
  *
  * */
 int kraken_init(struct kraken_api **kr_api, const char *api_key, const char *sec_key);
-/*! 
+/*!
  * \brief De-initialization of the structures
- * 
+ *
  * \param **kr_api Address of a pointer to the initialized structure.
  *
  *
@@ -200,9 +200,9 @@ int kraken_init(struct kraken_api **kr_api, const char *api_key, const char *sec
  *
  * */
 void kraken_clean(struct kraken_api **kr_api);
-/*! 
+/*!
  * \brief Helper function for the lookup-table
- * 
+ *
  * \param *str String to search for .
  * \param *type_table Lookup-table structure.
  * \param u8_n_keys Number of keywords in the lookup-table.
@@ -212,9 +212,9 @@ void kraken_clean(struct kraken_api **kr_api);
  *
  * */
 int key_from_string(const char *str, const struct st_opt_list *type_table, const uint8_t u8_n_keys);
-/*! 
+/*!
  * \brief Helper function to set optional arguments in api calls.
- *  
+ *
  * \param **kr_api Address of a pointer to the initialized structure.
  * \param *opt Name of the optional to be set (to be found in the lookup-table).
  *
