@@ -156,7 +156,7 @@ int query_private(struct kraken_api **kr_api){
 
 	/* GENERATE THE CURL COMMAND LINE ARGUMENT STRING */
 	/* -tlsv1.3 to force TLS V1.3 support */
-	curl_cmd_string = strdup("curl -sS -tlsv1.3 --data ");
+	curl_cmd_string = strdup("curl -m 60 -sS -tlsv1.3 --data ");
 	curl_cmd_string = to_url(curl_cmd_string, "\"");
 	curl_cmd_string = to_url(curl_cmd_string, curl_nonce_url);
 	curl_cmd_string = to_url(curl_cmd_string, "\" ");
@@ -206,7 +206,7 @@ int query_public(struct kraken_api **kr_api){
 
 	/* GENERATE THE CURL COMMAND LINE ARGUMENT STRING */
 	/* -tlsv1.3 to force TLS V1.3 support */
-	curl_cmd_string = strdup("curl -sS -tlsv1.3 ");
+	curl_cmd_string = strdup("curl -m 60 -sS -tlsv1.3 ");
 
 	PTRACEX("curl query: %s", (*kr_api)->s_data);
 
