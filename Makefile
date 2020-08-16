@@ -31,7 +31,8 @@ DEFINES= -DPASSWORD='"$(PASSWORD)"'
 LIBS = -L/usr/local/lib -L/usr/lib -L/usr/lib/x86_64-linux-gnu -lm -lssl -lcrypto
 PASSWORD= '"Default"'
 DEPS = logging.h kraken_api.h main_header.h curl.h url.h crypto.h kr_helper.h kr_private_trading_functions.h kr_public_functions.h kr_private_user_functions.h 
-OBJ = kraken_api.o main.o curl.o url.o crypto.o kr_helper.o kr_private_trading_functions.o kr_public_functions.o kr_private_user_functions.o
+LIBOBJ = kraken_api.o curl.o url.o crypto.o kr_helper.o kr_private_trading_functions.o kr_public_functions.o kr_private_user_functions.o
+OBJ = $(LIBOBJ) main.o
 
 all: REST
 	@echo "CFLAGS: $(CFLAGS)"
@@ -49,7 +50,11 @@ clean:
 
 .PHONY: LIBRARY
 LIBRARY: CFLAGS += -fPIC
-LIBRARY: clean REST LINK
+LIBRARY: clean $(LIB_NAME)
 	@echo "Library compiled with CFLAGS: $(CFLAGS)"
-LINK: $(OBJ)
-	ar -cvq $(LIB_NAME) *.o
+
+.PHONY: LINK
+LINK: $(LIB_NAME)
+
+$(LIB_NAME): $(LIBOBJ)
+	ar -cvq $(LIB_NAME) $(LIBOBJ)
