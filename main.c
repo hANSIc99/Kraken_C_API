@@ -248,6 +248,12 @@
  * \endcode
  * \n\n
  *
+ * <b>get system status</b>: get_system_status(&api)\n
+ * \code
+ * kr_api->pub_func->get_system_status(&kr_api);
+ * \endcode
+ * \n\n
+ *
  * <b>get asset info</b>: get_asset_info(&api)\n
  * \code
  * kr_api->pub_func->get_asset_info(&kr_api);
@@ -421,6 +427,11 @@ int main (void){
 
 #if 1
 	kr_api->pub_func->get_server_time(&kr_api);
+	print_n_reset(kr_api);
+#endif
+
+#if 0
+	kr_api->pub_func->get_system_status(&kr_api);
 	print_n_reset(kr_api);
 #endif
 

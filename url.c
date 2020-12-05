@@ -27,6 +27,7 @@ int make_url(struct kraken_api **kr_data){
 	const char* api_trade_volume        = "/TradeVolume";
 	/* PUBLIC FUNCTIONS */
 	const char* api_server_time         = "/Time";
+	const char* api_system_status       = "/SystemStatus";
 	const char* api_assets              = "/Assets";
 	const char* api_asset_pairs         = "/AssetPairs";
 	const char* api_ticker              = "/Ticker";
@@ -97,6 +98,9 @@ int make_url(struct kraken_api **kr_data){
 
 	/* SERVER TIME */
 	(*kr_data)->s_uri_server_time = strdup(api_server_time);
+
+	/* SYSTEM STATUS */
+	(*kr_data)->s_uri_system_status = strdup(api_system_status);
 
 	/* ASSET INFO */
 	(*kr_data)->s_uri_asset_info = strdup(api_assets);
