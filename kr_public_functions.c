@@ -12,6 +12,17 @@ int server_time(struct kraken_api **kr_api){
 	return 0;
 }
 
+int system_status(struct kraken_api **kr_api){
+
+	(*kr_api)->tmp_query_url = to_url((*kr_api)->tmp_query_url, (*kr_api)->s_uri_public);
+	(*kr_api)->tmp_query_url = to_url((*kr_api)->tmp_query_url, (*kr_api)->s_uri_system_status);
+
+	PTRACEX("system status executed: %s", (*kr_api)->tmp_query_url);
+	query_public(kr_api);
+
+	return 0;
+}
+
 int asset_info(struct kraken_api **kr_api){
 
 	/* set the appropriate optionals for this function */

@@ -107,6 +107,7 @@ int kraken_init(struct kraken_api **kr_api, const char *api_key, const char *sec
 
 	/* assign the public functions */
 	(*kr_api)->pub_func->get_server_time          = &server_time;
+	(*kr_api)->pub_func->get_system_status        = &system_status;
 	(*kr_api)->pub_func->get_asset_info           = &asset_info;
 	(*kr_api)->pub_func->get_tradable_asset_pairs = &asset_pairs;
 	(*kr_api)->pub_func->get_ticker_info          = &ticker_info;
@@ -177,6 +178,7 @@ void kraken_clean(struct kraken_api **kr_api){
 
 	/* PUBLIC MARKET DATA */
 	free((*kr_api)->s_uri_server_time);
+	free((*kr_api)->s_uri_system_status);
 	free((*kr_api)->s_uri_asset_info);
 	free((*kr_api)->s_uri_asset_pairs);
 	free((*kr_api)->s_uri_ticker);

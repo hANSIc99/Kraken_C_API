@@ -30,6 +30,14 @@
  * */
 int server_time(struct kraken_api **kr_api);
 /*!
+ * \brief Get system status.
+ * \param **kr_api Initialized API structure.
+ *
+ * Result: current system status (trading mode) & server time
+ * See further details on <a href=https://www.kraken.com/help/api#get-system-status>kraken api description</a>.
+ * */
+int system_status(struct kraken_api **kr_api);
+/*!
  * \brief Get asset info.
  * \param **kr_api Initialized API structure.
  *
